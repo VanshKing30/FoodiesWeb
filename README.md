@@ -1,70 +1,70 @@
-# Getting Started with Create React App
+# Foodies - BITSxPostman API Hackathon
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Submission By: Team API Alchemists
 
-## Available Scripts
+- Vansh Waldeo (Team Leader)
+- Swaraj Pawar
+- Sarvesh Shahane
+- Veda Bhadane
 
-In the project directory, you can run:
+## Introduction
 
-### `npm start`
+Hey there, fellow foodies! We are the API Alchemists, and we're thrilled to introduce you to "Foodies," our web app created for the BITSxPostman API hackathon. Foodies is designed to enhance your college food adventures, making them more convenient and fun.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## What Does Foodies Do?
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Imagine being a college student at lunchtime, wanting a delicious meal but unsure about the menu at each canteen on campus. That's where Foodies comes in. It serves as your personal food oracle, allowing you to check daily menus for all campus canteens right from your devices.
 
-### `npm test`
+### Nutritional Information at Your Fingertips
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Foodies isn't just about showing menus; it's also your health-conscious best friend. It uses the Spoonacular API to provide nutritional information for all dishes, empowering you to make informed and healthy choices.
 
-### `npm run build`
+### Empowering Canteen Owners
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Foodies benefits not only students but also canteen owners. It helps them plan menus, suggests recipes, and streamlines canteen operations.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### User-Friendly Experience
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+We prioritize security and user-friendliness. Students can easily sign up, and canteen owners receive secure login credentials from the college.
 
-### `npm run eject`
+### Health News
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The health news section delivers articles from the G News API, offering insights into good dietary choices and empowering users with knowledge for healthier eating.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Tech Stack
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Foodies is built using cutting-edge technologies:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- React.js: For a fantastic and smooth web app experience.
+- Tailwind CSS: For stylish and user-friendly design.
+- Express.js: Powering the backend engine.
+- MongoDB Atlas: Storing essential data securely.
+- Mongoose: Managing the database.
+- Spoonacular API: Providing nutritional information and recipe ideas.
+- G News API: Fetching health-related articles.
+- Bcrypt and JWT: Ensuring security and data protection.
+- Postman: Extensively used for backend route testing and understanding data from Spoonacular.
 
-## Learn More
+## Future Scope
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Foodies has exciting possibilities for the future:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Poll Functionality: Vote for your preferred dish.
+- Feedback System: Share thoughts with canteens for service improvement.
+- Expanding Horizons: Extend support for multiple colleges.
 
-### Code Splitting
+## Conclusion
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Creating Foodies has been a blast, simplifying campus food experiences. We express our gratitude to BITS and Postman for providing this opportunity to showcase our skills and creativity.
 
-### Analyzing the Bundle Size
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+The web app is open to contributions. Check out the [GitHub repository](https://github.com/VanshKing30/FoodiesWeb) and feel free to contribute!
 
-### Making a Progressive Web App
+## Live Demo
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Explore the live web app [here](https://foodies-web-app.vercel.app/).
 
-### Advanced Configuration
+## Medium Article
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Read more about Foodies on our [Medium article](https://medium.com/@vanshwaldeo360/foodies-connecting-you-to-your-college-canteens-2ecb8739484f).
