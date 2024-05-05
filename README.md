@@ -14,10 +14,10 @@
 
 ## Table of Contents 📒
 
-- [Introduction 👋](#introduction-)
-- [Features 🌟](#features-)
-- [Quick Start 🚀](#quickstart-)
-- [Contributorion Guide🤝](#Contribution-Guide-)
+- [Introduction 👋](#introduction)
+- [Features 🌟](#features)
+- [Quick Start 🚀](#quickstart)
+- [Contribution Guide🤝](#contribution)
 
 # Introduction <a name="introduction"></a>
 
@@ -114,7 +114,7 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 <a href="https://github.com/VanshKing30"><img src="https://avatars.githubusercontent.com/u/74658625?v=4" alt="image" border="0" height="120"></a>
 
-# ✴️ Contribution-Guide
+# ✴️ Contribution-Guide <a name="contribution"></a>
 
 - Fork the Repository
 
