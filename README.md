@@ -59,18 +59,34 @@ Welcome to Foodies, your go-to college dining companion! Designed for seamless c
 - **Expanding Horizons**: Extend Foodies to multiple colleges for personalized canteen listings.
 
 
-# Quick Start🚀 <a name="quickstart"></a>
+# Quick Start for Contributors 🚀 <a name="quickstart"></a>
 
-## Getting Started with Create React App
+## To get started with contributing to the FoodiesWeb project, follow these steps:
+
+1. **Navigate to the Project Directory:**
+   ```bash
+   cd path/to/FoodiesWeb
+2. **Split Terminal for Backend Setup:**
+
+3. **Navigate to the Server Directory:**
+- ```bash
+   cd path/to/FoodiesWeb
+4. **Install Dependencies (in both terminals):**
+- ```bash
+   npm install
+5. **Start the Backend Server (in the terminal within the /server directory):**
+   - In the terminal where you navigated to the /server directory, run the following command to start the backend server:
+   ```bash
+   nodemon server.js
+6. **Start the React App (with Backend Running):**
+   - In the other terminal, run the following command to start the React app with the backend server running successfully:
+   ```bash
+   npm start
+With these steps, you'll have both the backend server and the React app up and running, ready for development or testing.
+
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
