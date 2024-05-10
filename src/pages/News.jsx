@@ -26,7 +26,7 @@ function News() {
   return (
     <div className="text-gray-900 min-h-screen">
       <Navbar />
-      <h1 className="text-3xl font-bold text-center mt-4 text-white">
+      <h1 className="text-3xl font-bold text-center mt-20 text-white p-6">
         Trending Food and Health News
       </h1>
       <main className="mt-24 p-4">
