@@ -36,7 +36,7 @@ function Signup() {
           navigate("/home");
         })
         .catch((error) => {
-          toast.error("Failed To craete account");
+          toast.error("Failed To create account");
         });
     } else {
       const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
@@ -48,7 +48,7 @@ function Signup() {
           navigate(`/section/${response.data.cantId}`);
         })
         .catch((error) => {
-          toast.error("Failed To craete account");
+          toast.error("Failed To create account");
         });
     }
   }

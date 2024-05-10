@@ -68,7 +68,7 @@ const ModalForm = ({ onSubmit  , sectionName , canteenData , id}) => {
       })
       .catch((error)=>{
 
-        toast.error("Faild to add dish");
+        toast.error("Failed to add dish");
       })
 
 
