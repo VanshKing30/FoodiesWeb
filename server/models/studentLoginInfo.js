@@ -24,6 +24,10 @@ const studentSchema = new Schema({
     type: String,
     required: true,
   },
+  isVerified:{
+    type:Boolean,
+    default:false
+  }
 });
 
 const Student = mongoose.model('Student', studentSchema);

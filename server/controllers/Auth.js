@@ -2,6 +2,8 @@ const bcrypt = require("bcrypt");
 const User = require("../models/studentLoginInfo");
 const jwt = require("jsonwebtoken");
 const Canteen = require("../models/canteenLoginInfo");
+const { sendVerificationEmail } = require("../utils/email");
+const { successFullVerification } = require("../utils/emailTemplate");
 
 require("dotenv").config();
 
@@ -29,14 +31,32 @@ exports.studentSignup = async (req , res)=>{
             })
         }
 
-        const user = await User.create({
-            name , email , collegeName,accountType , password:hashedPassword
-        });
-
-        return res.status(200).json({
-            success : true,
-            message : "User created succesfully"
-        });
+        if(process.env.ENABLE_EMAIL_VERIFICATION){
+            console.log("Email Verification is enabled");
+            const user = await User.create({
+                name , email , collegeName,accountType , password:hashedPassword
+            });
+    
+            const verificationToken = jwt.sign({email:email, accountType: accountType},process.env.JWT_SECRET,{expiresIn:'1d'});
+    
+            await sendVerificationEmail(email,verificationToken,name);
+    
+    
+            return res.status(200).json({
+                success : true,
+                message: `User created succesfully, Verification email has been sent to ${email}`
+            });
+        }else{
+            console.log("Email Verification is disabled");
+            const user = await User.create({
+                name , email , collegeName,accountType , password:hashedPassword, isVerified:true
+            });
+    
+            return res.status(200).json({
+                success : true,
+                message : "User created succesfully"
+            });
+        }
 
 
     }
@@ -68,6 +88,13 @@ exports.studentLogin = async (req , res)=>{
             return res.status(401).json({
                 success : false,
                 message : "User is not registred"
+            })
+        }
+
+        if(!user.isVerified){
+            return res.status(401).json({
+                success : false,
+                message : `${user.name} please verify your email to login`
             })
         }
 
@@ -118,6 +145,83 @@ exports.studentLogin = async (req , res)=>{
     }
 }
 
+
+exports.verifyemail = async (req, res) => {
+    try {
+        const {verificationToken} = req.params;
+
+        console.log(verificationToken);
+        
+        const decoded = jwt.verify(verificationToken, process.env.JWT_SECRET);
+
+        const email = decoded.email;
+
+        let verfication;
+
+        if(decoded.accountType === "User"){
+            verfication = await User.findOne({email
+            });
+        }else{
+            verfication = await Canteen.findOne({email  
+            });
+        }
+
+        if (!verfication) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        verfication.isVerified = true;
+
+        await verfication.save();
+
+
+
+        res.send(successFullVerification(verfication.name));
+
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred during email verification.' });
+        console.log(error);
+    }
+};
+
+
+exports.resendVerificationEmail = async (req, res) => {
+
+    try {
+        const { email, accountType } = req.body;
+
+        let user;
+
+        if(accountType === "User"){
+
+            user = await User
+            .findOne({ email, accountType });
+
+        }else{
+            user = await Canteen
+            .findOne({ email, accountType });
+        }
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        if (user.isVerified) {
+            return res.status(400).json({ message: 'User is already verified' });
+        }
+
+        const verificationToken = jwt.sign({ email: email }, process.env.JWT_SECRET, { expiresIn: '1d' });
+
+        await sendVerificationEmail(email, verificationToken, user.name);
+
+        res.status(200).json({ message: `Verification email has been sent to ${email}` });
+
+    } catch (error) {
+        res.status(500).json({ message: 'An error occurred during email verification.' });
+        console.log(error);
+    }
+};
+
 //for canteens
 
 exports.canteenSignup = async (req , res)=>{
@@ -125,6 +229,8 @@ exports.canteenSignup = async (req , res)=>{
     try{
         const {name , email ,   collegeName , accountType ,  password} = req.body;
         const existingCanteen = await Canteen.findOne({email});
+
+
 
         if(existingCanteen){
             return res.status(400).json({
@@ -145,17 +251,32 @@ exports.canteenSignup = async (req , res)=>{
             })
         }
 
-        const canteen = await Canteen.create({
-            name , email , collegeName,accountType , password:hashedPassword
-        });
-
-        
-
-        return res.status(200).json({
-            success : true,
-            message : "User created succesfully",
-            cantId : canteen._id
-        });
+        if(process.env.ENABLE_EMAIL_VERIFICATION){
+            console.log("Email Verification is enabled");
+            const canteen = await Canteen.create({
+                name , email , collegeName,accountType , password:hashedPassword
+            });
+    
+            const verificationToken = jwt.sign({email:email, accountType: accountType},process.env.JWT_SECRET,{expiresIn:'1d'});
+    
+            await sendVerificationEmail(email,verificationToken,name);
+    
+    
+            return res.status(200).json({
+                success : true,
+                message: `Canteen created succesfully, Verification email has been sent to ${email}`
+            });
+        }else{
+            console.log("Email Verification is disabled");
+            const canteen = await Canteen.create({
+                name , email , collegeName,accountType , password:hashedPassword, isVerified:true
+            });
+    
+            return res.status(200).json({
+                success : true,
+                message : "Canteen created succesfully"
+            });
+        }
 
 
     }
@@ -189,6 +310,13 @@ exports.canteenLogin = async (req , res)=>{
             return res.status(401).json({
                 success : false,
                 message : " Canteen is not registred"
+            })
+        }
+
+        if(!canteen.isVerified){
+            return res.status(401).json({
+                success : false,
+                message : `${canteen.name} please verify your email to login`
             })
         }
 

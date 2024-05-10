@@ -36,11 +36,11 @@ function Login() {
 
       axios.post(apiUrl , formData)
       .then((response)=>{
-        toast.success("User Logged in ");
+        toast.success(response.data.message);
         navigate("/home");
       })
       .catch((error)=>{
-        toast.error("Failed to login")
+        toast.error(error.response.data.message)
       });
     }
 
@@ -54,7 +54,7 @@ function Login() {
         navigate(`/section/${response.data.cantId}`);
       })
       .catch((error)=>{
-        toast.error("Failed to login")
+        toast.error(error.response.data.message)
       });
     }
   }
@@ -130,9 +130,15 @@ function Login() {
           <button type="submit" className="w-full bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 py-2 rounded-2xl text-white font-semibold mb-2">
             Login
           </button>
-
+          
           <Link to="/signup">
             <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">Not registered? Create an account</span>
+          </Link>
+
+          <br/>
+
+          <Link to="/resendVerification">
+            <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">Resend verification email</span>
           </Link>
           
         </form>

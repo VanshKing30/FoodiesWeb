@@ -32,11 +32,11 @@ function Signup() {
       axios
         .post(apiUrl, formData)
         .then((response) => {
-          toast.success("Account Created succesfully");
-          navigate("/home");
+          toast.success(response.data.message);
+          navigate("/");
         })
         .catch((error) => {
-          toast.error("Failed To craete account");
+          toast.error(error.response.data.message);
         });
     } else {
       const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
@@ -44,11 +44,11 @@ function Signup() {
       axios
         .post(apiUrl, formData)
         .then((response) => {
-          toast.success("Account Created succesfully");
-          navigate(`/section/${response.data.cantId}`);
+          toast.success(response.data.message);
+          navigate(`/`);
         })
         .catch((error) => {
-          toast.error("Failed To craete account");
+          toast.error(error.response.data.message);
         });
     }
   }
@@ -161,6 +161,12 @@ function Signup() {
           >
             Signup
           </button>
+
+          <br />
+
+          <Link to="/">
+                <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">Already registerd? Login</span>
+              </Link>
         </form>
       </div>
     </div>

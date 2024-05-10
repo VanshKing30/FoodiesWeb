@@ -9,6 +9,7 @@ import MenuPage from './pages/MenuPage';
 import About from './pages/About';
 import SectionPage from './pages/SectionPage';
 import News from './pages/News';
+import ResendVerificationPage from './pages/ResendVerificationPage';
 
 const Layout = ({ children }) => {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/home' element={<Layout><Home /></Layout>} />
+        <Route path='/resendVerification' element={<Layout><ResendVerificationPage /></Layout>} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/about' element={<Layout><About /></Layout>} />
         <Route path='/section/:_id' element={<Layout><SectionPage /></Layout>} />

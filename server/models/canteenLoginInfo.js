@@ -23,6 +23,11 @@ const canteenSchema = new Schema({
     type: String,
     required: true,
   },
+
+  isVerified:{
+    type:Boolean,
+    default:false
+  }
 });
 
 const Canteen = mongoose.model('Canteen', canteenSchema);
