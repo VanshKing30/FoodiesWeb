@@ -6,7 +6,7 @@ console.log(
 
 // Get the database URL from the command line argument
 const userArgs = process.argv.slice(2);
-const databaseURL = process.env.DATABASE_URI;
+const databaseURL =process.env.DATABASE_URI;
 
 // Import the necessary Mongoose models
 const Canteen = require('./models/canteenLoginInfo');
@@ -36,71 +36,75 @@ async function main() {
   mongoose.connection.close();
 }
 
-async function canteenCreate(name, collegeName, email, password) {
+async function canteenCreate(name, collegeName, email, password, accountType) {
   const canteen = new Canteen({
-    name,
-    collegeName,
-    email,
-    password,
+      name,
+      collegeName,
+      email,
+      accountType,
+      password,
   });
   await canteen.save();
   console.log(`Added canteen: ${name}`);
 }
 
-async function studentCreate(username, email, collegeName, password) {
+async function studentCreate(name, email, collegeName, password, accountType) {
   const student = new Student({
-    username,
-    email,
-    collegeName,
-    password,
+      name,
+      email,
+      collegeName,
+      accountType,
+      password,
   });
   await student.save();
-  console.log(`Added student: ${username}`);
+  console.log(`Added student: ${name}`);
 }
 
 async function createCanteens() {
   console.log('Adding canteens');
   await Promise.all([
-    canteenCreate('Canteen 1', 'College A', 'canteen1@example.com', 'password1'),
-    canteenCreate('Canteen 2', 'College B', 'canteen2@example.com', 'password2'),
-    // Add more canteens as needed
+      canteenCreate('Canteen 1', 'College A', 'canteen1@example.com', 'password1', 'Canteen'),
+      canteenCreate('Canteen 2', 'College B', 'canteen2@example.com', 'password2', 'Canteen'),
+      // Add more canteens as needed
   ]);
 }
 
 async function createStudents() {
   console.log('Adding students');
   await Promise.all([
-    studentCreate('Student 1', 'student1@example.com', 'College A', 'password1'),
-    studentCreate('Student 2', 'student2@example.com', 'College B', 'password2'),
-    // Add more students as needed email should be unique
+      studentCreate('Student 1', 'student1@example.com', 'College A', 'password1', 'User'),
+      studentCreate('Student 2', 'student2@example.com', 'College B', 'password2', 'User'),
+      // Add more students as needed
   ]);
 }
 
-async function breakfastCreate(canteen, dishName) {
+async function breakfastCreate(dishId, dish, canteen) {
   const breakfast = new Breakfast({
+    dishId,
+    dish,
     canteen,
-    dishName,
   });
   await breakfast.save();
-  console.log(`Added breakfast dish: ${dishName}`);
+  console.log(`Added breakfast dish: ${dish}`);
 }
-
-async function lunchCreate(canteen, dishName) {
+async function lunchCreate(dishId,dish, canteen) {
   const lunch = new Lunch({
-    canteen,
-    dishName,
+       dishId,
+      dish,
+      canteen,
   });
   await lunch.save();
-  console.log(`Added lunch dish: ${dishName}`);
+  console.log(`Added lunch dish: ${dish}`);
 }
 
-async function dinnerCreate(canteen, dishName) {
+async function dinnerCreate(dishId,dish, canteen) {
   const dinner = new Dinner({
-    canteen,
-    dishName,
+    dishId,
+      dish,
+      canteen,
   });
   await dinner.save();
-  console.log(`Added dinner dish: ${dishName}`);
+  console.log(`Added dinner dish: ${dish}`);
 }
 
 async function createBreakfasts() {
@@ -109,12 +113,13 @@ async function createBreakfasts() {
   const canteen2 = await Canteen.findOne({ name: 'Canteen 2' });
 
   await Promise.all([
-    breakfastCreate(canteen1._id, 'Pancakes'),
-    breakfastCreate(canteen1._id, 'Omelette'),
-    breakfastCreate(canteen2._id, 'French Toast'),
-    breakfastCreate(canteen2._id, 'Waffles'),
+      breakfastCreate('1', 'Pancakes', canteen1._id),
+      breakfastCreate('2', 'Omelette', canteen1._id),
+      breakfastCreate('3', 'French Toast', canteen2._id),
+      breakfastCreate('4', 'Waffles', canteen2._id),
   ]);
 }
+
 
 async function createLunches() {
   console.log('Adding lunch dishes');
@@ -122,10 +127,10 @@ async function createLunches() {
   const canteen2 = await Canteen.findOne({ name: 'Canteen 2' });
 
   await Promise.all([
-    lunchCreate(canteen1._id, 'Burger'),
-    lunchCreate(canteen1._id, 'Pizza'),
-    lunchCreate(canteen2._id, 'Sandwich'),
-    lunchCreate(canteen2._id, 'Salad'),
+      lunchCreate('1','Burger', canteen1._id),
+      lunchCreate('2','Pizza', canteen1._id),
+      lunchCreate('3','Sandwich', canteen2._id),
+      lunchCreate('4','Salad', canteen2._id),
   ]);
 }
 
@@ -135,9 +140,9 @@ async function createDinners() {
   const canteen2 = await Canteen.findOne({ name: 'Canteen 2' });
 
   await Promise.all([
-    dinnerCreate(canteen1._id, 'Spaghetti'),
-    dinnerCreate(canteen1._id, 'Steak'),
-    dinnerCreate(canteen2._id, 'Sushi'),
-    dinnerCreate(canteen2._id, 'Chicken Curry'),
+      dinnerCreate('1','Spaghetti', canteen1._id),
+      dinnerCreate('2','Steak', canteen1._id),
+      dinnerCreate('3','Sushi', canteen2._id),
+      dinnerCreate('4','Chicken Curry', canteen2._id),
   ]);
 }

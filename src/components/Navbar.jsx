@@ -13,7 +13,9 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="space-x-6 md:space-x-20 text-lg md:flex">
+          
           <Link to="/home" className="hover:text-green-400 cursor-pointer transition-all duration-200">
+          
             Home
           </Link>
           <Link to="/news" className="hover:text-green-400 cursor-pointer transition-all duration-200">
