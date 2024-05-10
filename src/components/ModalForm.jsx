@@ -66,9 +66,9 @@ const ModalForm = ({ onSubmit  , sectionName , canteenData , id}) => {
       .then((response)=>{
         toast.success("Added to menu");
       })
-      .catch((error)=>{
+      .catch((error )=>{
 
-        toast.error("Faild to add dish");
+        toast.error("Failed to add dish");
       })
 
 

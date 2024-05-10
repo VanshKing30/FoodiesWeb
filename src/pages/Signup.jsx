@@ -36,7 +36,7 @@ function Signup() {
           navigate("/home");
         })
         .catch((error) => {
-          toast.error("Failed To craete account");
+          toast.error("Failed To create account");
         });
     } else {
       const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
@@ -48,13 +48,13 @@ function Signup() {
           navigate(`/section/${response.data.cantId}`);
         })
         .catch((error) => {
-          toast.error("Failed To craete account");
+          toast.error("Failed To create account");
         });
     }
   }
 
   return (
-    <div className="h-screen md:flex">
+    <div className="h-screen md:flex" >
       <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 bg-no-repeat justify-around items-center hidden">
         <div>
           <img src={logo} alt="logo" className="w-48 h-12 mb-2" />
