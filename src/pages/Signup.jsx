@@ -54,7 +54,7 @@ function Signup() {
   }
 
   return (
-    <div className="h-screen md:flex">
+    <div className="h-screen md:flex" >
       <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 bg-no-repeat justify-around items-center hidden">
         <div>
           <img src={logo} alt="logo" className="w-48 h-12 mb-2" />
