@@ -60,9 +60,9 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
-            className="md:hidden flex flex-col items-center justify-center w-full"
+            className="md:hidden absolute flex flex-col items-center justify-center w-full"
           >
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <div className="w-[100%] bg-[#282c34] px-[20%] pt-2 pb-3 space-y-1 sm:px-3">
               <MobileNavItem to="/home">Home</MobileNavItem>
               <MobileNavItem to="/about">About us</MobileNavItem>
               <MobileNavItem to="/news">News</MobileNavItem>
@@ -85,7 +85,7 @@ const NavItem = ({ icon, to, children }) => {
   return (
     <Link
       to={to}
-      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+      className="z-[2] text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
     >
       {icon}
       <span className="ml-2">{children}</span>
