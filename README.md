@@ -123,7 +123,7 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 - Create a new branch using git checkout -b [branchName].
 - Start the project and work on the issue you have been assigned to.
 - After you are done with the changes, commit them using commands: git add . , git commit -m [commit name] & then git push origin [branch name].
-- Now, on your repository, first update your repository with the Original repository to avoid any merge issues.
+- Now, on your repository, sync your forked repository with the Original repository to avoid any merge issues.
 - Compare and create a pull request and mention the issue number along with the PR you solved.
 ---
 
