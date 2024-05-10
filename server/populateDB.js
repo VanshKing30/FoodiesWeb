@@ -72,7 +72,7 @@ console.log(
     await Promise.all([
       studentCreate('Student 1', 'student1@example.com', 'College A', 'password1'),
       studentCreate('Student 2', 'student2@example.com', 'College B', 'password2'),
-      // Add more students as needed
+      // Add more students as needed email should be unique
     ]);
   }
   
