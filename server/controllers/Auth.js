@@ -3,7 +3,7 @@ const User = require("../models/studentLoginInfo");
 const jwt = require("jsonwebtoken");
 const Canteen = require("../models/canteenLoginInfo");
 const { sendVerificationEmail } = require("../utils/email");
-const { successFullVerification } = require("../utils/emailTemplate");
+const { successFullVerification, tokenExpired } = require("../utils/emailTemplate");
 
 require("dotenv").config();
 
@@ -91,7 +91,7 @@ exports.studentLogin = async (req , res)=>{
             })
         }
 
-        if(!user.isVerified){
+        if(process.env.ENABLE_EMAIL_VERIFICATION && !user.isVerified){
             return res.status(401).json({
                 success : false,
                 message : `${user.name} please verify your email to login`
@@ -149,10 +149,12 @@ exports.studentLogin = async (req , res)=>{
 exports.verifyemail = async (req, res) => {
     try {
         const {verificationToken} = req.params;
-
-        console.log(verificationToken);
         
         const decoded = jwt.verify(verificationToken, process.env.JWT_SECRET);
+
+        if (!decoded) {
+            return res.send(tokenExpired);
+        }
 
         const email = decoded.email;
 
@@ -313,7 +315,7 @@ exports.canteenLogin = async (req , res)=>{
             })
         }
 
-        if(!canteen.isVerified){
+        if(process.env.ENABLE_EMAIL_VERIFICATION && !canteen.isVerified){
             return res.status(401).json({
                 success : false,
                 message : `${canteen.name} please verify your email to login`
