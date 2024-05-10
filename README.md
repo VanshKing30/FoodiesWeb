@@ -116,20 +116,15 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 # ✴️ Contribution-Guide <a name="contribution"></a>
 
-- Fork the Repository
-
-
-- Set Up the Project, by cloning the repository to your local machine
-- Install dependencies.
-- Start the project.
-
-- Create a New Branch
-- Create or work on existing issues
-
-- Make changes and commit with descriptive messages
-
-- Push changes to your forked repository.
-- Create a Pull Request
+- On the top-right corner of the repositpry, Give a star and then Fork the Repository. (by doing this you will get the repositry under your account)
+- Set Up the Project, by cloning the repository to your local machine by copying the https code from code button and then using command on the terminal : git clone [URL].
+- enter into the repository: cd [foldername].
+- Install dependencies using npm install.
+- Create a new branch using git checkout -b [branchName].
+- Start the project and work on the issue you have been assigned to.
+- After you are done with the changes, commit them using commands: git add . , git commit -m [commit name] & then git push origin [branch name].
+- Now, on your repository, sync your forked repository with the Original repository to avoid any merge issues.
+- Compare and create a pull request and mention the issue number along with the PR you solved.
 ---
 
 ##  <center>Part of GSSoC24</center>
