@@ -119,10 +119,13 @@ function Signup() {
           });
       }
     }else{
-      if(!confirmPasswordCheck){
-        toast.error("Password and confirm Password do not match");
-      }else{
+      console.log(lowerValidated && upperValidated && numberValidated && specialValidated && lengthValidated)
+      if ((lowerValidated && upperValidated && numberValidated && specialValidated && lengthValidated) === false){
         toast.error("Password must pass all the criteria");
+      }
+      if(confirmPasswordCheck === false){
+        toast.error("Password and confirm Password do not match");
+
       }
     }
   }
@@ -232,7 +235,7 @@ function Signup() {
             <input
               required
               className="w-full py-2 px-3 border border-gray-300 rounded-2xl"
-              type={showPassword ? "text" : "password"}
+              type={showPassword2 ? "text" : "password"}
               placeholder="Confirm Password"
               name="confirmPassword"
               value={confirmPassword}
@@ -242,7 +245,7 @@ function Signup() {
               className="absolute right-3 top-3 cursor-pointer"
               onClick={() => setShowPassword2((prev) => !prev)}
             >
-              {showPassword ? (
+              {showPassword2 ? (
                 <AiOutlineEyeInvisible size={20} />
               ) : (
                 <AiOutlineEye size={20} />
