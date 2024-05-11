@@ -15,13 +15,17 @@ function Signup() {
     collegeName: "",
     accountType: "",
     password: "",
+    confirmPassword: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
   const [lowerValidated, setLowerValidated] = useState(false);
   const [upperValidated, setUpperValidated] = useState(false);
   const [numberValidated, setNumberValidated] = useState(false);
   const [specialValidated, setSpecialValidated] = useState(false);
   const [lengthValidated, setLengthValidated] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmPasswordCheck, setConfirmPasswordCheck] = useState(false);
 
 
   const navigate = useNavigate();
@@ -77,10 +81,18 @@ function Signup() {
       [event.target.name]: event.target.value,
     }));
   }
+  function ConfirmPasswordHandler(event){
+    setConfirmPassword(event.target.value);
+    if((event.target.value === formData.password)){
+      setConfirmPasswordCheck(true);
+    }else{
+      setConfirmPasswordCheck(false);
+    }
+  }
 
   function submitHandler(event) {
     event.preventDefault();
-    if (lowerValidated && upperValidated && numberValidated && specialValidated && lengthValidated) {
+    if (lowerValidated && upperValidated && numberValidated && specialValidated && lengthValidated && confirmPasswordCheck) {
       if (formData.accountType === "User") {
         const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
 
@@ -106,8 +118,12 @@ function Signup() {
             toast.error("Failed To create account");
           });
       }
-    } else {
-      toast.error("Password must pass all the criteria");
+    }else{
+      if(!confirmPasswordCheck){
+        toast.error("Password and confirm Password do not match");
+      }else{
+        toast.error("Password must pass all the criteria");
+      }
     }
   }
 
@@ -204,6 +220,27 @@ function Signup() {
             <span
               className="absolute right-3 top-3 cursor-pointer"
               onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? (
+                <AiOutlineEyeInvisible size={20} />
+              ) : (
+                <AiOutlineEye size={20} />
+              )}
+            </span>
+          </div>
+          <div className="relative mb-4">
+            <input
+              required
+              className="w-full py-2 px-3 border border-gray-300 rounded-2xl"
+              type={showPassword ? "text" : "password"}
+              placeholder="Confirm Password"
+              name="confirmPassword"
+              value={confirmPassword}
+              onChange={ConfirmPasswordHandler}
+            />
+            <span
+              className="absolute right-3 top-3 cursor-pointer"
+              onClick={() => setShowPassword2((prev) => !prev)}
             >
               {showPassword ? (
                 <AiOutlineEyeInvisible size={20} />
