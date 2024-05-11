@@ -219,6 +219,11 @@ function Signup() {
           >
             Signup
           </button>
+
+          <Link to="/login">
+            <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">Already have an account? Login</span>
+          </Link>
+
           {/* 
             
             Validation Checks for password
@@ -287,6 +292,7 @@ function Signup() {
               At least 8 characters
             </div>
           </main>
+
         </form>
       </div>
       <style jsx global>
