@@ -102,7 +102,7 @@ const ResendVerificationPage = () => {
               </Link>
               <br/>
               <Link to="/">
-                <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">Login</span>
+                <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">Already registered? Login</span>
               </Link>
               
             </form>

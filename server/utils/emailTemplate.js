@@ -59,7 +59,7 @@ function gmailContent(verificationToken, username) {
         <p>Please take a moment to verify your email 👋</p>
         <div style="text-align: center; margin-top: 20px;">
           <h2>Hello ${username},</h2>
-          <p>Foodies appreciates your commitment to securing your account. To proceed, kindly click the button below to verify your email:</p>
+          <p>FoodiesWeb appreciates your commitment to securing your account. To proceed, kindly click the button below to verify your email:</p>
           <a href="${process.env.BACKEND_URL}/verifyemail/${verificationToken}" class="btn-verify" style="color: white;">Verify Email</a>
         </div>
       </div>
