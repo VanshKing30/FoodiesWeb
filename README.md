@@ -96,11 +96,11 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 **Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single-build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point, you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However, we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
 ## Learn More
 
@@ -116,13 +116,13 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 # ✴️ Contribution-Guide <a name="contribution"></a>
 
-- On the top-right corner of the repositpry, Give a star and then Fork the Repository. (by doing this you will get the repositry under your account)
-- Set Up the Project, by cloning the repository to your local machine by copying the https code from code button and then using command on the terminal : git clone [URL].
+- On the top-right corner of the repository, Give a star and then Fork the Repository. (by doing this you will get the repository under your account)
+- Set Up the Project, by cloning the repository to your local machine by copying the HTTPS code from the code button and then using the command on the terminal: git clone [URL].
 - enter into the repository: cd [foldername].
 - Install dependencies using npm install.
 - Create a new branch using git checkout -b [branchName].
 - Start the project and work on the issue you have been assigned to.
-- After you are done with the changes, commit them using commands: git add . , git commit -m [commit name] & then git push origin [branch name].
+- After you are done with the changes, commit them using the command: git add. , git commit -m [commit name] & then git push origin [branch name].
 - Now, on your repository, sync your forked repository with the Original repository to avoid any merge issues.
 - Compare and create a pull request and mention the issue number along with the PR you solved.
 ---
