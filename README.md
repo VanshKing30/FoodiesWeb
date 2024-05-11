@@ -58,20 +58,36 @@ Welcome to Foodies, your go-to college dining companion! Designed for seamless c
 - **Feedback System**: Share thoughts with canteens for service improvement.
 - **Expanding Horizons**: Extend Foodies to multiple colleges for personalized canteen listings.
 
+# Quick Start for Contributors 🚀 <a name="quickstart"></a>
 
-# Quick Start🚀 <a name="quickstart"></a>
+## To get started with contributing to the FoodiesWeb project, follow these steps:
 
-## Getting Started with Create React App
+1. **Navigate to the Project Directory:**
+   ```bash
+   cd path/to/FoodiesWeb
+2. **Split Terminal for Backend Setup:**
+
+3. **Navigate to the Server Directory:**
+- ```bash
+   cd path/to/FoodiesWeb
+4. **Install Dependencies (in both terminals):**
+- ```bash
+   npm install
+5. **Start the Backend Server (in the terminal within the /server directory):**
+   - In the terminal where you navigated to the /server directory, run the following command to start the backend server:
+   ```bash
+   nodemon server.js
+6. **Start the React App (with Backend Running):**
+   - In the other terminal, run the following command to start the React app with the backend server running successfully:
+   ```bash
+   npm start
+   
+With these steps, you'll have both the backend server and the React app up and running, ready for development or testing.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
 Runs the app in the development mode.\
+
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
@@ -116,16 +132,22 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 # ✴️ Contribution-Guide <a name="contribution"></a>
 
-- On the top-right corner of the repository, Give a star and then Fork the Repository. (by doing this you will get the repository under your account)
-- Set Up the Project, by cloning the repository to your local machine by copying the HTTPS code from the code button and then using the command on the terminal: git clone [URL].
-- enter into the repository: cd [foldername].
-- Install dependencies using npm install.
-- Create a new branch using git checkout -b [branchName].
-- Start the project and work on the issue you have been assigned to.
-- After you are done with the changes, commit them using the command: git add. , git commit -m [commit name] & then git push origin [branch name].
-- Now, on your repository, sync your forked repository with the Original repository to avoid any merge issues.
-- Compare and create a pull request and mention the issue number along with the PR you solved.
----
+
+- Fork the Repository
+
+
+- Set Up the Project, by cloning the repository to your local machine
+- Install dependencies.
+- Start the project.
+
+- Create a New Branch
+- Create or work on existing issues
+
+- Make changes and commit with descriptive messages
+
+- Push changes to your forked repository.
+- Create a Pull Request
+
 
 ##  <center>Part of GSSoC24</center>
 
