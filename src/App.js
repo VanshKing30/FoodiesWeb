@@ -24,6 +24,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/home' element={<Layout><Home /></Layout>} />
+        <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/about' element={<Layout><About /></Layout>} />
         <Route path='/section/:_id' element={<Layout><SectionPage /></Layout>} />
