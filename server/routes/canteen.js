@@ -3,6 +3,7 @@ const router = express.Router();
 
 // Import canteen controller functions
 const canteenController = require('../controllers/canteenController');
+const { auth, isCanteen } = require('../middlewares/auth');
 
 router.get('/getcanteen' , canteenController.getAllCanteen);
 
@@ -19,21 +20,21 @@ router.get('/:id/dinner' , canteenController.getDinner);
 // router.get('/:id', canteenController.getCanteenDashboard);
 
 // Route to add a breakfast dish for a specific canteen
-router.post('/:id/breakfast/add', canteenController.addBreakfastDish);
+router.post('/:id/breakfast/add',auth,isCanteen, canteenController.addBreakfastDish);
 
 // Route to remove a breakfast dish for a specific canteen
-router.delete('/:id/breakfast/remove', canteenController.removeBreakfastDish);
+router.delete('/:id/breakfast/remove',auth,isCanteen, canteenController.removeBreakfastDish);
 
 // Route to add a lunch dish for a specific canteen
-router.post('/:id/lunch/add', canteenController.addLunchDish);
+router.post('/:id/lunch/add',auth,isCanteen, canteenController.addLunchDish);
 
 // Route to remove a lunch dish for a specific canteen
-router.delete('/:id/lunch/remove', canteenController.removeLunchDish);
+router.delete('/:id/lunch/remove',auth,isCanteen, canteenController.removeLunchDish);
 
 // Route to add a dinner dish for a specific canteen
-router.post('/:id/dinner/add', canteenController.addDinnerDish);
+router.post('/:id/dinner/add',auth,isCanteen, canteenController.addDinnerDish);
 
 // Route to remove a dinner dish for a specific canteen
-router.delete('/:id/dinner/remove', canteenController.removeDinnerDish);
+router.delete('/:id/dinner/remove',auth,isCanteen, canteenController.removeDinnerDish);
 
 module.exports = router;
