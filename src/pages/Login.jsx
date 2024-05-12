@@ -9,7 +9,7 @@ import logo from "../assets/logo2.png"
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
-    accountType : "",
+   
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -95,20 +95,7 @@ function Login() {
             />
           </div>
 
-          <div className="mb-4">
-              <select
-                required
-                name="accountType"
-                onChange={changeHandler}
-                value={formData.accountType}
-                className="mt-1 p-2 w-full border rounded-2xl"
-              >
-                <option value="" disabled selected hidden>Login as</option>
-                <option value="User">User</option>
-                <option value="Canteen">Canteen</option>
-              </select>
-          </div>
-         
+          
           <div className="relative mb-4">
             <input
               required
