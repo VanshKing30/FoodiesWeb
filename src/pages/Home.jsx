@@ -1,80 +1,63 @@
-
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import Navbar from "../components/Navbar";
 import CanteenList from "../components/CanteenList";
+import Searchbar from "../components/Searchbar";
 
 function Home() {
-
-  const [canteenData , setCanteenData] = useState();
-
-  const getCanteenData = async () =>{
-    try{
+  const [canteenData, setCanteenData] = useState();
+  const [filteredData, setfilteredData] = useState();
+  const [isSearched, setIsSearched] = useState(false);
+  const getCanteenData = async () => {
+    try {
       const getCanteen = await fetch(
         `${process.env.REACT_APP_BASE_URL}/getcanteen`,
         {
-          method : "GET",
-          headers :{
-            "Content-Type" : "application/json",
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
           },
         }
       );
       const res = await getCanteen.json();
       setCanteenData(res);
+    } catch (error) {
+      console.error(error);
     }
-      catch(error){
-        console.error(error);
-    };
-
   };
 
-  useEffect(()=>{
+  const searchValueHandler = (value) => {
+    const data = canteenData?.data?.filter((canteen) => {
+      return canteen.name.toUpperCase() === value.toUpperCase();
+    });
+    if (data.length > 0) {
+      setIsSearched(!isSearched);
+      setfilteredData({ data });
+    } else {
+      toast.error("No such canteen!");
+    }
+  };
+
+  useEffect(() => {
     getCanteenData();
-  },[])
-
-
-
+  }, []);
 
   return (
     <div className=" min-h-screen">
       <Navbar />
-      <div className="text-center">
-        <CanteenList canteenData = {canteenData}/>
+      <Searchbar
+        searchValueHandler={(value) => {
+          searchValueHandler(value);
+        }}
+      />
+      {console.log(filteredData, canteenData)}
+      <div className=" text-center  absolute top-28 ">
+        <CanteenList canteenData={isSearched ? filteredData : canteenData} />
       </div>
     </div>
-      
   );
 }
 
 export default Home;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
