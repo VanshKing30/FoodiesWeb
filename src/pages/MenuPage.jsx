@@ -92,8 +92,14 @@ function MenuPage() {
   };
 
   function handleFeedbackSubmit() {
-    setFeedback("");
-    toast.success("Feedback Submitted!");
+    if (feedback.trim() === '') {
+      // Display an alert if the feedback is empty
+      toast.error("Please provide your feedback before submitting.");
+    } else {
+      // Submit feedback if it's not empty
+      setFeedback('');
+      toast.success('Feedback Submitted!');
+    }
   }
 
   return (

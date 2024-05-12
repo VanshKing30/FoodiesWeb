@@ -4,6 +4,9 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import logo from "../assets/logo2.png"
+import Icon from 'react-icons-kit';
+import { arrows_circle_check } from 'react-icons-kit/linea/arrows_circle_check'
+import { arrows_exclamation } from 'react-icons-kit/linea/arrows_exclamation'
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -14,7 +17,59 @@ function Signup() {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [lowerValidated, setLowerValidated] = useState(false);
+  const [upperValidated, setUpperValidated] = useState(false);
+  const [numberValidated, setNumberValidated] = useState(false);
+  const [specialValidated, setSpecialValidated] = useState(false);
+  const [lengthValidated, setLengthValidated] = useState(false);
+
+
   const navigate = useNavigate();
+
+  function PasswordChecker(event) {
+    const lower = new RegExp('(?=.*[a-z])');
+    const upper = new RegExp('(?=.*[A-Z])');
+    const number = new RegExp('(?=.*[0-9])');
+    const special = new RegExp('(?=.*[!@#\$%\^&\*])');
+    const length = new RegExp('(?=.{8,})')
+    const value = event.target.value;
+    if (lower.test(value)) {
+      setLowerValidated(true);
+    }
+    else {
+      setLowerValidated(false);
+    }
+    if (upper.test(value)) {
+      setUpperValidated(true);
+    }
+    else {
+      setUpperValidated(false);
+    }
+    if (number.test(value)) {
+      setNumberValidated(true);
+    }
+    else {
+      setNumberValidated(false);
+    }
+    if (special.test(value)) {
+      setSpecialValidated(true);
+    }
+    else {
+      setSpecialValidated(false);
+    }
+    if (length.test(value)) {
+      setLengthValidated(true);
+    }
+    else {
+      setLengthValidated(false);
+    }
+
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [event.target.name]: event.target.value,
+    }));
+  }
 
   function changeHandler(event) {
     setFormData((prevData) => ({
@@ -25,31 +80,34 @@ function Signup() {
 
   function submitHandler(event) {
     event.preventDefault();
+    if (lowerValidated && upperValidated && numberValidated && specialValidated && lengthValidated) {
+      if (formData.accountType === "User") {
+        const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
 
-    if (formData.accountType === "User") {
-      const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
+        axios
+          .post(apiUrl, formData)
+          .then((response) => {
+            toast.success("Account Created succesfully");
+            navigate("/home");
+          })
+          .catch((error) => {
+            toast.error("Failed To create account");
+          });
+      } else {
+        const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
 
-      axios
-        .post(apiUrl, formData)
-        .then((response) => {
-          toast.success("Account Created succesfully");
-          navigate("/home");
-        })
-        .catch((error) => {
-          toast.error("Failed To create account");
-        });
+        axios
+          .post(apiUrl, formData)
+          .then((response) => {
+            toast.success("Account Created succesfully");
+            navigate(`/section/${response.data.cantId}`);
+          })
+          .catch((error) => {
+            toast.error("Failed To create account");
+          });
+      }
     } else {
-      const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
-
-      axios
-        .post(apiUrl, formData)
-        .then((response) => {
-          toast.success("Account Created succesfully");
-          navigate(`/section/${response.data.cantId}`);
-        })
-        .catch((error) => {
-          toast.error("Failed To create account");
-        });
+      toast.error("Password must pass all the criteria");
     }
   }
 
@@ -141,7 +199,7 @@ function Signup() {
               placeholder="Password"
               name="password"
               value={formData.password}
-              onChange={changeHandler}
+              onChange={PasswordChecker}
             />
             <span
               className="absolute right-3 top-3 cursor-pointer"
@@ -161,8 +219,105 @@ function Signup() {
           >
             Signup
           </button>
+
+          <Link to="/login">
+            <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">Already have an account? Login</span>
+          </Link>
+
+          {/* 
+            
+            Validation Checks for password
+            
+          */}
+
+          <main className='tracker-box text-sm font-normal text-red-600'>
+            <div className={lowerValidated ? 'validated text-green-600' : 'not-validated'}>
+              {lowerValidated ? (
+                <span className='list-icon green'>
+                  <Icon icon={arrows_circle_check} />
+                </span>
+              ) : (
+                <span className='list-icon'>
+                  <Icon icon={arrows_exclamation} />
+                </span>
+              )}
+              At least one lowercase letter
+            </div>
+            <div className={upperValidated ? 'validated text-green-600' : 'not-validated'}>
+              {upperValidated ? (
+                <span className='list-icon green'>
+                  <Icon icon={arrows_circle_check} />
+                </span>
+              ) : (
+                <span className='list-icon'>
+                  <Icon icon={arrows_exclamation} />
+                </span>
+              )}
+              At least one uppercase letter
+            </div>
+            <div className={numberValidated ? 'validated text-green-600' : 'not-validated'}>
+              {numberValidated ? (
+                <span className='list-icon green'>
+                  <Icon icon={arrows_circle_check} />
+                </span>
+              ) : (
+                <span className='list-icon'>
+                  <Icon icon={arrows_exclamation} />
+                </span>
+              )}
+              At least one number
+            </div>
+            <div className={specialValidated ? 'validated text-green-600' : 'not-validated'}>
+              {specialValidated ? (
+                <span className='list-icon green'>
+                  <Icon icon={arrows_circle_check} />
+                </span>
+              ) : (
+                <span className='list-icon'>
+                  <Icon icon={arrows_exclamation} />
+                </span>
+              )}
+              At least one special character
+            </div>
+            <div className={lengthValidated ? 'validated text-green-600' : 'not-validated'}>
+              {lengthValidated ? (
+                <span className='list-icon green'>
+                  <Icon icon={arrows_circle_check} />
+                </span>
+              ) : (
+                <span className='list-icon'>
+                  <Icon icon={arrows_exclamation} />
+                </span>
+              )}
+              At least 8 characters
+            </div>
+          </main>
+
         </form>
       </div>
+      <style jsx global>
+        {`
+                .tracker-box{
+                  font-size: 0.7rem;
+                  letter-spacing: 0.09em;
+                  padding: 15px;
+                  border-radius: 5px;
+                  margin-top: 5px;
+                }
+                
+                .tracker-box div{
+                  margin: 5px 0;
+                }
+                
+                .list-icon{
+                  padding-right: 0.3rem;
+                }
+                
+                .list-icon.green{
+                  color: #006400;
+                }
+                `}
+      </style>
     </div>
   );
 }
