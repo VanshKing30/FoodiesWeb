@@ -33,7 +33,7 @@ function Home() {
       return canteen.name.toUpperCase() === value.toUpperCase();
     });
     if (data.length > 0) {
-      setIsSearched(!isSearched);
+      setIsSearched(true);
       setfilteredData({ data });
     } else {
       toast.error("No such canteen!");
@@ -52,7 +52,7 @@ function Home() {
           searchValueHandler(value);
         }}
       />
-      {console.log(filteredData, canteenData)}
+
       <div className=" text-center  absolute top-28 ">
         <CanteenList canteenData={isSearched ? filteredData : canteenData} />
       </div>
