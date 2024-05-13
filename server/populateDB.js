@@ -2,7 +2,7 @@
 const bcrypt = require("bcrypt");
 
 console.log(
-  'This script populates the database with dummy data. Specified database URL as argument - e.g.: node populateDB.js "mongodb+srv://<username>:<password>@<cluster>.mongodb.net/"'
+  'This script populates the database with dummy data. Specified database URL as argument - e.g.: node populateDB.js "mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<dbname>"'
 );
 
 // Get the database URL from the command line argument
