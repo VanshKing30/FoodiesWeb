@@ -13,17 +13,16 @@ const studentSchema = new Schema({
   },
   collegeName: {
     type: String,
-    required: true,
   },
-  accountType : {
-    type : String,
-    enum : ["User" , "Canteen"], 
-    required : true,
+  accountType: {
+    type: String,
+    enum: ["User", "Canteen"],
+    required: true,
   },
   password: {
     type: String,
     required: true,
-  },
+  }
 });
 
 const Student = mongoose.model('Student', studentSchema);

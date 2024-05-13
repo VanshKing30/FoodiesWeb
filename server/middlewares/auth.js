@@ -1,6 +1,6 @@
 const Canteen = require("../models/canteenLoginInfo");
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
+require("dotenv").config()
 
 //auth
 exports.auth = async (req, res, next) => {

@@ -52,8 +52,8 @@ exports.studentSignup = async (req , res)=>{
 
 exports.studentLogin = async (req , res)=>{
     try{
-        const {email , password } = req.body;
-
+        const { email, password, logintype } = req.body;
+        // console.log(req.body);
         if(!email || !password){
             return res.status(400).json({
                 success : false,
@@ -62,15 +62,31 @@ exports.studentLogin = async (req , res)=>{
         }
 
         
-
         let user = await User.findOne({email});
+        if(logintype === "Google" && !user){
+            // create a new user with google email and password
+            User.create({
+                name : email.split("@")[0],
+                email,
+                collegeName : "",
+                accountType : "User",
+                password:await bcrypt.hash(password,10),
+            });            
+        }
+        else if(user && logintype === "Google"){
+            return res.status(200).json({
+                success : true,
+                message : "User logged in succesfully"
+            });
+        }
+
+        user = await User.findOne({ email });
         if(!user){
             return res.status(401).json({
                 success : false,
                 message : "User is not registred"
             })
         }
-
         const payload = {
             email : user.email,
             id : user._id,
@@ -173,8 +189,9 @@ exports.canteenLogin = async (req , res)=>{
 
     
     try{
-        const {email , password } = req.body;
-
+        const {email , password, logintype } = req.body;
+        // console.log(logintype)
+        // console.log(req.body);
         if(!email || !password){
             return res.status(400).json({
                 success : false,
@@ -182,16 +199,34 @@ exports.canteenLogin = async (req , res)=>{
             });
         }
 
-        
-
         let canteen = await Canteen.findOne({email});
-        if(!canteen){
+        // console.log(canteen);
+        if (logintype === "Google" && canteen===null) {
+          // create a new user with google email and password
+          Canteen.create({
+            name: email.split("@")[0],
+            email,
+            collegeName: "",
+            accountType: "Canteen",
+            password: await bcrypt.hash(password, 10),
+          });
+        }
+        else if(canteen && logintype === "Google"){
+            return res.status(200).json({
+                success : true,
+                message : "Canteen logged in succesfully",
+                cantId : canteen._id
+            });
+        }
+        canteen = await Canteen.findOne({email});
+        // console.log(canteen);
+
+        if(canteen===null){
             return res.status(401).json({
                 success : false,
                 message : " Canteen is not registred"
             })
         }
-
         const payload = {
             email : canteen.email,
             id : canteen._id,

@@ -12,7 +12,6 @@ const canteenSchema = new Schema({
   },
   collegeName: {
     type: String,
-    required: true,
   },
   accountType : {
     type : String,

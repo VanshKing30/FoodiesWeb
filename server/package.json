@@ -19,6 +19,7 @@
     "faker": "^5.5.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.6.2",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "passport": "^0.7.0"
   }
 }

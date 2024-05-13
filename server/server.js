@@ -9,9 +9,8 @@ app.use(
       origin: "*",
     })
 );
-
+express.urlencoded({ extended: true });
 app.use(express.json());
-
 //mounting routes
 const studentRoutes = require("./routes/student"); 
 const canteenRoutes = require("./routes/canteen");
