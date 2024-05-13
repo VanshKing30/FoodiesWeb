@@ -109,7 +109,7 @@ function MenuPage() {
         <h1 className="text-4xl font-bold mb-8 text-white">Today's Menu </h1>
 
         
-        <div className="grid grid-cols-3 gap-4">
+        <div className="flex flex-col gap-4 p-5 md:flex-row">
           
           {breakfast && (
             <div className="bg-white p-6 rounded shadow-md text-gray-900">

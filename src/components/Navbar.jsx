@@ -34,13 +34,13 @@ const Navbar = () => {
             </div>
           </div>
           <div className="hidden md:block">
-            <NavItem to="/">
+            <Link to="/">
               <button
-                className="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded transition duration-300 ease-in-out transform hover:scale-105"
+                className="bg-green-400 hover:bg-green-600 hover:shadow-green text-white py-1 px-2 rounded w-full h-auto text-l relative z-0 rounded-lg transition-all duration-200 hover:scale-110"
               >
                 Log out
               </button>
-            </NavItem>
+            </Link>
           </div>
           <div className="-mr-2 flex md:hidden">
             <button
@@ -100,11 +100,16 @@ const NavItem = ({ to, children }) => {
 
 
   return (
+
     <motion.div
       variants={itemVariants}
       initial="initial"
       whileHover="hover"
       className="text-gray-300 px-3 py-2 rounded-md text-sm font-medium"
+    <Link
+      to={to}
+      className="w-full h-auto relative z-0 rounded-lg transition-all duration-200 hover:scale-125 relative text-l w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-gradient-to-r from-green-300 to-green-600 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center
+      "
     >
       <Link to={to}>{children}</Link>
     </motion.div>
