@@ -2,12 +2,13 @@
 const bcrypt = require("bcrypt");
 
 console.log(
-  'This script populates the database with dummy data. Specified database URL as argument - e.g.: node populatedb "mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<dbname>"'
+  'This script populates the database with dummy data. Specified database URL as argument - e.g.: node populateDB.js "mongodb+srv://<username>:<password>@<cluster>.mongodb.net/"'
 );
 
 // Get the database URL from the command line argument
 const userArgs = process.argv.slice(2);
-const databaseURL = process.env.DATABASE_URI;
+const databaseURL = userArgs[0];
+
 
 // Import the necessary Mongoose models
 const Canteen = require("./models/canteenLoginInfo");
