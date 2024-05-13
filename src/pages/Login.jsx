@@ -4,12 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import logo from "../assets/logo2.png"
+import googleButton from '../assets/btn_google_signin_dark_pressed_web.png'
 
 
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
-    accountType : "",
+    accountType: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -22,40 +23,49 @@ function Login() {
     }));
   }
 
+  async function auth() {
+    const response = await fetch('http://localhost:3000/request', { method: 'post' });
+
+    const data = await response.json();
+    console.log(data);
+    navigate(data.url);
+
+  }
+
 
   function submitHandler(event) {
-    
-    
+
+
     event.preventDefault();
 
 
 
-    if(formData.accountType === "User"){
+    if (formData.accountType === "User") {
 
       const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentLogin`;
 
-      axios.post(apiUrl , formData)
-      .then((response)=>{
-        toast.success("User Logged in ");
-        navigate("/home");
-      })
-      .catch((error)=>{
-        toast.error("Failed to login")
-      });
+      axios.post(apiUrl, formData)
+        .then((response) => {
+          toast.success("User Logged in ");
+          navigate("/home");
+        })
+        .catch((error) => {
+          toast.error("Failed to login")
+        });
     }
 
-    else{
+    else {
 
       const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
 
-      axios.post(apiUrl , formData)
-      .then((response)=>{
-        toast.success("User Logged in ");
-        navigate(`/section/${response.data.cantId}`);
-      })
-      .catch((error)=>{
-        toast.error("Failed to login")
-      });
+      axios.post(apiUrl, formData)
+        .then((response) => {
+          toast.success("User Logged in ");
+          navigate(`/section/${response.data.cantId}`);
+        })
+        .catch((error) => {
+          toast.error("Failed to login")
+        });
     }
   }
 
@@ -65,7 +75,7 @@ function Login() {
       <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 bg-no-repeat justify-around items-center hidden">
 
         <div>
-          <img src={logo} alt="logo" className="w-48 h-12 mb-2"/>
+          <img src={logo} alt="logo" className="w-48 h-12 mb-2" />
           <p className="text-white mt-1 ml-3">Connecting You to Your College Canteens</p>
         </div>
 
@@ -96,19 +106,19 @@ function Login() {
           </div>
 
           <div className="mb-4">
-              <select
-                required
-                name="accountType"
-                onChange={changeHandler}
-                value={formData.accountType}
-                className="mt-1 p-2 w-full border rounded-2xl"
-              >
-                <option value="" disabled selected hidden>Login as</option>
-                <option value="User">User</option>
-                <option value="Canteen">Canteen</option>
-              </select>
+            <select
+              required
+              name="accountType"
+              onChange={changeHandler}
+              value={formData.accountType}
+              className="mt-1 p-2 w-full border rounded-2xl"
+            >
+              <option value="" disabled selected hidden>Login as</option>
+              <option value="User">User</option>
+              <option value="Canteen">Canteen</option>
+            </select>
           </div>
-         
+
           <div className="relative mb-4">
             <input
               required
@@ -134,8 +144,16 @@ function Login() {
           <Link to="/signup">
             <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">Don't have an account? Sign Up</span>
           </Link>
-          
+
+          {/* <div className="flex justify-center items-center text-stone-500 mt-4 mb-4">
+            ----- OR -----
+          </div>
+
+          <button className="w-full" type="button" onClick={() => auth()}>
+            <img className="block m-auto" src={googleButton} alt='google sign in' />
+          </button> */}
         </form>
+
 
       </div>
 
