@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+var cookieParser = require("cookie-parser");
 const PORT = process.env.PORT || 4000;
 const cloudinaryConfig = require("./config/cloudinaryConfig");
 
@@ -9,7 +10,7 @@ app.use(
     origin: "*",
   })
 );
-
+app.use(cookieParser());
 app.use(express.json());
 app.use("*", cloudinaryConfig.cloudinaryConfig);
 
