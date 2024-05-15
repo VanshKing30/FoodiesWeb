@@ -7,6 +7,7 @@ import logo from "../assets/logo2.png"
 import Icon from 'react-icons-kit';
 import { arrows_circle_check } from 'react-icons-kit/linea/arrows_circle_check'
 import { arrows_exclamation } from 'react-icons-kit/linea/arrows_exclamation'
+import { useAuthContext } from "../context/AuthContext";
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ function Signup() {
   const [specialValidated, setSpecialValidated] = useState(false);
   const [lengthValidated, setLengthValidated] = useState(false);
 
-
+  const {setAuthUser} = useAuthContext();
   const navigate = useNavigate();
 
   function PasswordChecker(event) {
@@ -90,6 +91,8 @@ function Signup() {
         axios
           .post(apiUrl, formData)
           .then((response) => {
+            localStorage.setItem("auth_user", JSON.stringify(response.data));
+            setAuthUser(response.data)
             toast.success("Account Created succesfully");
             navigate("/home");
           })
@@ -103,6 +106,7 @@ function Signup() {
         axios
           .post(apiUrl, formData)
           .then((response) => {
+            localStorage.setItem("auth_user", JSON.stringify(response.data));
             toast.success("Account Created succesfully");
             navigate(`/section/${response.data.cantId}`);
           })

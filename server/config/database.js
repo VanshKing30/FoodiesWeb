@@ -4,7 +4,7 @@ require("dotenv").config();
 // process.env.DATABASE_URL
 
 const dbConnect = () =>{
-    mongoose.connect(process.env.DATABASE_URL,{
+    mongoose.connect("mongodb://127.0.0.1:27017",{
         useNewUrlParser : true,
         useUnifiedTopology : true,
     })

@@ -3,16 +3,17 @@ const app = express();
 const cors = require("cors");
 var cookieParser = require("cookie-parser");
 const PORT = process.env.PORT || 4000;
-const cloudinaryConfig = require("./config/cloudinaryConfig");
+// const cloudinaryConfig = require("./config/cloudinaryConfig");
 
 app.use(
   cors({
     origin: "*",
   })
 );
+
 app.use(cookieParser());
 app.use(express.json());
-app.use("*", cloudinaryConfig.cloudinaryConfig);
+// app.use("*", cloudinaryConfig.cloudinaryConfig);
 
 //mounting routes
 const studentRoutes = require("./routes/student");
@@ -29,6 +30,7 @@ app.listen(PORT, () => {
 
 //getting connected to databse
 const dbConnect = require("./config/database");
+const { studentAuth } = require("./middlewares/auth");
 dbConnect();
 
 //default route
