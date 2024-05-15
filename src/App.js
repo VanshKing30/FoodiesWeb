@@ -31,7 +31,7 @@ function App() {
                 <Route path='/home' element={authUser?<Layout><Home /></Layout>:<Navigate to="/"/>} />
                 <Route path='/login' element={authUser?<Layout><Home/></Layout>:<Login />} />
                 <Route path='/signup' element={authUser?<Layout><Home/></Layout>:<Signup />} />
-                <Route path='/about' element={<Layout><About /></Layout>} />
+                <Route path='/about' element={authUser?<Layout><About /></Layout>:<Navigate to="/"/>} />
                 <Route path='/section/:_id' element={authUser?.cantId ?<Layout><SectionPage /></Layout>:<Navigate to="/"/>} />
                 <Route path="/menu/:_id" element={authUser ?<Layout><MenuPage /></Layout>:<Navigate to="/"/>} />
                 <Route path='/news' element={authUser?<Layout><News /></Layout>:<Navigate to="/"/>} />
