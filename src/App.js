@@ -9,6 +9,8 @@ import MenuPage from './pages/MenuPage';
 import About from './pages/About';
 import SectionPage from './pages/SectionPage';
 import News from './pages/News';
+import NotFound from './pages/NotFound';
+import Loader from './components/Loader/Loader';
 
 const Layout = ({ children }) => {
   return (
@@ -30,6 +32,8 @@ function App() {
         <Route path='/section/:_id' element={<Layout><SectionPage /></Layout>} />
         <Route path="/menu/:_id" element={<Layout><MenuPage /></Layout>} />
         <Route path='/news' element={<Layout><News/></Layout>}/>
+        <Route path='/loader' element={<Layout><Loader/></Layout>}/>
+        <Route path="*" element={<Layout><NotFound /></Layout>} />
       </Routes>
     </div>
   );
