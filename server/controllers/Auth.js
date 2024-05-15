@@ -97,9 +97,6 @@ exports.studentLogin = async (req, res) => {
                 message: "User logged in succesfully",
             });
         } else {
-            // console.log("NIGGA")
-            console.log("USER PWD",user.password)
-            console.log("FETCHED PWD", bcrypt.hash(password, "abcd"))
             return res.status(403).json({
                 success: false,
                 message: "Pasword Incorrect",
