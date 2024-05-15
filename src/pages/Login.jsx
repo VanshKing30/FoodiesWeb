@@ -35,7 +35,7 @@ function Login() {
 
         if (formData.accountType === "User") {
 
-            const apiUrl = `${process.env.REACT_APP_BASE_URL}studentLogin`;
+            const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentLogin`;
 
             axios.post(apiUrl, formData)
                 .then((response) => {
