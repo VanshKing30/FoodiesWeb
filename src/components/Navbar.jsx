@@ -17,7 +17,7 @@ const Navbar = () => {
              className="left-0 top-0 w-full h-1 bg-blue-500 fixed z-50"
              style={{ scaleX: scrollYProgress }}
           />
- <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">
@@ -26,7 +26,7 @@ const Navbar = () => {
               </Link>
             </div>
             <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
+              <div className="ml-16 flex gap-6 items-baseline space-x-4">
                 <NavItem to="/home">Home</NavItem>
                 <NavItem to="/about">About</NavItem>
                 <NavItem to="/news">News</NavItem>
@@ -56,16 +56,16 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-        </div>
+      </div>
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
-            className="md:hidden absolute w-full flex flex-col items-center justify-center"
+            className="md:hidden absolute left-0 w-full flex flex-col items-center justify-center"
           >
-            <div className="w-[100%] bg-[#282c34] px-[20%] pt-2 pb-3 space-y-1 sm:px-3">
+            <div className="w-[100%] bg-[#282c34] px-[20%] pt-2 pb-3 space-y-1 mt-3">
               <MobileNavItem to="/home">Home</MobileNavItem>
               <MobileNavItem to="/about">About us</MobileNavItem>
               <MobileNavItem to="/news">News</MobileNavItem>
@@ -87,20 +87,21 @@ const NavItem = ({ icon, to, children }) => {
   return (
     <Link
       to={to}
-      className="w-full h-auto relative z-0 rounded-lg transition-all duration-200 hover:scale-125 relative text-l w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-gradient-to-r from-green-300 to-green-600 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center
+      className="w-full h-auto relative z-0 rounded-lg transition-all duration-200 hover:scale-125 text-l block after:block after:content-[''] after:absolute after:h-[3px] after:bg-gradient-to-r from-green-300 to-green-600 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center
       "
     >
       {icon}
-      <span className="ml-2">{children}</span>
+      <span>{children}</span>
     </Link>
   );
 };
 
 const MobileNavItem = ({ to, children }) => {
+  let classname = "z-[2] text-gray-300 text-center hover:text-white block px-3 py-2 rounded-md text-base font-medium ";
   return (
     <Link
       to={to}
-      className="z-[2] text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+      className={ children.type == "button" ? classname : classname + "hover:bg-gray-700" }
     >
       {children}
     </Link>
