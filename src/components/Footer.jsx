@@ -12,23 +12,8 @@ export default function Footer(){
           <li className="mr-4 hover:underline md:mr-6 hover:text-orange-600">
           <Link to="/about">About</Link>
           </li>
-          <li>
-              <a href="#" className="mr-4 hover:underline md:mr-6 hover:text-orange-600">Premium</a>
-          </li>
-          <li>
-              <a href="#" className="mr-4 hover:underline md:mr-6 hover:text-orange-600">Campaigns</a>
-          </li>
-          <li>
-              <a href="#" className="mr-4 hover:underline md:mr-6 hover:text-orange-600">Blog</a>
-          </li>
           <li className="mr-4 hover:underline md:mr-6 hover:text-orange-600">
               <Link to="/news">News</Link>
-          </li>
-          <li>
-              <a href="#" className="mr-4 hover:underline md:mr-6 hover:text-orange-600">FAQs</a>
-          </li>
-          <li>
-              <a href="#" className="mr-4 hover:underline md:mr-6 hover:text-orange-600">Contact</a>
           </li>
       </ul>
       <span className="text-sm text-white sm:text-center ">© 2024-2025 <a href="#" className="hover:underline">Foodies™</a>. All Rights Reserved.</span>
