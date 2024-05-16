@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import NewsCard from "../components/NewsCard";
 import Loader from "../components/Loader/Loader";
+import Footer from "../components/Footer";
 
 
 
@@ -48,10 +49,11 @@ function News() {
                   ))}
                 </div>
               </main>
+              <Footer />
             </div>
           )
       }
-
+      
     </>
   );
 }

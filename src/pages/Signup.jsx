@@ -98,6 +98,7 @@ function Signup() {
           });
       } else {
         const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
+        // const apiUrl = `http://localhost:4000/api/v1/canteenSignup`;
 
 
         axios
