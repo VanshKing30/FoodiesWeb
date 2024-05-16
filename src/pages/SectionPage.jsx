@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Modal from '../components/Modal';
 import Navbar from '../components/Navbar';
 import Loader from '../components/Loader/Loader';
+import Footer from '../components/Footer';
 
 const SectionPage = () => {
   const { _id } = useParams();
@@ -91,9 +92,7 @@ const SectionPage = () => {
           </>
         )
       }
-
-
-
+      <Footer />
     </div>
   );
 };
