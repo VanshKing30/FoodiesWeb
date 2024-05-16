@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Modal from '../components/Modal';
 import Navbar from '../components/Navbar';
 import Loader from '../components/Loader/Loader';
+import Footer from '../components/Footer';
 
 const SectionPage = () => {
   const { _id } = useParams();
@@ -76,7 +77,7 @@ const SectionPage = () => {
           <Loader />
         ) : (
           <>
-            <div className="flex space-x-4 justify-center">
+            <div className="flex space-x-4 justify-center p-5">
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleSectionClick('Breakfast')}>
                 Breakfast
               </button>
@@ -93,7 +94,7 @@ const SectionPage = () => {
       }
 
 
-
+      <Footer />
     </div>
   );
 };
