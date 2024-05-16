@@ -63,7 +63,7 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
-            className="md:hidden absolute w-full flex flex-col items-center justify-center"
+            className="md:hidden absolute left-0 w-full flex flex-col items-center justify-center"
           >
             <div className="w-[100%] bg-[#282c34] px-[20%] pt-2 pb-3 space-y-1 mt-3">
               <MobileNavItem to="/home">Home</MobileNavItem>
