@@ -28,6 +28,7 @@ const Navbar = () => {
             <div className="hidden md:block">
               <div className="ml-16 flex gap-6 items-baseline space-x-4">
                 <NavItem to="/home">Home</NavItem>
+                <NavItem to="/canteen">Canteen</NavItem>
                 <NavItem to="/about">About</NavItem>
                 <NavItem to="/news">News</NavItem>
               </div>
@@ -67,6 +68,7 @@ const Navbar = () => {
           >
             <div className="w-[100%] bg-[#282c34] px-[20%] pt-2 pb-3 space-y-1 mt-3">
               <MobileNavItem to="/home">Home</MobileNavItem>
+              <MobileNavItem to="/canteen">Canteen</MobileNavItem>
               <MobileNavItem to="/about">About us</MobileNavItem>
               <MobileNavItem to="/news">News</MobileNavItem>
               <MobileNavItem to="/">

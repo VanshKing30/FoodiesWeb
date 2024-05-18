@@ -3,6 +3,7 @@ import React from 'react';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
+import Canteen from './pages/Canteen';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import MenuPage from './pages/MenuPage';
@@ -26,6 +27,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/home' element={<Layout><Home /></Layout>} />
+        <Route path='/canteen' element={<Layout><Canteen /></Layout>} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/about' element={<Layout><About /></Layout>} />
