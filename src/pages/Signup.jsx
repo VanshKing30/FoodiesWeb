@@ -211,9 +211,9 @@ function Signup() {
               onClick={() => setShowPassword((prev) => !prev)}
             >
               {showPassword ? (
-                <AiOutlineEyeInvisible size={20} />
-              ) : (
                 <AiOutlineEye size={20} />
+              ) : (
+                <AiOutlineEyeInvisible size={20} />
               )}
             </span>
           </div>
