@@ -123,7 +123,7 @@ function Login() {
               className="absolute right-3 top-3 cursor-pointer"
               onClick={() => setShowPassword((prev) => !prev)}
             >
-              {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+              {showPassword ? <AiOutlineEye size={20} /> : <AiOutlineEyeInvisible size={20} />}
             </span>
           </div>
 
