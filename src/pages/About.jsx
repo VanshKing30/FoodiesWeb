@@ -21,7 +21,7 @@ const About = () => {
         <Loader/>
       ):
       (
-        <div className="text-white min-h-screen from-blue-950 via-blue-950 to-gray-900 bg-no-repeat w-[100%] flex flex-col justify-center mx-auto">
+        <div className="text-white min-h-screen from-blue-950 via-blue-950 to-gray-900 bg-no-repeat w-full overflow-hidden flex flex-col justify-center mx-auto">
         <Navbar />
   
         <div className="container mx-auto mt-[7rem] lg:p-2 w-full">
@@ -89,8 +89,7 @@ const About = () => {
                 data-aos="fade-up"
                 className="text-3xl font-bold text-green-500 mb-2 md:mb-4 text-center"
               >
-                {" "}
-                Our Mission{" "}
+                Our Mission
               </h2>
               <div
                 data-aos="fade-up"
