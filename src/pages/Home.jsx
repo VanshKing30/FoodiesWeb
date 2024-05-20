@@ -23,7 +23,7 @@ const Home = () => {
             <div
               className="absolute inset-0 bg-cover bg-center"
               style={{
-                backgroundImage: `url('https://downpic.cc/photos/istock/Downpic.cc-492150995.jpg')`,
+                backgroundImage: `url('/Canteen.jpg')`,
                 filter: "brightness(0.6)",
               }}
             ></div>
