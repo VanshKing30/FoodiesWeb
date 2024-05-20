@@ -86,7 +86,7 @@ function Signup() {
       if (formData.accountType === "User") {
         const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
         // const apiUrl = `http://localhost:4000/api/v1/studentSignup`;
-
+          console.log(process.env.REACT_APP_BASE_URL + " hello")
         axios
           .post(apiUrl, formData)
           .then((response) => {
