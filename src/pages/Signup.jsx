@@ -84,8 +84,8 @@ function Signup() {
 
     if (lowerValidated && upperValidated && numberValidated && specialValidated && lengthValidated) {
       if (formData.accountType === "User") {
-        const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
-        // const apiUrl = `http://localhost:4000/api/v1/studentSignup`;
+        // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
+        const apiUrl = `http://localhost:4000/api/v1/studentSignup`;
           
         axios
           .post(apiUrl, formData)

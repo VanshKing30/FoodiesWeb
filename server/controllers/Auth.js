@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/studentLoginInfo");
 const jwt = require("jsonwebtoken");
 const Canteen = require("../models/canteenLoginInfo");
+const Session = require("../models/session");
 
 require("dotenv").config();
 
@@ -37,6 +38,8 @@ exports.studentSignup = async (req, res) => {
       accountType,
       password: hashedPassword,
     });
+
+    await user.save();
 
     return res.status(200).json({
       success: true,
@@ -81,22 +84,35 @@ exports.studentLogin = async (req, res) => {
       let token = jwt.sign(payload, process.env.JWT_SECRET, {
         expiresIn: "2h",
       });
+
+      // creating a session
+      const session = new Session({ userId: user._id, token });
+      await session.save();
+
       user = user.toObject();
       user.token = token;
       user.password = undefined;
       console.log(user);
 
-      const options = {
-        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-        httpOnly: true,
-      };
+      // const options = {
+      //   expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+      //   httpOnly: true,
+      // };
 
-      res.cookie("token", token, options).status(200).json({
-        success: true,
-        token,
-        user,
-        message: "User logged in succesfully",
+      // res.cookie("token", token, options).status(200).json({
+      //   success: true,
+      //   token,
+      //   user,
+      //   message: "User logged in succesfully",
+      // });
+
+       // Setting cookie
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        maxAge: 3600000,
       });
+      res.json({ success: true, message: "Logged in successfully", token, user });
     } else {
       return res.status(403).json({
         success: false,
@@ -127,14 +143,24 @@ exports.studentLogout = async (req, res) => {
       }
     );
 
-    const options = {
-      httpOnly: true,
-    };
+    // const options = {
+    //   httpOnly: true,
+    // };
 
-    return res.status(200).clearCookie("token", options).json({
-      success: true,
-      message: "User Logged off successfully.",
-    });
+    // return res.status(200).clearCookie("token", options).json({
+    //   success: true,
+    //   message: "User Logged off successfully.",
+    // });
+
+    const token =
+      req.cookies?.token ||
+      req?.header("Authorization")?.replace("Bearer ", "");
+
+    if (token) {
+      await Session.findOneAndDelete({ token });
+      res.clearCookie("token");
+    }
+    res.status(200).json({ success: true, message: "Logged out successfully" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -251,18 +277,31 @@ exports.canteenLogin = async (req, res) => {
       canteen.password = undefined;
       console.log(canteen);
 
-      const options = {
-        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-        httpOnly: true,
-      };
+      // const options = {
+      //   expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+      //   httpOnly: true,
+      // };
 
-      res.cookie("token", token, options).status(200).json({
-        success: true,
-        token,
-        canteen,
-        message: "Canteen logged in succesfully",
-        cantId: canteen._id,
+      // res.cookie("token", token, options).status(200).json({
+      //   success: true,
+      //   token,
+      //   canteen,
+      //   message: "Canteen logged in succesfully",
+      //   cantId: canteen._id,
+      // });
+
+      // Create session
+      const session = new Session({ userId: canteen._id, token });
+      await session.save();
+
+      // Set cookie
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        maxAge: 3600000,
       });
+      res.json({ success: true, message: "Logged in successfully", token, canteen, cantId: canteen._id });
+
     } else {
       return res.status(403).json({
         success: false,
@@ -293,14 +332,24 @@ exports.canteenLogout = async (req, res) => {
       }
     );
 
-    const options = {
-      httpOnly: true,
-    };
+    // const options = {
+    //   httpOnly: true,
+    // };
 
-    return res.status(200).clearCookie("token", options).json({
-      success: true,
-      message: "Canteen User Logged off successfully.",
-    });
+    // return res.status(200).clearCookie("token", options).json({
+    //   success: true,
+    //   message: "Canteen User Logged off successfully.",
+    // });
+
+    const token =
+      req.cookies?.token ||
+      req?.header("Authorization")?.replace("Bearer ", "");
+
+    if (token) {
+      await Session.findOneAndDelete({ token });
+      res.clearCookie("token");
+    }
+    res.status(200).json({ success: true, message: "Logged out successfully" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
