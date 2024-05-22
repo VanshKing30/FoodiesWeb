@@ -69,7 +69,7 @@ const SectionPage = () => {
   };
 
   return (
-    <div className=" text-center text-gray-900 min-h-screen">
+    <div className=" text-center text-gray-900 min-h-screen pt-[8rem]">
       <Navbar />
       <h1 className="text-4xl font-bold mb-8 text-white">Select Today's Menu</h1>
       {
