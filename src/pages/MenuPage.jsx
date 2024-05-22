@@ -196,7 +196,7 @@ function MenuPage() {
           ></textarea>
           <button
             onClick={handleFeedbackSubmit}
-            className="bg-green-500 hover-bg-green-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-all duration-200 hover:scale-110"
           >
             Submit Feedback
           </button>
