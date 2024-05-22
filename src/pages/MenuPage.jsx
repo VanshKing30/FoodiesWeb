@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import Navbar from "../components/Navbar";
 import Loader from "../components/Loader/Loader";
+import Footer from "../components/Footer";
 
 function MenuPage() {
   const { _id } = useParams();
@@ -205,6 +206,7 @@ function MenuPage() {
           )
         }
       </div>
+      <Footer />
     </div>
   );
 }

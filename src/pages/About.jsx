@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import AOS from "aos";
 import Loader from "../components/Loader/Loader";
 import "aos/dist/aos.css";
+import Footer from "../components/Footer"
 
 const About = () => {
   const [loading,setLoading] = useState(false);
@@ -196,6 +197,7 @@ const About = () => {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
       )
     }

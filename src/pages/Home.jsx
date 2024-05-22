@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import Navbar from "../components/Navbar";
 import CanteenList from "../components/CanteenList";
 import Loader from "../components/Loader/Loader";
+import Footer from "../components/Footer";
 
 function Home() {
 
@@ -54,6 +55,7 @@ function Home() {
         <div className="text-center">
           <CanteenList canteenData = {canteenData}/>
         </div>
+        <Footer />
       </div>
       )
     }
