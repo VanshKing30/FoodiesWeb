@@ -126,10 +126,10 @@ function MenuPage() {
             <Loader/>
           ): (
             <>
-             <div className="flex flex-col gap-4 p-5 md:flex-row">
+             <div className="flex flex-col gap-4 p-5 md:flex-row justify-center">
           
           {breakfast && (
-            <div className="bg-white p-6 rounded shadow-md text-gray-900">
+            <div className="bg-blue-500 p-8 rounded shadow-md text-gray-900 cursor-pointer hover:bg-blue-700">
               <h2 className="text-2xl font-bold mb-4">Breakfast</h2>
               <ul>
                 {breakfast.data.map((dish) => (
@@ -148,7 +148,7 @@ function MenuPage() {
 
           
           {lunch && (
-            <div className="bg-white p-6 rounded shadow-md text-gray-900">
+            <div className="bg-green-500 p-8 rounded shadow-md text-gray-900 cursor-pointer hover:bg-green-700">
               <h2 className="text-2xl font-bold mb-4">Lunch</h2>
               <ul>
                 {lunch.data.map((dish) => (
@@ -167,7 +167,7 @@ function MenuPage() {
 
           
           {dinner && (
-            <div className="bg-white p-6 rounded shadow-md text-gray-900">
+            <div className="bg-yellow-500 p-8 rounded shadow-md text-gray-900 cursor-pointer hover:bg-yellow-700">
               <h2 className="text-2xl font-bold mb-4">Dinner</h2>
               <ul>
                 {dinner.data.map((dish) => (

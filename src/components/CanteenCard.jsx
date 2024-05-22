@@ -13,7 +13,7 @@ const CanteenCard = ({ canteen  }) => {
   };
 
   return (
-    <div className="max-w-sm bg-white border border-white rounded-lg shadow dark:bg-white dark:border-white my-4 mx-2 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-green-500/50 ...">
+    <div className="max-w-(18rem) bg-white border border-white rounded-lg shadow dark:bg-white dark:border-white my-4 mx-2 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-green-500/50 ...">
     <div className="flex justify-center">
       <a href="#">
         <img
@@ -25,7 +25,7 @@ const CanteenCard = ({ canteen  }) => {
     </div>
     <div className="p-5">
       <a href="#">
-        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-900 hover:text-green-500 transition duration-300 ease-in-out">
+        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-900 hover:text-green-500 transition duration-300 ease-in-out overflow-x-hidden">
           {canteen.name}
         </h5>
       </a>
