@@ -3,14 +3,13 @@ import React from 'react';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
 import MenuPage from './pages/MenuPage';
 import About from './pages/About';
 import SectionPage from './pages/SectionPage';
 import News from './pages/News';
 import NotFound from './pages/NotFound';
 import Loader from './components/Loader/Loader';
+import Login from './pages/Login&SignUpform'
 
 const Layout = ({ children }) => {
   return (
@@ -27,7 +26,7 @@ function App() {
         <Route path='/' element={<Login />} />
         <Route path='/home' element={<Layout><Home /></Layout>} />
         <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<Signup />} />
+        <Route path='/signup' element={<Login />} />
         <Route path='/about' element={<Layout><About /></Layout>} />
         <Route path='/section/:_id' element={<Layout><SectionPage /></Layout>} />
         <Route path="/menu/:_id" element={<Layout><MenuPage /></Layout>} />
