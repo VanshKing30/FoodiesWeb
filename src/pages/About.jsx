@@ -43,12 +43,12 @@ const About = () => {
               </div>
               <div
                 data-aos="fade-left"
-                className="md:w-1/2 order-1 md:order-2 md:px-8 flex justify-center"
+                className="md:w-1/2 order-1 md:order-2 md:px-2 flex justify-center"
               >
                 <img
                   src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=2053&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Food"
-                  className="rounded-lg shadow-lg mb-8 h-64 w-[100%] sm:w-[100%] md:h-96 md:w-[80%]"
+                  className="object-cover rounded-lg shadow-lg mb-8 h-64 w-[100%] sm:w-[100%] md:h-96 md:w-[80%]"
                 />
               </div>
             </div>
@@ -56,12 +56,12 @@ const About = () => {
             <div className="flex flex-col md:flex-row justify-between items-center md:space-x-8 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 py-[10%]">
               <div
                 data-aos="fade-right"
-                className="md:w-1/2 order-1 md:order-1 md:px-20 mt-[5rem] flex justify-center"
+                className="md:w-1/2 order-1 md:order-1 md:px-10 md:pl-16 mt-[5rem] flex justify-center"
               >
                 <img
                   src="https://images.unsplash.com/photo-1455849318743-b2233052fcff?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Food"
-                  className="rounded-lg shadow-lg mb-8 h-64 w-[100%] md:h-96 md:w-[100%]"
+                  className="object-cover rounded-lg shadow-lg mb-8 h-64 w-[100%] md:h-96 md:w-[100%]"
                 />
               </div>
               <div
@@ -100,7 +100,7 @@ const About = () => {
                   <img
                     src="https://plus.unsplash.com/premium_photo-1661476060301-265248d32b94?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZGluaW5nJTIwY29sbGVnZSUyMGlubm92YXRpb258ZW58MHwwfDB8fHww"
                     alt="Food"
-                    className="rounded-lg shadow-lg mb-8 p-[1rem] h-64 w-[100%] mx-auto"
+                    className="object-cover rounded-lg shadow-lg mb-8 h-64 w-[100%] mx-auto"
                   />
                   <span className="p-[2rem] sm:p-[1rem]">
                     Dedicated to simplifying campus dining, we ensure effortless
@@ -114,7 +114,7 @@ const About = () => {
                   <img
                     src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt="Food"
-                    className="rounded-lg shadow-lg mb-8 p-[1rem] h-64 mx-auto w-[100%]"
+                    className="object-cover rounded-lg shadow-lg mb-8 h-64 mx-auto w-[100%]"
                   />
                   <span className="p-[2rem] sm:p-[1rem]">
                     We're dedicated to streamlining your dining experience,
@@ -128,7 +128,7 @@ const About = () => {
                   <img
                     src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt="Food"
-                    className="rounded-lg shadow-lg mb-8 p-[1rem] h-64 w-[100%] mx-auto"
+                    className="object-cover rounded-lg shadow-lg mb-8 h-64 w-[100%] mx-auto"
                   />
                   <span className="p-[2rem] sm:p-[1rem]">
                     Embark on a culinary adventure on campus, exploring diverse
@@ -149,7 +149,7 @@ const About = () => {
                 <img
                   src="https://images.unsplash.com/photo-1485182708500-e8f1f318ba72?q=80&w=1820&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Food"
-                  className="rounded-lg shadow-lg mb-8 h-64 w-[100%] md:h-96"
+                  className="object-cover rounded-lg shadow-lg mb-8 h-64 w-[100%] md:h-96"
                 />
               </div>
               <div
@@ -191,7 +191,7 @@ const About = () => {
                 <img
                   src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Food"
-                  className="rounded-lg shadow-lg mb-8 h-64 w-[100%] md:h-96"
+                  className="object-cover rounded-lg shadow-lg mb-8 h-64 w-[100%] md:h-96"
                 />
               </div>
             </div>
