@@ -4,6 +4,8 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import Navbar from "../components/Navbar";
+import Loader from "../components/Loader/Loader";
+import Footer from "../components/Footer";
 
 function MenuPage() {
   const { _id } = useParams();
@@ -12,9 +14,11 @@ function MenuPage() {
   const [dinner, setDinner] = useState();
   const [selectedDish, setSelectedDish] = useState(null);
   const [feedback, setFeedback] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const getBreakfast = async () => {
     try {
+      setLoading(true);
       const getBreakfast = await fetch(
         `${process.env.REACT_APP_BASE_URL}/${_id}/breakfast`,
         {
@@ -28,12 +32,15 @@ function MenuPage() {
       setBreakfast(res);
     } catch (error) {
       console.error(error);
+    }finally {
+      setLoading(false); // Set loading to false after fetching data
     }
   };
 
 
   const getLunch = async () => {
     try {
+      setLoading(true);
       const getLunch = await fetch(
         `${process.env.REACT_APP_BASE_URL}/${_id}/lunch`,
         {
@@ -48,10 +55,14 @@ function MenuPage() {
     } catch (error) {
       console.error(error);
     }
+    finally {
+      setLoading(false); // Set loading to false after fetching data
+    }
   };
 
   const getDinner = async () => {
     try {
+      setLoading(true);
       const getDinner = await fetch(
         `${process.env.REACT_APP_BASE_URL}/${_id}/dinner`,
         {
@@ -65,6 +76,9 @@ function MenuPage() {
       setDinner(res);
     } catch (error) {
       console.error(error);
+    }
+    finally {
+      setLoading(false); // Set loading to false after fetching data
     }
   };
 
@@ -107,12 +121,15 @@ function MenuPage() {
       <Navbar />
       <div className="container mx-auto p-4">
         <h1 className="text-4xl font-bold mb-8 text-white">Today's Menu </h1>
-
-        
-        <div className="flex flex-col gap-4 p-5 md:flex-row">
+        {
+          loading ? (
+            <Loader/>
+          ): (
+            <>
+             <div className="flex flex-col gap-4 p-5 md:flex-row justify-center">
           
           {breakfast && (
-            <div className="bg-white p-6 rounded shadow-md text-gray-900">
+            <div className="bg-blue-500 p-8 rounded shadow-md text-gray-900 cursor-pointer hover:bg-blue-700">
               <h2 className="text-2xl font-bold mb-4">Breakfast</h2>
               <ul>
                 {breakfast.data.map((dish) => (
@@ -131,7 +148,7 @@ function MenuPage() {
 
           
           {lunch && (
-            <div className="bg-white p-6 rounded shadow-md text-gray-900">
+            <div className="bg-green-500 p-8 rounded shadow-md text-gray-900 cursor-pointer hover:bg-green-700">
               <h2 className="text-2xl font-bold mb-4">Lunch</h2>
               <ul>
                 {lunch.data.map((dish) => (
@@ -150,7 +167,7 @@ function MenuPage() {
 
           
           {dinner && (
-            <div className="bg-white p-6 rounded shadow-md text-gray-900">
+            <div className="bg-yellow-500 p-8 rounded shadow-md text-gray-900 cursor-pointer hover:bg-yellow-700">
               <h2 className="text-2xl font-bold mb-4">Dinner</h2>
               <ul>
                 {dinner.data.map((dish) => (
@@ -184,7 +201,12 @@ function MenuPage() {
             Submit Feedback
           </button>
         </div>
+
+            </>
+          )
+        }
       </div>
+      <Footer />
     </div>
   );
 }

@@ -80,10 +80,13 @@ function Signup() {
 
   function submitHandler(event) {
     event.preventDefault();
+    console.log("ENV FILE",process.env.REACT_APP_BASE_URL);
+
     if (lowerValidated && upperValidated && numberValidated && specialValidated && lengthValidated) {
       if (formData.accountType === "User") {
-        const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
-
+        // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
+        const apiUrl = `http://localhost:4000/api/v1/studentSignup`;
+          
         axios
           .post(apiUrl, formData)
           .then((response) => {
@@ -96,6 +99,7 @@ function Signup() {
       } else {
         const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
 
+
         axios
           .post(apiUrl, formData)
           .then((response) => {
@@ -103,6 +107,7 @@ function Signup() {
             navigate(`/section/${response.data.cantId}`);
           })
           .catch((error) => {
+            console.log("Errorrr:->",error);
             toast.error("Failed To create account");
           });
       }
@@ -206,9 +211,9 @@ function Signup() {
               onClick={() => setShowPassword((prev) => !prev)}
             >
               {showPassword ? (
-                <AiOutlineEyeInvisible size={20} />
-              ) : (
                 <AiOutlineEye size={20} />
+              ) : (
+                <AiOutlineEyeInvisible size={20} />
               )}
             </span>
           </div>
