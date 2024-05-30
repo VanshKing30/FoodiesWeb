@@ -7,7 +7,7 @@ console.log(
 
 // Get the database URL from the command line argument
 const userArgs = process.argv.slice(2);
-const databaseURL = process.env.DATABASE_URL;
+const databaseURL = process.env.DATABASE_URI;
 
 // Import the necessary Mongoose models
 const Canteen = require("./models/canteenLoginInfo");
