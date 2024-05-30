@@ -29,7 +29,8 @@ function Login() {
 
       axios.post(apiUrl, formData)
         .then((response) => {
-          const token = response.data.token; // Assuming the token is in response.data.token
+          // Setting auth token in local storage for getting user details
+          const token = response.data.token;
           localStorage.setItem("authToken", token);
           toast.success("User Logged in");
           navigate("/home");
@@ -42,7 +43,7 @@ function Login() {
 
       axios.post(apiUrl, formData)
         .then((response) => {
-          const token = response.data.token; // Assuming the token is in response.data.token
+          const token = response.data.token;
           localStorage.setItem("authToken", token);
           toast.success("User Logged in");
           navigate(`/section/${response.data.cantId}`);

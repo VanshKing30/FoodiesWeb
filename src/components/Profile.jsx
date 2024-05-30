@@ -12,6 +12,7 @@ const Profile = () => {
     useEffect(() => {
         const token = localStorage.getItem('authToken');
         if (token) {
+            // to decode the token in localstorage and use the id to fetch the user details
             const decodedToken = jwtDecode(token);
             const userId = decodedToken.id;
 
@@ -49,6 +50,7 @@ const Profile = () => {
     };
 
     const handleSaveClick = async () => {
+        // to update the user details in db
         const token = localStorage.getItem('authToken');
         if (token) {
             const decodedToken = jwtDecode(token);
