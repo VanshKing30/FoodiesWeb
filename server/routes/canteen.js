@@ -3,9 +3,14 @@ const router = express.Router();
 
 // Import canteen controller functions
 const canteenController = require('../controllers/canteenController');
+const authController = require('../controllers/Auth')
 const { auth, isCanteen } = require('../middlewares/auth');
 
 router.get('/getcanteen' , canteenController.getAllCanteen);
+
+//user details -CRUD
+router.get("/user-details/:userId", authController.getUserDetails);
+router.put('/edit-user/:userId', authController.editUserDetails);
 
 //yeh mere routes
 router.get('/:id/breakfast' , canteenController.getBreakfast);

@@ -10,6 +10,7 @@ import About from './pages/About';
 import SectionPage from './pages/SectionPage';
 import News from './pages/News';
 import NotFound from './pages/NotFound';
+import Profile from './components/Profile';
 
 const Layout = ({ children }) => {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path='/' element={<Login />} />
         <Route path='/home' element={<Layout><Home /></Layout>} />
         <Route path='/login' element={<Login />} />
+        <Route path='/profile' element={<Layout><Profile /></Layout>} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/about' element={<Layout><About /></Layout>} />
         <Route path='/section/:_id' element={<Layout><SectionPage /></Layout>} />
