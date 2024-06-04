@@ -22,7 +22,7 @@ function Signup() {
   const [numberValidated, setNumberValidated] = useState(false);
   const [specialValidated, setSpecialValidated] = useState(false);
   const [lengthValidated, setLengthValidated] = useState(false);
-
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -78,38 +78,43 @@ function Signup() {
     }));
   }
 
-  function submitHandler(event) {
+  async function submitHandler(event) {
     event.preventDefault();
     console.log("ENV FILE",process.env.REACT_APP_BASE_URL);
 
     if (lowerValidated && upperValidated && numberValidated && specialValidated && lengthValidated) {
       if (formData.accountType === "User") {
-        // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
-        const apiUrl = `http://localhost:4000/api/v1/studentSignup`;
-          
-        axios
-          .post(apiUrl, formData)
-          .then((response) => {
-            toast.success("Account Created succesfully");
-            navigate("/home");
-          })
-          .catch((error) => {
-            toast.error("Failed To create account");
-          });
+         // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
+          const apiUrl = `http://localhost:8000/api/v1/studentSignup`;
+         try {
+          setLoading(true);
+        
+          const response = await axios.post(apiUrl, formData);
+        
+          toast.success("Account Created Successfully!"); 
+          navigate("/home");
+        } catch (error) {
+          toast.error("Failed To Create Account. Please try again."); 
+          console.error(error); 
+        } finally {
+          setLoading(false);
+        }
       } else {
-        const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
-
-
-        axios
-          .post(apiUrl, formData)
-          .then((response) => {
-            toast.success("Account Created succesfully");
-            navigate(`/section/${response.data.cantId}`);
-          })
-          .catch((error) => {
-            console.log("Errorrr:->",error);
-            toast.error("Failed To create account");
-          });
+        const apiUrl = `http://localhost:8000/api/v1/canteenSignup`
+       // const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
+        try {
+          setLoading(true);
+        
+          const response = await axios.post(apiUrl, formData);
+        
+          toast.success("Account Created Successfully!"); 
+          navigate("/home");
+        } catch (error) {
+          toast.error("Failed To Create Account. Please try again."); 
+          console.error(error); 
+        } finally {
+          setLoading(false);
+        }
       }
     } else {
       toast.error("Password must pass all the criteria");
@@ -221,8 +226,9 @@ function Signup() {
           <button
             type="submit"
             className="w-full bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 py-2 rounded-2xl text-white font-semibold mb-2"
+            disabled = {loading}
           >
-            Signup
+            {loading ? 'Loading...' : 'Sign Up'}
           </button>
 
           <Link to="/login">

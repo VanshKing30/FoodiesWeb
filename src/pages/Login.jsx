@@ -13,6 +13,7 @@ function Login() {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
 
   function changeHandler(event) {
@@ -23,7 +24,7 @@ function Login() {
   }
 
 
-  function submitHandler(event) {
+  async function submitHandler(event) {
     
     
     event.preventDefault();
@@ -32,17 +33,22 @@ function Login() {
 
     if(formData.accountType === "User"){
 
-      const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentLogin`;
-      // const apiUrl = `http://localhost:4000/api/v1/studentLogin`;
+      // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentLogin`;
+       const apiUrl = `http://localhost:4000/api/v1/studentLogin`;
 
-      axios.post(apiUrl , formData)
-      .then((response)=>{
-        toast.success("User Logged in ");
+       try {
+        setLoading(true);
+      
+        const response = await axios.post(apiUrl, formData);
+      
+        toast.success("Unable to login!"); 
         navigate("/home");
-      })
-      .catch((error)=>{
-        toast.error("Failed to login")
-      });
+      } catch (error) {
+        toast.error("Failed To Login. Please try again."); 
+        console.error(error); 
+      } finally {
+        setLoading(false);
+      }
     }
 
     else{
@@ -128,8 +134,8 @@ function Login() {
             </span>
           </div>
 
-          <button type="submit" className="w-full bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 py-2 rounded-2xl text-white font-semibold mb-2">
-            Login
+          <button type="submit" className="w-full bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 py-2 rounded-2xl text-white font-semibold mb-2" disabled = {loading} >
+            {loading ? 'Loading...' : 'Login'}
           </button>
 
           <Link to="/signup">
