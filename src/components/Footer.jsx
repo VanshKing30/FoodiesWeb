@@ -19,9 +19,9 @@ const Footer = () => {
                 <div className='md:w-1/2'>
                 <p className='text-gray-200 underline'>Legal Pages</p>
                     <ul className='text-gray-300 py-4 cursor-pointer'>
-                        <li className='py-1 cursor-pointer'>Privacy Policy</li>
-                        <li className='py-1 cursor-pointer'>Terms and Conditions</li>
-                        <li className='py-1 cursor-pointer'>Licensing</li>
+                        <a href="/privacypolicy"><li className='py-1 cursor-pointer'>Privacy Policy</li></a>
+                        <a href="/termsandconditions"><li className='py-1 cursor-pointer'>Terms and Conditions</li></a>
+                        <a href="/licensing"><li className='py-1 cursor-pointer'>Licensing</li></a>
                     </ul>
                 </div>
             </div>
