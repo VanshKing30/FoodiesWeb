@@ -50,7 +50,7 @@ function Home() {
       loading ? (
         <Loader/>
       ):(
-        <div className=" min-h-screen">
+        <div className=" min-h-screen dark:bg-teal-700">
         <Navbar />
         <div className="text-center">
           <CanteenList canteenData = {canteenData}/>

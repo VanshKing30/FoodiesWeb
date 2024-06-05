@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo2.png";
 import { motion, AnimatePresence,useScroll} from "framer-motion";
 import { IoClose } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
-
+import { MdDarkMode } from "react-icons/md";
+import { ThemeContext } from '../themeContext';
 const Navbar = () => {
+  const { theme, toggleTheme } = useContext(ThemeContext);
   const [isOpen, setIsOpen] = useState(false);
   const {scrollYProgress} = useScroll();
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
   return (
-    <nav className="text-white p-3 font-semibold shadow-lg top-0 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 w-full fixed z-40">
+    <nav className="text-white p-3 font-semibold shadow-lg top-0 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 w-full fixed z-40 dark:bg-cadetblue dark:bg-none">
         <motion.div
              className="left-0 top-0 w-full h-1 bg-blue-500 fixed z-50"
              style={{ scaleX: scrollYProgress }}
@@ -33,16 +35,24 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-5">
+          <button onClick={toggleTheme} className="p-2 rounded focus:outline-none focus:ring">
+        {theme === 'dark' ? '🌞 Light Mode' : '🌙 Dark Mode'}
+      </button>
+          <div>
             <Link to="/">
               <button
                 className="bg-green-400 hover:bg-green-600 hover:shadow-green text-white py-1 px-2 rounded w-full h-auto text-l relative z-0 rounded-lg transition-all duration-200 hover:scale-110"
-              >
+                >
                 Log out
               </button>
             </Link>
+                </div>
           </div>
           <div className="-mr-2 flex md:hidden">
+            <button onClick={toggleTheme} className="p-2 rounded focus:outline-none focus:ring">
+        {theme === 'dark' ? '🌞 Light Mode' : '🌙 Dark Mode'}
+      </button>
             <button
               onClick={toggleMenu}
               className="inline-flex items-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
@@ -65,7 +75,7 @@ const Navbar = () => {
             exit={{ opacity: 0, y: -50 }}
             className="md:hidden absolute left-0 w-full flex flex-col items-center justify-center"
           >
-            <div className="w-[100%] bg-[#282c34] px-[20%] pt-2 pb-3 space-y-1 mt-3">
+            <div className="w-[100%] bg-[#282c34] px-[20%] pt-2 pb-3 space-y-1 mt-3 dark:bg-teal-900">
               <MobileNavItem to="/home">Home</MobileNavItem>
               <MobileNavItem to="/about">About us</MobileNavItem>
               <MobileNavItem to="/news">News</MobileNavItem>
