@@ -2,6 +2,30 @@
 <img src="https://i.ibb.co/8KGfccV/image.png" alt="image" border="0"/>
 <h1>Connecting You to Your College Canteens</h1>
 
+<table align="center">
+    <thead align="center">
+        <tr border: 1px;>
+            <td><b>🌟 Stars</b></td>
+            <td><b>🍴 Forks</b></td>
+            <td><b>🐛 Issues</b></td>
+            <td><b>🔔 Open PRs</b></td>
+            <td><b>🔕 Close PRs</b></td>
+            <td><b> last commit</b></td>
+        </tr>
+     </thead>
+    <tbody>
+         <tr>
+            <td><img alt="Stars" src="https://img.shields.io/github/stars/VanshKing30/FoodiesWeb?style=flat&logo=github"/></td>
+             <td><img alt="Forks" src="https://img.shields.io/github/forks/VanshKing30/FoodiesWeb?style=flat&logo=github"/></td>
+            <td><img alt="Issues" src="https://img.shields.io/github/issues/VanshKing30/FoodiesWeb?style=flat&logo=github"/></td>
+            <td><img alt="Open Pull Requests" src="https://img.shields.io/github/issues-pr/VanshKing30/FoodiesWeb?style=flat&logo=github"/></td>
+           <td><img alt="Close Pull Requests" src="https://img.shields.io/github/issues-pr-closed/VanshKing30/FoodiesWeb?style=flat&color=critical&logo=github"/></td>
+           <td><img alt="Close Pull Requests" src="https://img.shields.io/github/last-commit/VanshKing30/FoodiesWeb?style=flat&color=critical&logo=github"/></td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
 # Tech Stacks
 
 ![](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&color=blue)
@@ -163,5 +187,13 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 <img src="https://imgur.com/wuiJXqr.png"/>
 
-<p>Thank you for being a part of this project!
+<h2 align = "center">Our Contributors ❤️</h2>    
+<div align = "center">
+ <h3>Thank you for being a part of this project!</h3>
+
+![Contributors](https://contrib.rocks/image?repo=VanshKing30/FoodiesWeb)<br>
+
+
+</div>
+
 <p align="right">(<a href="#top">Back to top</a>)</p>
