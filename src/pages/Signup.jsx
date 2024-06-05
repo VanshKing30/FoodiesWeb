@@ -94,6 +94,7 @@ function Signup() {
             navigate("/home");
           })
           .catch((error) => {
+            console.log(error)
             toast.error("Failed To create account");
           });
       } else {
