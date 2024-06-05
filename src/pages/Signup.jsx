@@ -23,19 +23,15 @@ function Signup() {
     accountType: "",
     password: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [lowerValidated, setLowerValidated] = useState(false);
+  const [upperValidated, setUpperValidated] = useState(false);
+  const [numberValidated, setNumberValidated] = useState(false);
+  const [specialValidated, setSpecialValidated] = useState(false);
+  const [lengthValidated, setLengthValidated] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] =
-    useState(false);
-  const [lowerValidated, setLowerValidated] =
-    useState(false);
-  const [upperValidated, setUpperValidated] =
-    useState(false);
-  const [numberValidated, setNumberValidated] =
-    useState(false);
-  const [specialValidated, setSpecialValidated] =
-    useState(false);
-  const [lengthValidated, setLengthValidated] =
-    useState(false);
+
 
   const navigate = useNavigate();
 
@@ -87,7 +83,7 @@ function Signup() {
     }));
   }
 
-  function submitHandler(event) {
+  async function submitHandler(event) {
     event.preventDefault();
     console.log(
       "ENV FILE",
@@ -102,51 +98,38 @@ function Signup() {
       lengthValidated
     ) {
       if (formData.accountType === "User") {
-        //Loader will show till the api fetching is done as show as promise is resolved the loader will be not shown
-        setLoading(true);
-        const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
-        //const apiUrl = `http://localhost:4000/api/v1/studentSignup`;
-
-        axios
-          .post(apiUrl, formData)
-          .then((response) => {
-            setLoading(false);
-            toast.success(
-              "Account Created succesfully"
-            );
-            navigate("/home");
-          })
-          .catch((error) => {
-            //If promise is not resolved the loader will be not shown
-            setLoading(false);
-            toast.error(
-              "Failed To create account"
-            );
-          });
+         // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
+          const apiUrl = `http://localhost:8000/api/v1/studentSignup`;
+         try {
+          setLoading(true);
+        
+          const response = await axios.post(apiUrl, formData);
+        
+          toast.success("Account Created Successfully!"); 
+          navigate("/home");
+        } catch (error) {
+          toast.error("Failed To Create Account. Please try again."); 
+          console.error(error); 
+        } finally {
+          setLoading(false);
+        }
       } else {
-        //Loader will show till the api fetching is done as show as promise is resolved the loader will be not shown
-        setLoading(true);
-        const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
+        const apiUrl = `http://localhost:8000/api/v1/canteenSignup`
+       // const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
+        try {
+          setLoading(true);
+        
+          const response = await axios.post(apiUrl, formData);
+        
+          toast.success("Account Created Successfully!"); 
+          navigate("/home");
+        } catch (error) {
+          toast.error("Failed To Create Account. Please try again."); 
+          console.error(error); 
+        } finally {
+          setLoading(false);
+        }
 
-        axios
-          .post(apiUrl, formData)
-          .then((response) => {
-            setLoading(false);
-            toast.success(
-              "Account Created succesfully"
-            );
-            navigate(
-              `/section/${response.data.cantId}`
-            );
-          })
-          .catch((error) => {
-            //If promise is not resolved the loader will be not shown
-            setLoading(false);
-            console.log("Errorrr:->", error);
-            toast.error(
-              "Failed To create account"
-            );
-          });
       }
     } else {
       toast.error(
@@ -279,8 +262,11 @@ function Signup() {
 
           <button
             type="submit"
-            className="w-full bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 py-2 rounded-2xl text-white font-semibold mb-2">
-            Signup
+            className="w-full bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 py-2 rounded-2xl text-white font-semibold mb-2"
+            disabled = {loading}
+          >
+            {loading ? 'Loading...' : 'Sign Up'}
+
           </button>
 
           <Link to="/login">

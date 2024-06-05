@@ -21,9 +21,9 @@ function Login() {
     accountType: "",
     password: "",
   });
-  const [showPassword, setShowPassword] =
-    useState(false);
-  const [loading, setLoading] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
 
   function changeHandler(event) {
@@ -33,30 +33,33 @@ function Login() {
     }));
   }
 
-  function submitHandler(event) {
+
+  async function submitHandler(event) {
     event.preventDefault();
 
     if (formData.accountType === "User") {
       //Loader will show till the api fetching is done as show as promise is resolved the loader will be not shown
       setLoading(true);
 
-      const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentLogin`;
-      //const apiUrl = `http://localhost:4000/api/v1/studentLogin`;
+      // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentLogin`;
+       const apiUrl = `http://localhost:4000/api/v1/studentLogin`;
 
-      axios
-        .post(apiUrl, formData)
-        .then((response) => {
-          setLoading(false);
-          toast.success("User Logged in ");
-          navigate("/home");
-        })
-        .catch((error) => {
-          //Loader will show till the api fetching is done as show as promise is resolved the loader will be not shown
-          setLoading(false);
-          toast.error("Failed to login");
-        });
-    } else {
-      //Loader will show till the api fetching is done as show as promise is resolved the loader will be not shown
+       try {
+        setLoading(true);
+      
+        const response = await axios.post(apiUrl, formData);
+      
+        toast.success("Unable to login!"); 
+        navigate("/home");
+      } catch (error) {
+        toast.error("Failed To Login. Please try again."); 
+        console.error(error); 
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    else{
       const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
       setLoading(true);
 
@@ -192,9 +195,20 @@ function Login() {
               </Link>
             </form>
           </div>
-        </div>
-      )}
-    </>
+          <button type="submit" className="w-full bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 py-2 rounded-2xl text-white font-semibold mb-2" disabled = {loading} >
+            {loading ? 'Loading...' : 'Login'}
+          </button>
+
+          <Link to="/signup">
+            <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">Don't have an account? Sign Up</span>
+          </Link>
+          
+        </form>
+
+      </div>
+
+    </div>
+
   );
 }
 
