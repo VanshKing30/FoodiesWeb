@@ -11,6 +11,9 @@ import SectionPage from './pages/SectionPage';
 import News from './pages/News';
 import NotFound from './pages/NotFound';
 import Loader from './components/Loader/Loader';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsandConditions from './pages/TermsandConditions';
+import Licensing from './pages/Licensing';
 
 const Layout = ({ children }) => {
   return (
@@ -32,6 +35,9 @@ function App() {
         <Route path='/section/:_id' element={<Layout><SectionPage /></Layout>} />
         <Route path="/menu/:_id" element={<Layout><MenuPage /></Layout>} />
         <Route path='/news' element={<Layout><News/></Layout>}/>
+        <Route path='/privacypolicy' element={<Layout><PrivacyPolicy/></Layout>}/>
+        <Route path='/termsandconditions' element={<Layout><TermsandConditions/></Layout>}/>
+        <Route path='/licensing' element={<Layout><Licensing/></Layout>}/>
         <Route path='/loader' element={<Layout><Loader/></Layout>}/>
         <Route path="*" element={<Layout><NotFound /></Layout>} />
       </Routes>
