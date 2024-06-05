@@ -1,22 +1,24 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo2.png";
-import { motion, AnimatePresence,useScroll} from "framer-motion";
+import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { IoClose } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { FaUser } from "react-icons/fa";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const {scrollYProgress} = useScroll();
+  const { scrollYProgress } = useScroll();
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
   return (
     <nav className="text-white p-3 font-semibold shadow-lg top-0 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 w-full fixed z-40">
-        <motion.div
-             className="left-0 top-0 w-full h-1 bg-blue-500 fixed z-50"
-             style={{ scaleX: scrollYProgress }}
-          />
+      <motion.div
+        className="left-0 top-0 w-full h-1 bg-blue-500 fixed z-50"
+        style={{ scaleX: scrollYProgress }}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -33,7 +35,11 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center space-x-4">
+            <Link to="/profile" className="flex items-center space-x-1">
+              <FaUser className="text-white" />
+              <span>Profile</span>
+            </Link>
             <Link to="/">
               <button
                 className="bg-green-400 hover:bg-green-600 hover:shadow-green text-white py-1 px-2 rounded w-full h-auto text-l relative z-0 rounded-lg transition-all duration-200 hover:scale-110"
@@ -69,6 +75,7 @@ const Navbar = () => {
               <MobileNavItem to="/home">Home</MobileNavItem>
               <MobileNavItem to="/about">About us</MobileNavItem>
               <MobileNavItem to="/news">News</MobileNavItem>
+              <MobileNavItem to="/profile">Profile</MobileNavItem>
               <MobileNavItem to="/">
                 <button
                   className="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded transition duration-300 ease-in-out transform hover:scale-105"
@@ -83,12 +90,12 @@ const Navbar = () => {
     </nav>
   );
 };
+
 const NavItem = ({ icon, to, children }) => {
   return (
     <Link
       to={to}
-      className="w-full h-auto relative z-0 rounded-lg transition-all duration-200 hover:scale-125 text-l block after:block after:content-[''] after:absolute after:h-[3px] after:bg-gradient-to-r from-green-300 to-green-600 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center
-      "
+      className="w-full h-auto relative z-0 rounded-lg transition-all duration-200 hover:scale-125 relative text-l w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-gradient-to-r from-green-300 to-green-600 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center"
     >
       {icon}
       <span>{children}</span>
