@@ -9,7 +9,7 @@ const Footer = () => {
             </div>
             <div className='md:w-1/2 md:flex'>
                 <div className='md:w-1/2'>
-                    <p className='text-gray-200'>Company</p>
+                    <p className='text-gray-200 underline'>Company</p>
                     <ul className='text-gray-300 py-4'>
                         <a href="/about"><li className='py-1 cursor-pointer'>About Us</li></a>
                         <a href="/news"><li className='py-1 cursor-pointer'>News</li></a>
@@ -17,7 +17,7 @@ const Footer = () => {
                     </ul>
                 </div>
                 <div className='md:w-1/2'>
-                <p className='text-gray-200'>Legal Pages</p>
+                <p className='text-gray-200 underline'>Legal Pages</p>
                     <ul className='text-gray-300 py-4 cursor-pointer'>
                         <li className='py-1 cursor-pointer'>Privacy Policy</li>
                         <li className='py-1 cursor-pointer'>Terms and Conditions</li>
