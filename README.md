@@ -62,29 +62,34 @@ Welcome to Foodies, your go-to college dining companion! Designed for seamless c
 
 ## To get started with contributing to the FoodiesWeb project, follow these steps:
 
-1. **Navigate to the Project Directory:**
+1. **Fork and clone the repository**
+2. **Navigate to the Project Directory:**
    ```bash
-   cd path/to/FoodiesWeb
+   cd FoodiesWeb
    ```
-2. **Split Terminal for Backend Setup**
+3. **Split Terminal for Backend Setup**
 
-3. **Navigate to the Server Directory:**
+4. **Navigate to the Server Directory:**
    ```bash
-    cd path/to/FoodiesWeb/server
+    cd server
    ```
-4. **Install Dependencies (in both terminals):**
+5. **Install Dependencies (in both terminals):**
    ```bash
      npm install
    ```
-5. **Start the Backend Server (in the terminal within the /server directory):** <br>
+
+   ### **ENV Variables**
+   Setup MongoDB local host instance and port in env file in your local device. Default port is 4000
+   Sample uri is given below.
+   ```
+   PORT=3000
+   DATABASE_URL="http://localhost:21713/foods"
+   ``` 
+
+6. **Start the Backend Server (in the terminal within the /server directory):** <br>
    In the terminal where you navigated to the /server directory, run the following command to start the backend server:
    ```bash
    nodemon server.js
-   ```
-6. **Navigate to the src (with Backend Running):**<br>
-   In the other terminal, run the following command to navigate to the src folder (frontend):
-   ```bash
-   cd src
    ```
 7. **Start the React App (with Backend Running):**<br>
    After navigating run the following command to start the React app with the backend server running successfully:
