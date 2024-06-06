@@ -1,5 +1,5 @@
  <div align="center">
-<img src="https://i.ibb.co/8KGfccV/image.png" alt="image" border="0"/>
+<img src="https://github.com/me-shweta/Design-Den/blob/main/FoodiesWeblogo.png" alt="image" border="0"/>
 <h1>Connecting You to Your College Canteens</h1>
 
 <table align="center">
