@@ -1,6 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Footer = () => {
+    const navigate = useNavigate();
+
+    const handleNavigation = (path) => {
+    navigate(path);
+    window.scrollTo(0, 0);
+  };
   return (
     <div className='bg-blue-950 text-white p-10'>
         <div className='md:flex'>
@@ -11,7 +18,7 @@ const Footer = () => {
                 <div className='md:w-1/2'>
                     <p className='text-gray-200 underline'>Company</p>
                     <ul className='text-gray-300 py-4'>
-                        <a href="/about"><li className='py-1 cursor-pointer'>About Us</li></a>
+                        <li className='py-1 cursor-pointer' onClick={() => handleNavigation('/about')}>About Us</li>
                         <a href="/news"><li className='py-1 cursor-pointer'>News</li></a>
                         <li className='py-1 cursor-pointer'>Contact Us</li>
                     </ul>
