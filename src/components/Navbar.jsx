@@ -65,7 +65,7 @@ const Navbar = () => {
             exit={{ opacity: 0, y: -50 }}
             className="md:hidden absolute left-0 w-full flex flex-col items-center justify-center"
           >
-            <div className="w-[100%] bg-[#282c34] px-[20%] pt-2 pb-3 space-y-1 mt-3">
+            <div className="w-[100%] bg-[#282c34] px-[20%] pt-2 pb-3 space-y-1 mt-1">
               <MobileNavItem to="/home">Home</MobileNavItem>
               <MobileNavItem to="/about">About us</MobileNavItem>
               <MobileNavItem to="/news">News</MobileNavItem>
