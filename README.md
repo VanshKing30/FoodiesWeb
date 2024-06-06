@@ -1,6 +1,30 @@
  <div align="center">
-<img src="https://i.ibb.co/8KGfccV/image.png" alt="image" border="0"/>
+<img src="https://github.com/me-shweta/Design-Den/blob/main/FoodiesWeblogo.png" alt="image" border="0"/>
 <h1>Connecting You to Your College Canteens</h1>
+
+<table align="center">
+    <thead align="center">
+        <tr border: 1px;>
+            <td><b>🌟 Stars</b></td>
+            <td><b>🍴 Forks</b></td>
+            <td><b>🐛 Issues</b></td>
+            <td><b>🔔 Open PRs</b></td>
+            <td><b>🔕 Close PRs</b></td>
+            <td><b> last commit</b></td>
+        </tr>
+     </thead>
+    <tbody>
+         <tr>
+            <td><img alt="Stars" src="https://img.shields.io/github/stars/VanshKing30/FoodiesWeb?style=flat&logo=github"/></td>
+             <td><img alt="Forks" src="https://img.shields.io/github/forks/VanshKing30/FoodiesWeb?style=flat&logo=github"/></td>
+            <td><img alt="Issues" src="https://img.shields.io/github/issues/VanshKing30/FoodiesWeb?style=flat&logo=github"/></td>
+            <td><img alt="Open Pull Requests" src="https://img.shields.io/github/issues-pr/VanshKing30/FoodiesWeb?style=flat&logo=github"/></td>
+           <td><img alt="Close Pull Requests" src="https://img.shields.io/github/issues-pr-closed/VanshKing30/FoodiesWeb?style=flat&color=critical&logo=github"/></td>
+           <td><img alt="Close Pull Requests" src="https://img.shields.io/github/last-commit/VanshKing30/FoodiesWeb?style=flat&color=critical&logo=github"/></td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
 # Tech Stacks
 
@@ -62,29 +86,34 @@ Welcome to Foodies, your go-to college dining companion! Designed for seamless c
 
 ## To get started with contributing to the FoodiesWeb project, follow these steps:
 
-1. **Navigate to the Project Directory:**
+1. **Fork and clone the repository**
+2. **Navigate to the Project Directory:**
    ```bash
-   cd path/to/FoodiesWeb
+   cd FoodiesWeb
    ```
-2. **Split Terminal for Backend Setup**
+3. **Split Terminal for Backend Setup**
 
-3. **Navigate to the Server Directory:**
+4. **Navigate to the Server Directory:**
    ```bash
-    cd path/to/FoodiesWeb/server
+    cd server
    ```
-4. **Install Dependencies (in both terminals):**
+5. **Install Dependencies (in both terminals):**
    ```bash
      npm install
    ```
-5. **Start the Backend Server (in the terminal within the /server directory):** <br>
+
+   ### **ENV Variables**
+   Setup MongoDB local host instance and port in env file in your local device. Default port is 4000
+   Sample uri is given below.
+   ```
+   PORT=3000
+   DATABASE_URL="http://localhost:21713/foods"
+   ``` 
+
+6. **Start the Backend Server (in the terminal within the /server directory):** <br>
    In the terminal where you navigated to the /server directory, run the following command to start the backend server:
    ```bash
    nodemon server.js
-   ```
-6. **Navigate to the src (with Backend Running):**<br>
-   In the other terminal, run the following command to navigate to the src folder (frontend):
-   ```bash
-   cd src
    ```
 7. **Start the React App (with Backend Running):**<br>
    After navigating run the following command to start the React app with the backend server running successfully:
@@ -158,5 +187,13 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 <img src="https://imgur.com/wuiJXqr.png"/>
 
-<p>Thank you for being a part of this project!
+<h2 align = "center">Our Contributors ❤️</h2>    
+<div align = "center">
+ <h3>Thank you for being a part of this project!</h3>
+
+![Contributors](https://contrib.rocks/image?repo=VanshKing30/FoodiesWeb)<br>
+
+
+</div>
+
 <p align="right">(<a href="#top">Back to top</a>)</p>
