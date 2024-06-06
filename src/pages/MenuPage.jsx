@@ -20,7 +20,7 @@ function MenuPage() {
     try {
       setLoading(true);
       const getBreakfast = await fetch(
-        `${process.env.REACT_APP_BASE_URL}/${_id}/breakfast`,
+        `http://localhost:8000/api/v1/${_id}/breakfast`,
         {
           method: "GET",
           headers: {
@@ -42,7 +42,7 @@ function MenuPage() {
     try {
       setLoading(true);
       const getLunch = await fetch(
-        `${process.env.REACT_APP_BASE_URL}/${_id}/lunch`,
+        `http://localhost:8000/api/v1/${_id}/lunch`,
         {
           method: "GET",
           headers: {
@@ -64,7 +64,7 @@ function MenuPage() {
     try {
       setLoading(true);
       const getDinner = await fetch(
-        `${process.env.REACT_APP_BASE_URL}/${_id}/dinner`,
+        `http://localhost:8000/api/v1/${_id}/dinner`,
         {
           method: "GET",
           headers: {

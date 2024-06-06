@@ -5,6 +5,7 @@ import Modal from '../components/Modal';
 import Navbar from '../components/Navbar';
 import Loader from '../components/Loader/Loader';
 import Footer from '../components/Footer';
+import AddFoodItem from './AddFoodItem';
 
 const SectionPage = () => {
   const { _id } = useParams();
@@ -23,7 +24,7 @@ const SectionPage = () => {
     try {
       setLoading(true);
       const getCanteen = await fetch(
-        `${process.env.REACT_APP_BASE_URL}/getcanteen`,
+        `http://localhost:8000/api/v1/getcanteen`,
         {
           method: "GET",
           headers: {
@@ -77,7 +78,7 @@ const SectionPage = () => {
           <Loader />
         ) : (
           <>
-            <div className="flex space-x-4 justify-center">
+            {/* <div className="flex space-x-4 justify-center">
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleSectionClick('Breakfast')}>
                 Breakfast
               </button>
@@ -88,7 +89,10 @@ const SectionPage = () => {
                 Dinner
               </button>
             </div>
-            <Modal showModal={showModal} setShowModal={setShowModal} sectionName={selectedSection} canteenData={canteenData} onSubmit={handleFormSubmit} id={_id} />
+            <Modal showModal={showModal} setShowModal={setShowModal} sectionName={selectedSection} canteenData={canteenData} onSubmit={handleFormSubmit} id={_id} /> */}
+        
+           <AddFoodItem/>
+        
           </>
         )
       }

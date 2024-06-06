@@ -98,7 +98,7 @@ function Signup() {
       lengthValidated
     ) {
       if (formData.accountType === "User") {
-         // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
+         // const apiUrl = `http://localhost:8000/api/v1/studentSignup`;
           const apiUrl = `http://localhost:8000/api/v1/studentSignup`;
          try {
           setLoading(true);
@@ -115,14 +115,17 @@ function Signup() {
         }
       } else {
         const apiUrl = `http://localhost:8000/api/v1/canteenSignup`
-       // const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
+       // const apiUrl = `http://localhost:8000/api/v1/canteenSignup`;
         try {
           setLoading(true);
         
           const response = await axios.post(apiUrl, formData);
-        
+          const token = response.data.token;
+         
+          localStorage.setItem("token", token);
+          localStorage.setItem('canteenId', response.data.cantId);
           toast.success("Account Created Successfully!"); 
-          navigate("/home");
+          navigate(`/section/${response.data.cantId}`);
         } catch (error) {
           toast.error("Failed To Create Account. Please try again."); 
           console.error(error); 

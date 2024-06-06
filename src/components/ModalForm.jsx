@@ -60,7 +60,7 @@ const ModalForm = ({ onSubmit  , sectionName , canteenData , id}) => {
 
     if(sectionName === "Breakfast"){
 
-      const apiUrl = `${process.env.REACT_APP_BASE_URL}/${id}/breakfast/add`;
+      const apiUrl = `http://localhost:8000/api/v1/${id}/breakfast/add`;
 
       axios.post(apiUrl , foodDetails)
       .then((response)=>{
@@ -75,7 +75,7 @@ const ModalForm = ({ onSubmit  , sectionName , canteenData , id}) => {
     }
     else if(sectionName === "Lunch"){
 
-      const apiUrl = `${process.env.REACT_APP_BASE_URL}/${id}/lunch/add`;
+      const apiUrl = `http://localhost:8000/api/v1/${id}/lunch/add`;
 
       axios.post(apiUrl , foodDetails)
       .then((response)=>{
@@ -92,7 +92,7 @@ const ModalForm = ({ onSubmit  , sectionName , canteenData , id}) => {
     }
     else{
      
-      const apiUrl = `${process.env.REACT_APP_BASE_URL}/${id}/dinner/add`;
+      const apiUrl = `http://localhost:8000/api/v1/${id}/dinner/add`;
 
       axios.post(apiUrl , foodDetails)
       .then((response)=>{
