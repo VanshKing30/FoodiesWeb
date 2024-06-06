@@ -1,4 +1,3 @@
-
 import React from 'react';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
@@ -11,13 +10,11 @@ import SectionPage from './pages/SectionPage';
 import News from './pages/News';
 import NotFound from './pages/NotFound';
 import Loader from './components/Loader/Loader';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import TermsandConditions from './pages/TermsandConditions';
-import Licensing from './pages/Licensing';
+import { ThemeProvider } from './themeContext';
 
 const Layout = ({ children }) => {
   return (
-    <div className="bg-cover bg-center min-h-screen bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 bg-no-repeat " >
+    <div className="bg-cover bg-center min-h-screen bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 bg-no-repeat dark:bg-none">
       {children}
     </div>
   );
@@ -25,25 +22,23 @@ const Layout = ({ children }) => {
 
 function App() {
   return (
-    <div className=''>
-      <Routes>
-        <Route path='/' element={<Login />} />
-        <Route path='/home' element={<Layout><Home /></Layout>} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/about' element={<Layout><About /></Layout>} />
-        <Route path='/section/:_id' element={<Layout><SectionPage /></Layout>} />
-        <Route path="/menu/:_id" element={<Layout><MenuPage /></Layout>} />
-        <Route path='/news' element={<Layout><News/></Layout>}/>
-        <Route path='/privacypolicy' element={<Layout><PrivacyPolicy/></Layout>}/>
-        <Route path='/termsandconditions' element={<Layout><TermsandConditions/></Layout>}/>
-        <Route path='/licensing' element={<Layout><Licensing/></Layout>}/>
-        <Route path='/loader' element={<Layout><Loader/></Layout>}/>
-        <Route path="*" element={<Layout><NotFound /></Layout>} />
-      </Routes>
-    </div>
+    <ThemeProvider>
+      <div className=''>
+        <Routes>
+          <Route path='/' element={<Login />} />
+          <Route path='/home' element={<Layout><Home /></Layout>} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/about' element={<Layout><About /></Layout>} />
+          <Route path='/section/:_id' element={<Layout><SectionPage /></Layout>} />
+          <Route path="/menu/:_id" element={<Layout><MenuPage /></Layout>} />
+          <Route path='/news' element={<Layout><News /></Layout>} />
+          <Route path='/loader' element={<Layout><Loader /></Layout>} />
+          <Route path="*" element={<Layout><NotFound /></Layout>} />
+        </Routes>
+      </div>
+    </ThemeProvider>
   );
 }
 
 export default App;
-
