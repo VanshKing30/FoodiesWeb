@@ -3,101 +3,99 @@ const User = require("../models/studentLoginInfo");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-//auth
+// Utility function to extract token from various sources
+const extractToken = (req) => {
+  if (req.cookies && req.cookies.token) return req.cookies.token;
+  if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+    return req.headers.authorization.split(" ")[1];
+  }
+  if (req.headers.cookie) {
+    const cookies = req.headers.cookie.split("; ").reduce((acc, cookie) => {
+      const [key, value] = cookie.split("=");
+      acc[key] = value;
+      return acc;
+    }, {});
+    return cookies.token;
+  }
+  return null;
+};
+
+// Auth middleware for canteen
 exports.auth = async (req, res, next) => {
   try {
-    //extract token
-    const token =
-      req.cookies?.token ||
-      req?.header("Authorization") ||
-      req?.header("Authorisation")?.replace("Bearer ", "") ||
-      req?.headers?.cookie.split("=")[1];
-
-    //if token missing, then return response
+    const token = extractToken(req);
     if (!token) {
       return res.status(401).json({
         success: false,
-        message: "TOken is missing",
+        message: "Token is missing",
       });
     }
-    //verify the token
+
     try {
       const decode = jwt.verify(token, process.env.JWT_SECRET);
-      //now check that user present in db or not
       const user = await Canteen.findById(decode.id);
-      if (!user)
+      if (!user) {
         return res.status(500).json({
           success: false,
-          message: "invalid user ! try to  login again",
+          message: "Invalid user! Try to login again",
         });
+      }
       req.user = user;
+      next();
     } catch (err) {
-      //verification - issue
       return res.status(401).json({
         success: false,
-        message: "token is invalid",
+        message: "Token is invalid",
       });
     }
-    next();
   } catch (error) {
     return res.status(401).json({
       success: false,
-      message: `Something went wrong while validating the token ${error.message}`,
+      message: `Something went wrong while validating the token: ${error.message}`,
     });
   }
 };
 
+// Auth middleware for student
 exports.studentAuth = async (req, res, next) => {
   try {
-    // console.log(req);
-    // console.log(req.cookies);
-    //extract token
-    const token =
-      req.cookies?.token ||
-      req?.header("Authorization") ||
-      req?.header("Authorisation")?.replace("Bearer ", "") ||
-      req?.headers?.cookie.split("=")[1];
-    // console.log(token);
-    //if token missing, then return response
+    const token = extractToken(req);
     if (!token) {
       return res.status(401).json({
         success: false,
-        message: "TOken is missing",
+        message: "Token is missing",
       });
     }
-    //verify the token
+
     try {
       const decode = jwt.verify(token, process.env.JWT_SECRET);
-      console.log(decode);
-      //now check that user present in db or not
       const user = await User.findById(decode.id);
-      if (!user)
+      if (!user) {
         return res.status(500).json({
           success: false,
-          message: "invalid user ! try to  login again",
+          message: "Invalid user! Try to login again",
+          
         });
+      }
       req.user = user;
+      next();
     } catch (err) {
-      //verification - issue
-      console.log(err);
       return res.status(401).json({
         success: false,
-        message: "token is invalid",
+        message: "Token is invalid",
       });
     }
-    next();
   } catch (error) {
     return res.status(401).json({
       success: false,
-      message: `Something went wrong while validating the token ${error.message}`,
+      message: `Something went wrong while validating the token: ${error.message}`,
     });
   }
 };
 
-//isCanteen(canteen manager) account type
+// isCanteen middleware
 exports.isCanteen = async (req, res, next) => {
   try {
-    console.log("isCanteen middleware", req.user);
     if (req.user.accountType !== "Canteen") {
       return res.status(401).json({
         success: false,
