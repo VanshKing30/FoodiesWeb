@@ -1,12 +1,12 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import Navbar from "../components/Navbar";
 import Loader from "../components/Loader/Loader";
 import Footer from "../components/Footer";
-
+import { ThemeContext } from '../themeContext';
 function MenuPage() {
   const { _id } = useParams();
   const [breakfast, setBreakfast] = useState();
@@ -15,7 +15,7 @@ function MenuPage() {
   const [selectedDish, setSelectedDish] = useState(null);
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const { theme, toggleTheme } = useContext(ThemeContext);
   const getBreakfast = async () => {
     try {
       setLoading(true);
@@ -117,7 +117,7 @@ function MenuPage() {
   }
 
   return (
-    <div className="text-purple-800 min-h-screen">
+    <div className="text-purple-800 min-h-screen pt-5">
       <Navbar />
       <div className="container mx-auto p-4">
         <h1 className="text-4xl font-bold mb-8 text-white">Today's Menu </h1>
@@ -129,59 +129,90 @@ function MenuPage() {
              <div className="flex flex-col gap-4 p-5 md:flex-row justify-center">
           
           {breakfast && (
-            <div className="bg-blue-500 p-8 rounded shadow-md text-gray-900 cursor-pointer hover:bg-blue-700">
-              <h2 className="text-2xl font-bold mb-4">Breakfast</h2>
+      
+            <div className="w-2/3 rounded-lg shadow-md border-2 border-red-300 mt-5">
+            <div className="text-center bg-red-300 text-black py-3 font-xl relative">
+              <img
+                src="https://cdn-icons-png.flaticon.com/128/5025/5025429.png"
+                alt="Breakfast Icon"
+                className="absolute top-0 left-4 h-16 w-16 -mt-8 -ml-8"
+              />
+              Breakfast
+            </div>
+            <div className="p-4">
               <ul>
                 {breakfast.data.map((dish) => (
                   <li
                     key={dish._id}
                     onClick={() => handleDishClick(dish.dishId)} // Add click handler
-                    style={{ cursor: "pointer" }}
-                    className="hover:bg-gradient-to-r from-green-300 to-green-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1"
+                    className={`cursor-pointer hover:bg-gradient-to-r from-green-300 to-green-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${theme === 'dark' ? 'text-white' : 'text-red-600'} hover:text-black mt-2 `}
                   >
                     • {dish.dish}
                   </li>
                 ))}
               </ul>
             </div>
+          </div>
+          
           )}
 
           
           {lunch && (
-            <div className="bg-green-500 p-8 rounded shadow-md text-gray-900 cursor-pointer hover:bg-green-700">
-              <h2 className="text-2xl font-bold mb-4">Lunch</h2>
-              <ul>
+        
+
+            <div className=" w-2/3 rounded-lg shadow-md border-green-300 border-2 mt-5" >
+            <div className=" text-center bg-green-300 text-black py-3 font-xl relative" >
+            <img
+                src="https://cdn-icons-png.flaticon.com/128/2082/2082045.png"
+                alt="Breakfast Icon"
+                className="absolute top-0 left-4 h-16 w-16 -mt-8 -ml-8"
+              />
+             Lunch
+            </div>
+            <div>
+            <ul>
                 {lunch.data.map((dish) => (
-                  <li
-                    key={dish._id}
-                    onClick={() => handleDishClick(dish.dishId)} // Add click handler
-                    style={{ cursor: "pointer" }}
-                    className="hover:bg-gradient-to-r from-green-300 to-green-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1"
-                  >
-                    • {dish.dish}
-                  </li>
+                <li
+                  key={dish._id}
+                  onClick={() => handleDishClick(dish.dishId)} // Add click handler
+                  style={{ cursor: "pointer" }}
+                   className={`hover:bg-gradient-to-r from-green-300 to-green-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${theme === 'dark' ? 'text-white' : 'text-green-600'} hover:text-black mt-2 `}
+                 >
+                   • {dish.dish}
+                 </li>
                 ))}
               </ul>
             </div>
+           </div>
           )}
 
           
           {dinner && (
-            <div className="bg-yellow-500 p-8 rounded shadow-md text-gray-900 cursor-pointer hover:bg-yellow-700">
-              <h2 className="text-2xl font-bold mb-4">Dinner</h2>
-              <ul>
+
+            <div className=" w-2/3 rounded-lg shadow-md border-yellow-300 border-2 mt-5" >
+            <div className=" text-center bg-yellow-300 text-black py-3 font-xl relative " >
+            <img
+                src="https://cdn-icons-png.flaticon.com/128/3321/3321601.png"
+                alt="Breakfast Icon"
+                className="absolute top-0 left-4 h-16 w-16 -mt-8 -ml-8"
+              />
+             Dinner
+            </div>
+            <div>
+            <ul>
                 {dinner.data.map((dish) => (
-                  <li
-                    key={dish._id}
-                    onClick={() => handleDishClick(dish.dishId)} // Add click handler
-                    style={{ cursor: "pointer" }}
-                    className="hover:bg-gradient-to-r from-green-300 to-green-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1"
-                  >
-                    • {dish.dish}
-                  </li>
+                <li
+                  key={dish._id}
+                  onClick={() => handleDishClick(dish.dishId)} // Add click handler
+                  style={{ cursor: "pointer" }}
+                   className={`hover:bg-gradient-to-r from-yellow-300 to-yellow-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${theme === 'dark' ? 'text-white' : 'text-yellow-600'} hover:text-black mt-2 `}
+                 >
+                   • {dish.dish}
+                 </li>
                 ))}
               </ul>
             </div>
+           </div>
           )}
         </div>
 
