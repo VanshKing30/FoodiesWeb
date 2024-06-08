@@ -241,7 +241,7 @@ function Signup() {
 								</button>
 
 								<Link to="/login">
-									<span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
+									<span className="text-sm hover:text-blue-500 cursor-pointer">
 										Already have an account? Login
 									</span>
 								</Link>
