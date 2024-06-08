@@ -61,7 +61,16 @@ function Login() {
       {loading ? (
         <Loader />
       ) : (
-        <div className="h-screen md:flex">
+        <div className="relative h-screen md:flex">
+          <div className="absolute top-0 right-0 m-3">
+            <Link to="/contact">
+              <button
+                className="hover:shadow-blue-950 hover:shadow-sm text-white py-1 px-2 w-full h-auto text-l relative z-0 rounded-full transition-all duration-200 hover:scale-110"
+              >
+                <img src="/c4.png" className="h-10 w-10" />
+              </button>
+            </Link>
+          </div>
           <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 bg-no-repeat justify-around items-center hidden">
             <div>
               <img src={logo} alt="logo" className="w-48 h-12 mb-2" />
@@ -74,7 +83,6 @@ function Login() {
             <div className="absolute -top-40 -right-0 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
             <div className="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
           </div>
-
           <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
             <form
               className="bg-white p-8 rounded shadow-lg w-80"
