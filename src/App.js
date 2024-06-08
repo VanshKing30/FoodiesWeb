@@ -11,6 +11,7 @@ import News from './pages/News';
 import NotFound from './pages/NotFound';
 import Loader from './components/Loader/Loader';
 import { ThemeProvider } from './themeContext';
+import EditProfile from './pages/EditProfile';
 
 const Layout = ({ children }) => {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/menu/:_id" element={<Layout><MenuPage /></Layout>} />
           <Route path='/news' element={<Layout><News /></Layout>} />
           <Route path='/loader' element={<Layout><Loader /></Layout>} />
+          <Route path="/edit-profile/:_id" element={<Layout><EditProfile /></Layout>} />
           <Route path="*" element={<Layout><NotFound /></Layout>} />
         </Routes>
       </div>
