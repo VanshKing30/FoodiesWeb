@@ -77,53 +77,53 @@ function Signup() {
 	async function submitHandler(event) {
 		event.preventDefault();
 
-		if (
-			lowerValidated &&
-			upperValidated &&
-			numberValidated &&
-			specialValidated &&
-			lengthValidated
-		) {
-			if (formData.accountType === "User") {
-				// const apiUrl = `http://localhost:8000/api/v1/studentSignup`;
-				const apiUrl = `http://localhost:8000/api/v1/studentSignup`;
-				try {
-					setLoading(true);
+    if (
+      lowerValidated &&
+      upperValidated &&
+      numberValidated &&
+      specialValidated &&
+      lengthValidated
+    ) {
+      if (formData.accountType === "User") {
+         // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
+          const apiUrl = `http://localhost:3000/api/v1/studentSignup`;
+         try {
+          setLoading(true);
+        
+          const response = await axios.post(apiUrl, formData);
+        
+          toast.success("Account Created Successfully!"); 
+          navigate("/home");
+        } catch (error) {
+          toast.error("Failed To Create Account. Please try again."); 
+          console.error(error); 
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        const apiUrl = `http://localhost:3000/api/v1/canteenSignup`
+       // const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
+        try {
+          setLoading(true);
+        
+          const response = await axios.post(apiUrl, formData);
+        
+          toast.success("Account Created Successfully!"); 
+          navigate("/home");
+        } catch (error) {
+          toast.error("Failed To Create Account. Please try again."); 
+          console.error(error); 
+        } finally {
+          setLoading(false);
+        }
 
-					const response = await axios.post(apiUrl, formData);
-
-					toast.success("Account Created Successfully!");
-					navigate("/home");
-				} catch (error) {
-					toast.error("Failed To Create Account. Please try again.");
-					console.error(error);
-				} finally {
-					setLoading(false);
-				}
-			} else {
-				const apiUrl = `http://localhost:8000/api/v1/canteenSignup`;
-				// const apiUrl = `http://localhost:8000/api/v1/canteenSignup`;
-				try {
-					setLoading(true);
-
-					const response = await axios.post(apiUrl, formData);
-					const token = response.data.token;
-
-					localStorage.setItem("token", token);
-					localStorage.setItem("canteenId", response.data.cantId);
-					toast.success("Account Created Successfully!");
-					navigate(`/section/${response.data.cantId}`);
-				} catch (error) {
-					toast.error("Failed To Create Account. Please try again.");
-					console.error(error);
-				} finally {
-					setLoading(false);
-				}
-			}
-		} else {
-			toast.error("Password must pass all the criteria");
-		}
-	}
+      }
+    } else {
+      toast.error(
+        "Password must pass all the criteria"
+      );
+    }
+  }
 
 	return (
 		<>
