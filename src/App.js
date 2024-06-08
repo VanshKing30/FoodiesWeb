@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import MenuPage from './pages/MenuPage';
 import About from './pages/About';
+import Rateus from './pages/Rateus';
 import SectionPage from './pages/SectionPage';
 import News from './pages/News';
 import NotFound from './pages/NotFound';
@@ -30,6 +31,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/about' element={<Layout><About /></Layout>} />
+          <Route path='/rateus' element={<Layout><Rateus /></Layout>} />
           <Route path='/section/:_id' element={<Layout><SectionPage /></Layout>} />
           <Route path="/menu/:_id" element={<Layout><MenuPage /></Layout>} />
           <Route path='/news' element={<Layout><News /></Layout>} />

@@ -4,8 +4,6 @@ import NewsCard from "../components/NewsCard";
 import Loader from "../components/Loader/Loader";
 import Footer from "../components/Footer";
 
-
-
 function News() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -53,7 +51,6 @@ function News() {
             </div>
           )
       }
-
     </>
   );
 }

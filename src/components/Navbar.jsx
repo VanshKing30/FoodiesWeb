@@ -1,24 +1,26 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo2.png";
-import { motion, AnimatePresence,useScroll} from "framer-motion";
+import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { IoClose } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { MdDarkMode } from "react-icons/md";
 import { ThemeContext } from '../themeContext';
+
 const Navbar = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isOpen, setIsOpen] = useState(false);
-  const {scrollYProgress} = useScroll();
+  const { scrollYProgress } = useScroll();
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
   return (
     <nav className="text-white p-3 font-semibold shadow-lg top-0 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 w-full fixed z-40 dark:bg-cadetblue dark:bg-none">
-        <motion.div
-             className="left-0 top-0 w-full h-1 bg-blue-500 fixed z-50"
-             style={{ scaleX: scrollYProgress }}
-          />
+      <motion.div
+        className="left-0 top-0 w-full h-1 bg-blue-500 fixed z-50"
+        style={{ scaleX: scrollYProgress }}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -32,27 +34,28 @@ const Navbar = () => {
                 <NavItem to="/home">Home</NavItem>
                 <NavItem to="/about">About</NavItem>
                 <NavItem to="/news">News</NavItem>
+                <NavItem to="/rateus">RateUs</NavItem>
               </div>
             </div>
           </div>
           <div className="hidden md:flex items-center gap-5">
-          <button onClick={toggleTheme} className="p-2 rounded focus:outline-none focus:ring">
-        {theme === 'dark' ? '🌞 Light Mode' : '🌙 Dark Mode'}
-      </button>
-          <div>
-            <Link to="/">
-              <button
-                className="bg-green-400 hover:bg-green-600 hover:shadow-green text-white py-1 px-2 rounded w-full h-auto text-l relative z-0 rounded-lg transition-all duration-200 hover:scale-110"
+            <button onClick={toggleTheme} className="p-2 rounded focus:outline-none focus:ring">
+              {theme === 'dark' ? '🌞 Light Mode' : '🌙 Dark Mode'}
+            </button>
+            <div>
+              <Link to="/">
+                <button
+                  className="bg-green-400 hover:bg-green-600 hover:shadow-green text-white py-1 px-2 rounded w-full h-auto text-l relative z-0 rounded-lg transition-all duration-200 hover:scale-110"
                 >
-                Log out
-              </button>
-            </Link>
-                </div>
+                  Log out
+                </button>
+              </Link>
+            </div>
           </div>
           <div className="-mr-2 flex md:hidden">
             <button onClick={toggleTheme} className="p-2 rounded focus:outline-none focus:ring">
-        {theme === 'dark' ? '🌞 Light Mode' : '🌙 Dark Mode'}
-      </button>
+              {theme === 'dark' ? '🌞 Light Mode' : '🌙 Dark Mode'}
+            </button>
             <button
               onClick={toggleMenu}
               className="inline-flex items-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
@@ -75,12 +78,11 @@ const Navbar = () => {
             exit={{ opacity: 0, y: -50 }}
             className="md:hidden absolute left-0 w-full flex flex-col items-center justify-center"
           >
-
             <div className="w-[100%] bg-[#282c34] px-[20%] pt-2 pb-3 space-y-1 mt-1 dark:bg-teal-900">
-
               <MobileNavItem to="/home">Home</MobileNavItem>
               <MobileNavItem to="/about">About us</MobileNavItem>
               <MobileNavItem to="/news">News</MobileNavItem>
+              <MobileNavItem to="/rateus">Rateus</MobileNavItem>
               <MobileNavItem to="/">
                 <button
                   className="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded transition duration-300 ease-in-out transform hover:scale-105"
@@ -95,11 +97,12 @@ const Navbar = () => {
     </nav>
   );
 };
+
 const NavItem = ({ icon, to, children }) => {
   return (
     <Link
       to={to}
-      className="w-full h-auto relative z-0 rounded-lg transition-all duration-200 hover:scale-125 text-l block after:block after:content-[''] after:absolute after:h-[3px] after:bg-gradient-to-r from-green-300 to-green-600 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center
+      className="w-full h-auto relative z-0 rounded-lg transition-all duration-200 hover:scale-125 text-xl block after:block after:content-[''] after:absolute after:h-[3px] after:bg-gradient-to-r from-green-300 to-green-600 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center
       "
     >
       {icon}
@@ -109,11 +112,11 @@ const NavItem = ({ icon, to, children }) => {
 };
 
 const MobileNavItem = ({ to, children }) => {
-  let classname = "z-[2] text-gray-300 text-center hover:text-white block px-3 py-2 rounded-md text-base font-medium ";
+  let classname = "z-[2] text-gray-300 text-center hover:text-white block px-3 py-2 rounded-md text-xl font-medium ";
   return (
     <Link
       to={to}
-      className={ children.type == "button" ? classname : classname + "hover:bg-gray-700" }
+      className={ children.type === "button" ? classname : classname + "hover:bg-gray-700" }
     >
       {children}
     </Link>

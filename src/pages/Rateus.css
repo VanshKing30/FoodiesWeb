@@ -1,0 +1,169 @@
+/* Basic reset and styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg') no-repeat fixed;
+    background-size: cover;
+    background-position: center;
+    color: #333;
+}
+
+/* Header and Navbar styling */
+header {
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+    padding: 10px 0;
+}
+
+.navigbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo img {
+    height: 40px;
+}
+
+.ul1 {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.ul1 li {
+    margin: 0 10px;
+}
+
+.ul1 li a {
+    color: #fff; /* White text color for navbar items */
+    text-decoration: none;
+    font-size: 16px;
+    padding: 5px 10px;
+    transition: color 0.3s, border-bottom 0.3s;
+}
+
+.ul1 li a:hover, #active-page {
+    color: #f29523; /* Highlight color for active and hovered items */
+    border-bottom: 2px solid #f29523;
+}
+
+/* Container styling */
+.container {
+    max-width: 600px;
+    margin: 100px auto; /* Adjusted margin for better spacing */
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly less transparent white background */
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.container:hover {
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+    transform: scale(1.02);
+}
+
+h1 {
+    margin-bottom: 10px; /* Increased margin-bottom */
+    color: #333;
+    font-size: 36px; /* Increased font size */
+}
+
+
+/* Star rating styling */
+.stars {
+    display: flex;
+    justify-content: center;
+    font-size: 30px; /* Increased font size for stars */
+    margin-bottom: 20px;
+}
+
+.stars input[type="radio"] {
+    display: none;
+}
+
+.stars label {
+    cursor: pointer;
+    color: #ccc;
+    transition: color 0.3s;
+    padding: 0 5px; /* Padding between stars */
+}
+
+/* Highlight stars up to and including the hovered or checked star */
+.stars label:hover,
+.stars label:hover ~ label {
+    color: #ffcf00;
+}
+
+.stars input[type="radio"]:checked ~ label {
+    color: #ffcf00;
+}
+
+.stars input[type="radio"]:checked ~ label ~ label {
+    color: #ccc;
+}
+
+.stars label.active {
+    color: #ffcf00;
+}
+
+/* Feedback textarea styling */
+.feedback {
+    width: calc(100% - 40px);
+    height: 150px;
+    padding: 15px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    resize: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Submit button styling */
+.submit-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 30px;
+    background-color: #0056b3;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Additional responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        margin: 50px 20px;
+        padding: 20px;
+    }
+
+    .ul1 li a {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ul1 {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .ul1 li {
+        margin: 5px 0;
+    }
+}
