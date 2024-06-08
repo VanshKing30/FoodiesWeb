@@ -63,6 +63,24 @@ const Contact = () => {
   const handleSaveToDB = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    try {
+      // Save to MongoDB
+      await axios.post('http://localhost:3000/api/contact', form);
+
+      setLoading(false);
+      alert("Your message has been saved to the database.");
+
+      setForm({
+        name: "",
+        email: "",
+        message: "",
+      });
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+      alert("Sorry, something went wrong while saving your message to the database. Please try again later.");
+    }
   };
 
   return (
@@ -126,6 +144,13 @@ const Contact = () => {
               className='bg-tertiary py-3 px-8 rounded-xl outline-none w-fit text-white font-bold shadow-md shadow-primary bg-cyan-700 hover:scale-[1.1]'
             >
               {loading ? "Sending..." : "Send_Mail"}
+            </button>
+            <button
+              type='button'
+              onClick={handleSaveToDB}
+              className='bg-tertiary py-3 px-8 rounded-xl outline-none w-fit text-white font-bold shadow-md shadow-primary bg-cyan-800 hover:scale-[1.1]'
+            >
+              {loading ? "Saving..." : "Submit"}
             </button>
           </div>
         </form></div>

@@ -3,6 +3,7 @@ const User = require("../models/studentLoginInfo");
 const jwt = require("jsonwebtoken");
 const Canteen = require("../models/canteenLoginInfo");
 const Session = require("../models/session");
+const Contact = require('../models/Contact');
 
 require("dotenv").config();
 
@@ -393,3 +394,22 @@ exports.changeCanteenPassword = async (req, res) => {
     message: "Password updated successfully.",
   });
 };
+
+
+//contactUs
+
+exports.saveContactMessage = async (req, res) => {
+  try {
+    const { name, email, message } = req.body;
+    if (!name || !email || !message) {
+      return res.status(400).send('All fields are required');
+    }
+    const newContact = new Contact({ name, email, message });
+    await newContact.save();
+    res.status(201).send('Message received');
+  } catch (error) {
+    console.error('Error saving message:', error.message, error);
+    res.status(500).send('Error saving message');
+  }
+};
+
