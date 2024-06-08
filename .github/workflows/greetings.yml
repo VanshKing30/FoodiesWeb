@@ -1,7 +1,6 @@
 name: "Greetings"
 
 on:
-  fork:
   push:
     branches: [main]
   issues:
@@ -13,8 +12,8 @@ jobs:
   welcome:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: EddieHubCommunity/gh-action-community/src/welcome@main
+      - uses: actions/checkout@v3
+      - uses: EddieHubCommunity/gh-action-community/welcome@main
         with:
           github-token: ${{ secrets.GH_TOKEN }}
           issue-message: |
