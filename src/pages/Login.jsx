@@ -38,9 +38,9 @@ function Login() {
 
       // Assuming the response contains a token
       const token = response.data.token;
-      
+
       localStorage.setItem("token", token);
-      localStorage.setItem('canteenId', response.data.cantId);
+      localStorage.setItem("canteenId", response.data.cantId);
       if (formData.accountType === "User") {
         toast.success("User logged in successfully!");
         navigate("/home");
@@ -80,8 +80,12 @@ function Login() {
               className="bg-white p-8 rounded shadow-lg w-80"
               onSubmit={submitHandler}
             >
-              <h1 className="text-gray-800 font-bold text-2xl mb-1">Hello Again!</h1>
-              <p className="text-sm font-normal text-gray-600 mb-7">Welcome Back</p>
+              <h1 className="text-gray-800 font-bold text-2xl mb-1">
+                Hello Again!
+              </h1>
+              <p className="text-sm font-normal text-gray-600 mb-7">
+                Welcome Back
+              </p>
 
               <div className="mb-4">
                 <input
@@ -122,10 +126,14 @@ function Login() {
                   onChange={changeHandler}
                 />
                 <span
-                  className="absolute right-3 top-3 cursor-pointer"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
                   onClick={() => setShowPassword((prev) => !prev)}
                 >
-                  {showPassword ? <AiOutlineEye size={20} /> : <AiOutlineEyeInvisible size={20} />}
+                  {showPassword ? (
+                    <AiOutlineEye size={20} />
+                  ) : (
+                    <AiOutlineEyeInvisible size={20} />
+                  )}
                 </span>
               </div>
 
@@ -134,7 +142,7 @@ function Login() {
                 className="w-full bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 py-2 rounded-2xl text-white font-semibold mb-2"
                 disabled={loading}
               >
-                {loading ? 'Loading...' : 'Login'}
+                {loading ? "Loading..." : "Login"}
               </button>
 
               <Link to="/signup">
