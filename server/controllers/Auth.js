@@ -7,6 +7,7 @@ const Session = require("../models/session");
 require("dotenv").config();
 
 exports.studentSignup = async (req, res) => {
+  console.log("This is jwt", process.env.JWT_SECRET);
   try {
     console.log(req.body);
     const { name, email, collegeName, accountType, password } = await req.body;
