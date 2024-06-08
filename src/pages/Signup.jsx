@@ -370,7 +370,7 @@ function Signup() {
 							`}
 						</style>
 					</div>
-					);
+					{/* Resolvedd the bug here  */}
 				</>
 			)}
 		</>
