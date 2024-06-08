@@ -11,6 +11,8 @@ import SectionPage from './pages/SectionPage';
 import News from './pages/News';
 import NotFound from './pages/NotFound';
 import Loader from './components/Loader/Loader';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 const Layout = ({ children }) => {
   return (
@@ -28,6 +30,8 @@ function App() {
         <Route path='/home' element={<Layout><Home /></Layout>} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
+        <Route path='/forgotPassword' element={<ForgotPassword/>} />
+        <Route path='/api/v1/newPassword/:id/:token' element={<ResetPassword/>} />
         <Route path='/about' element={<Layout><About /></Layout>} />
         <Route path='/section/:_id' element={<Layout><SectionPage /></Layout>} />
         <Route path="/menu/:_id" element={<Layout><MenuPage /></Layout>} />
