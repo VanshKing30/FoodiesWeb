@@ -83,10 +83,10 @@ function AddFoodItem() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className="flex justify-center items-center h-screen bg-white">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded shadow-lg w-full max-w-sm"
+        className="bg-white p-6 rounded shadow-lg w-full max-w-sm border-2"
       >
         <h1 className="text-xl font-bold mb-4">Add Food Item</h1>
         <div className="mb-4">

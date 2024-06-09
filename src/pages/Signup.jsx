@@ -86,9 +86,10 @@ function Signup() {
     ) {
       if (formData.accountType === "User") {
 
-        // const apiUrl = `http://localhost:8000/api/v1/studentSignup`;
-        const apiUrl = `http://localhost:8000/api/v1/studentSignup`;
-        try {
+         // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
+          const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
+         try {
+
           setLoading(true);
 
           const response = await axios.post(apiUrl, formData);
@@ -102,8 +103,10 @@ function Signup() {
           setLoading(false);
         }
       } else {
-        const apiUrl = `http://localhost:8000/api/v1/canteenSignup`;
-        // const apiUrl = `http://localhost:8000/api/v1/canteenSignup`;
+
+        const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenSignup`
+       // const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
+
         try {
           setLoading(true);
 

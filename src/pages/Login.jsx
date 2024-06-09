@@ -32,7 +32,7 @@ function Login() {
       setLoading(true);
 
       // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentLogin`;
-       const apiUrl = `http://localhost:3000/api/v1/studentLogin`;
+       const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentLogin`;
 
 
       // Assuming the response contains a token
@@ -60,6 +60,8 @@ function Login() {
         .post(apiUrl, formData)
         .then((response) => {
           setLoading(false);
+          localStorage.setItem("canteenId", response.data.cantId);
+          localStorage.setItem("token", response.data.token);
           toast.success("User Logged in ");
           navigate(
             `/section/${response.data.cantId}`
