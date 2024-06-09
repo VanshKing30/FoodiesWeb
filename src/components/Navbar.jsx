@@ -32,6 +32,7 @@ const Navbar = () => {
                 <NavItem to="/home">Home</NavItem>
                 <NavItem to="/about">About</NavItem>
                 <NavItem to="/news">News</NavItem>
+                <NavItem to="/rateus">RateUs</NavItem>
               </div>
             </div>
           </div>
@@ -81,6 +82,7 @@ const Navbar = () => {
               <MobileNavItem to="/home">Home</MobileNavItem>
               <MobileNavItem to="/about">About us</MobileNavItem>
               <MobileNavItem to="/news">News</MobileNavItem>
+              <MobileNavItem to="/rateus">Rate us</MobileNavItem>
               <MobileNavItem to="/">
                 <button
                   className="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded transition duration-300 ease-in-out transform hover:scale-105"
