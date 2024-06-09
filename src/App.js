@@ -11,6 +11,8 @@ import SectionPage from './pages/SectionPage';
 import News from './pages/News';
 import NotFound from './pages/NotFound';
 import Loader from './components/Loader/Loader';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import { ThemeProvider } from './themeContext';
 import EditProfile from './pages/EditProfile';
 
@@ -31,6 +33,8 @@ function App() {
           <Route path='/home' element={<Layout><Home /></Layout>} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='/forgotPassword' element={<ForgotPassword/>} />
+          <Route path='/api/v1/newPassword/:id/:token' element={<ResetPassword/>} />
           <Route path='/about' element={<Layout><About /></Layout>} />
           <Route path='/rateus' element={<Layout><Rateus /></Layout>} />
           <Route path='/section/:_id' element={<Layout><SectionPage /></Layout>} />

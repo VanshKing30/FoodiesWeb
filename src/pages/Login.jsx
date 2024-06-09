@@ -32,9 +32,17 @@ function Login() {
       ? `${process.env.REACT_APP_BASE_URL}/studentLogin`
       : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
 
+
+      // const apiUrl = `http://localhost:4000/api/v1/studentLogin`;
+       const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentLogin`;
+
+
+      // Assuming the response contains a token
+      const token = response.data.token;
     try {
       const response = await axios.post(apiUrl, formData);
       const { token, cantId } = response.data;
+
 
       localStorage.setItem("token", token);
       localStorage.setItem("canteenId", cantId);
@@ -46,11 +54,36 @@ function Login() {
         toast.success("User Logged in ");
         navigate(`/section/${cantId}`);
       }
+    }
+
+    else{
+      const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
+	// const apiUrl = `http://localhost:4000/api/v1/canteenLogin`;
+      setLoading(true);
+
+      axios
+        .post(apiUrl, formData)
+        .then((response) => {
+          setLoading(false);
+          localStorage.setItem("canteenId", response.data.cantId);
+          localStorage.setItem("token", response.data.token);
+          toast.success("User Logged in ");
+          navigate(
+            `/section/${response.data.cantId}`
+          );
+        })
+        .catch((error) => {
+          //Loader will show till the api fetching is done as show as promise is resolved the loader will be not shown
+          setLoading(false);
+          toast.error("Failed to login");
+        });
+
     } catch (error) {
       toast.error("Failed To Login. Please try again.");
       console.error(error);
     } finally {
       setLoading(false);
+
     }
   }
 
@@ -134,6 +167,13 @@ function Login() {
                   )}
                 </span>
               </div>
+	        	<div className="mb-4 flex justify-end text-red-400">
+           	 <Link to="/forgotPassword">
+              	<h1 classname="font-medium">
+               	 Forogt Password ?
+              	</h1>
+             </Link>
+          	</div>
 
               <button
                 type="submit"
