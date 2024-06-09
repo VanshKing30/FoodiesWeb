@@ -43,10 +43,12 @@ function News() {
                 Trending Food and Health News
               </h1>
               <main className="mt-24 p-4">
-                <div className="container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {articles.map((article, index) => (
-                    <NewsCard key={index} article={article} />
-                  ))}
+                <div style={{display:"flex",justifyContent:"center"}}>
+                  <div className="container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 ">
+                    {articles.map((article, index) => (
+                      <NewsCard key={index} article={article} />
+                    ))}
+                  </div>
                 </div>
               </main>
               <Footer />

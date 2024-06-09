@@ -85,6 +85,7 @@ function Signup() {
       lengthValidated
     ) {
       if (formData.accountType === "User") {
+
         // const apiUrl = `http://localhost:8000/api/v1/studentSignup`;
         const apiUrl = `http://localhost:8000/api/v1/studentSignup`;
         try {
@@ -122,6 +123,7 @@ function Signup() {
       }
     } else {
       toast.error("Password must pass all the criteria");
+
     }
   }
 
