@@ -14,6 +14,7 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 exports.studentSignup = async (req, res) => {
+  console.log("This is jwt", process.env.JWT_SECRET);
   try {
     console.log(req.body);
     const {
@@ -247,6 +248,7 @@ exports.changeStudentPassword = async (
 //for canteens
 
 exports.canteenSignup = async (req, res) => {
+  console.log("Received signup request with data:", req.body);
   try {
     const {
       name,
@@ -260,9 +262,10 @@ exports.canteenSignup = async (req, res) => {
     );
 
     if (existingCanteen) {
+      console.log("User already exists with email:", email);
       return res.status(400).json({
         success: false,
-        message: "User alredy exist",
+        message: "User already exists",
       });
     }
 
@@ -274,6 +277,7 @@ exports.canteenSignup = async (req, res) => {
         10
       );
     } catch (error) {
+      console.error("Error in hashing password:", error);
       return res.status(500).json({
         success: false,
         message: "Error in hashing password",
@@ -288,20 +292,26 @@ exports.canteenSignup = async (req, res) => {
       password: hashedPassword,
     });
 
+    // Create a token
+    const token = jwt.sign({ id: canteen._id, email: canteen.email }, process.env.JWT_SECRET, {
+      expiresIn: '1h', // Set token expiration time as needed
+    });
+
+    console.log("User created successfully with ID:", canteen._id);
     return res.status(200).json({
       success: true,
-      message: "User created succesfully",
+      message: "User created successfully",
       cantId: canteen._id,
+      token,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Error during user registration:", error);
     return res.status(500).json({
       success: false,
-      message: "USer can not be registred",
+      message: "User cannot be registered",
     });
   }
 };
-
 exports.canteenLogin = async (req, res) => {
   try {
     const { email, password } = req.body;

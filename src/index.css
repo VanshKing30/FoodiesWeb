@@ -15,7 +15,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+.text-3xl{
+  margin-top: 80px;
+  margin-bottom: 40px;
+}
 ::-webkit-scrollbar{
   display: none;
 }

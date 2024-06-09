@@ -4,8 +4,6 @@ import NewsCard from "../components/NewsCard";
 import Loader from "../components/Loader/Loader";
 import Footer from "../components/Footer";
 
-
-
 function News() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -39,21 +37,22 @@ function News() {
           (
             <div className="text-gray-900 min-h-screen">
               <Navbar />
-              <h1 className="text-3xl font-bold text-center mt-20 text-white p-6">
+              <h1 className="text-3xl font-bold text-center mt-20 text-white p-6 dark:text-slate-900">
                 Trending Food and Health News
               </h1>
               <main className="mt-24 p-4">
-                <div className="container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {articles.map((article, index) => (
-                    <NewsCard key={index} article={article} />
-                  ))}
+                <div style={{display:"flex",justifyContent:"center"}}>
+                  <div className="container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 ">
+                    {articles.map((article, index) => (
+                      <NewsCard key={index} article={article} />
+                    ))}
+                  </div>
                 </div>
               </main>
               <Footer />
             </div>
           )
       }
-
     </>
   );
 }
