@@ -34,12 +34,15 @@ function Login() {
       // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentLogin`;
        const apiUrl = `http://localhost:3000/api/v1/studentLogin`;
 
-       try {
-        setLoading(true);
-      
-        const response = await axios.post(apiUrl, formData);
-      
-        toast.success("Unable to login!"); 
+
+      // Assuming the response contains a token
+      const token = response.data.token;
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("canteenId", response.data.cantId);
+      if (formData.accountType === "User") {
+        toast.success("User logged in successfully!");
+
         navigate("/home");
       } catch (error) {
         toast.error("Failed To Login. Please try again."); 
@@ -97,7 +100,10 @@ function Login() {
           <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
             <form
               className="bg-white p-8 rounded shadow-lg w-80"
-              onSubmit={submitHandler}>
+
+              onSubmit={submitHandler}
+            >
+
               <h1 className="text-gray-800 font-bold text-2xl mb-1">
                 Hello Again!
               </h1>
@@ -144,10 +150,14 @@ function Login() {
                   onChange={changeHandler}
                 />
                 <span
-                  className="absolute right-3 top-3 cursor-pointer"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
                   onClick={() => setShowPassword((prev) => !prev)}
                 >
-                  {showPassword ? <AiOutlineEye size={20} /> : <AiOutlineEyeInvisible size={20} />}
+                  {showPassword ? (
+                    <AiOutlineEye size={20} />
+                  ) : (
+                    <AiOutlineEyeInvisible size={20} />
+                  )}
                 </span>
               </div>
 
@@ -156,7 +166,7 @@ function Login() {
                 className="w-full bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 py-2 rounded-2xl text-white font-semibold mb-2"
                 disabled={loading}
               >
-                {loading ? 'Loading...' : 'Login'}
+                {loading ? "Loading..." : "Login"}
               </button>
 
               <Link to="/signup">
