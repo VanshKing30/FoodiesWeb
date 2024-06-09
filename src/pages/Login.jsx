@@ -26,52 +26,31 @@ function Login() {
 
   async function submitHandler(event) {
     event.preventDefault();
+    setLoading(true);
 
-    if (formData.accountType === "User") {
-      //Loader will show till the api fetching is done as show as promise is resolved the loader will be not shown
-      setLoading(true);
+    const apiUrl = formData.accountType === "User"
+      ? "http://localhost:3000/api/v1/studentLogin"
+      : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
 
-      // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentLogin`;
-       const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentLogin`;
-
-
-      // Assuming the response contains a token
-      const token = response.data.token;
+    try {
+      const response = await axios.post(apiUrl, formData);
+      const { token, cantId } = response.data;
 
       localStorage.setItem("token", token);
-      localStorage.setItem("canteenId", response.data.cantId);
+      localStorage.setItem("canteenId", cantId);
+
       if (formData.accountType === "User") {
         toast.success("User logged in successfully!");
-
         navigate("/home");
-      } catch (error) {
-        toast.error("Failed To Login. Please try again."); 
-        console.error(error); 
-      } finally {
-        setLoading(false);
+      } else {
+        toast.success("User Logged in ");
+        navigate(`/section/${cantId}`);
       }
-    }
-
-    else{
-      const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
-      setLoading(true);
-
-      axios
-        .post(apiUrl, formData)
-        .then((response) => {
-          setLoading(false);
-          localStorage.setItem("canteenId", response.data.cantId);
-          localStorage.setItem("token", response.data.token);
-          toast.success("User Logged in ");
-          navigate(
-            `/section/${response.data.cantId}`
-          );
-        })
-        .catch((error) => {
-          //Loader will show till the api fetching is done as show as promise is resolved the loader will be not shown
-          setLoading(false);
-          toast.error("Failed to login");
-        });
+    } catch (error) {
+      toast.error("Failed To Login. Please try again.");
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -83,14 +62,9 @@ function Login() {
         <div className="h-screen md:flex">
           <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 bg-no-repeat justify-around items-center hidden">
             <div>
-              <img
-                src={logo}
-                alt="logo"
-                className="w-48 h-12 mb-2"
-              />
+              <img src={logo} alt="logo" className="w-48 h-12 mb-2" />
               <p className="text-white mt-1 ml-3">
-                Connecting You to Your College
-                Canteens
+                Connecting You to Your College Canteens
               </p>
             </div>
             <div className="absolute -bottom-32 -left-40 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
@@ -102,10 +76,8 @@ function Login() {
           <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
             <form
               className="bg-white p-8 rounded shadow-lg w-80"
-
               onSubmit={submitHandler}
             >
-
               <h1 className="text-gray-800 font-bold text-2xl mb-1">
                 Hello Again!
               </h1>
