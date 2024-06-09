@@ -29,7 +29,7 @@ function Login() {
     setLoading(true);
 
     const apiUrl = formData.accountType === "User"
-      ? "http://localhost:3000/api/v1/studentLogin"
+      ? `${process.env.REACT_APP_BASE_URL}/studentLogin`
       : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
 
     try {
