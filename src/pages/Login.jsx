@@ -118,7 +118,7 @@ function Login() {
 
               <div className="relative mb-4">
                 <input
-                  
+                  required 
                   className="w-full py-2 px-3 border border-gray-300 rounded-2xl"
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
