@@ -10,7 +10,7 @@ const Footer = () => {
     window.scrollTo(0, 0);
   };
   return (
-    <div className='bg-blue-950 text-white p-10'>
+    <div className="text-white p-3 font-semibold shadow-lg bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 w-full z-40 dark:bg-cadetblue dark:bg-none">
         <div className='md:flex'>
             <div className='md:w-1/2 flex mb-8 md:mb-0 items-top'>
                 <img src="https://foodies-web-app.vercel.app/static/media/logo2.db6bd5028bb56c6572c7.png" alt="" className='h-16 w-48'/>
