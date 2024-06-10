@@ -30,8 +30,8 @@ const Contact = () => {
 
     try {
       await emailjs.send(
-        'service_kssjugu',//write service id here 
-        'template_cg8qcij',//write templet id here
+        'process.env.SERVICE_ID',//write service id here 
+        'process.env.TEMPLETS_ID',//write templet id here
         {
           from_name: form.name,
           to_name: "FoodiesWeb",
@@ -39,7 +39,7 @@ const Contact = () => {
           to_email: "info@foodiweb.com",
           message: form.message,
         },
-        'EJL9aVO3EzRRm0IYF'  //write public_key here
+        'process.env.PUBLIC_KEY'  //write public_key here
       );
     
    

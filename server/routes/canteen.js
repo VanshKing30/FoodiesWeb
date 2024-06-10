@@ -4,6 +4,7 @@ const router = express.Router();
 // Import canteen controller functions
 const canteenController = require('../controllers/canteenController');
 const { auth, isCanteen } = require('../middlewares/auth');
+const multerUploads = require('../middleware/multer.middleware');
 
 router.get('/getcanteen' , canteenController.getAllCanteen);
 
@@ -36,5 +37,8 @@ router.post('/:id/dinner/add',auth,isCanteen, canteenController.addDinnerDish);
 
 // Route to remove a dinner dish for a specific canteen
 router.delete('/:id/dinner/remove',auth,isCanteen, canteenController.removeDinnerDish);
+
+//router to update profile
+router.put('/:id/update', auth, isCanteen, multerUploads, canteenController.updateCanteen);
 
 module.exports = router;

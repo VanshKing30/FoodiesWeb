@@ -3,6 +3,7 @@ const Breakfast = require('../models/breakfast');
 const Lunch = require('../models/lunch');
 const Dinner = require('../models/dinner');
 const Canteen = require("../models/canteenLoginInfo");
+const { uploader } = require('../config/cloudinaryConfig');
 
 
 
@@ -180,6 +181,37 @@ const removeDinnerDish = asyncHandler(async (req, res, next) => {
   res.json({ message: 'Dish removed successfully' });
 
 });
+// Controller function to update canteen details
+
+
+const updateCanteen = async (req, res, next) => {
+  try {
+    const canteenId = req.params.id;
+    const { name, email, collegeName, canteenImage } = req.body;
+
+    // Process the uploaded file if exists
+    if (req.file) {
+      const filePath = `public/uploads/${req.file.originalname}`;
+      const uploadedImage = await uploader.upload(filePath);
+      req.body.canteenImage = uploadedImage.url; // Update the canteenImage with the uploaded file URL
+    }
+
+    // Find the canteen by ID and update
+    const canteen = await Canteen.findByIdAndUpdate(canteenId, req.body, { new: true });
+
+    // If canteen not found, return error
+    if (!canteen) {
+      return res.status(404).json({ success: false, message: "Canteen not found" });
+    }
+
+    // Return success response
+    res.status(200).json({ success: true, message: "Canteen updated successfully", data: canteen });
+  } catch (error) {
+    // Handle errors
+    console.error("Error updating canteen:", error);
+    res.status(500).json({ success: false, error: "Internal Server Error" });
+  }
+};
 
 module.exports = {
   getCanteenDashboard,
@@ -193,4 +225,5 @@ module.exports = {
   getBreakfast,
   getLunch,
   getDinner,
+  updateCanteen,
 };

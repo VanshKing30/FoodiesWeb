@@ -6,7 +6,11 @@ const cors = require("cors");
 var cookieParser = require("cookie-parser");
 const PORT = process.env.PORT || 4000;
 const cloudinaryConfig = require("./config/cloudinaryConfig");
+<<<<<<< HEAD
 const contactRoutes = require('./routes/contactRoutes');
+=======
+const bodyParser = require('body-parser');
+>>>>>>> upstream/main
 
 app.use(
   cors({
@@ -16,7 +20,8 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 app.use("*", cloudinaryConfig.cloudinaryConfig);
-
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 //mounting routes
 const studentRoutes = require("./routes/student");
 const canteenRoutes = require("./routes/canteen");
