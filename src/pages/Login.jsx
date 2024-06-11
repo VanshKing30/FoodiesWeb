@@ -33,17 +33,12 @@ function Login() {
       : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
 
 
-      // const apiUrl = `http://localhost:4000/api/v1/studentLogin`;
-       const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentLogin`;
+      //  const apiUrl = `http://localhost:8000/api/v1/studentLogin`;
+      // // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentLogin`;
 
-
-      // Assuming the response contains a token
-      const token = response.data.token;
     try {
       const response = await axios.post(apiUrl, formData);
       const { token, cantId } = response.data;
-
-
       localStorage.setItem("token", token);
       localStorage.setItem("canteenId", cantId);
 
@@ -51,39 +46,14 @@ function Login() {
         toast.success("User logged in successfully!");
         navigate("/home");
       } else {
-        toast.success("User Logged in ");
+        toast.success("User Logged in");
         navigate(`/section/${cantId}`);
       }
-    }
-
-    else{
-      const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
-	// const apiUrl = `http://localhost:4000/api/v1/canteenLogin`;
-      setLoading(true);
-
-      axios
-        .post(apiUrl, formData)
-        .then((response) => {
-          setLoading(false);
-          localStorage.setItem("canteenId", response.data.cantId);
-          localStorage.setItem("token", response.data.token);
-          toast.success("User Logged in ");
-          navigate(
-            `/section/${response.data.cantId}`
-          );
-        })
-        .catch((error) => {
-          //Loader will show till the api fetching is done as show as promise is resolved the loader will be not shown
-          setLoading(false);
-          toast.error("Failed to login");
-        });
-
     } catch (error) {
-      toast.error("Failed To Login. Please try again.");
-      console.error(error);
+      const errorMessage = error.response?.data?.message || "Failed to login. Please try again.";
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
-
     }
   }
 
@@ -148,7 +118,7 @@ function Login() {
 
               <div className="relative mb-4">
                 <input
-                  required
+                  required 
                   className="w-full py-2 px-3 border border-gray-300 rounded-2xl"
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
@@ -167,13 +137,11 @@ function Login() {
                   )}
                 </span>
               </div>
-	        	<div className="mb-4 flex justify-end text-red-400">
-           	 <Link to="/forgotPassword">
-              	<h1 classname="font-medium">
-               	 Forogt Password ?
-              	</h1>
-             </Link>
-          	</div>
+              <div className="mb-4 flex justify-end text-red-400">
+                <Link to="/forgotPassword">
+                  <h1 className="font-medium">Forgot Password ?</h1>
+                </Link>
+              </div>
 
               <button
                 type="submit"
@@ -184,7 +152,7 @@ function Login() {
               </button>
 
               <Link to="/signup">
-                <span className="text-sm  hover:text-blue-500 cursor-pointer">
+                <span className="text-sm hover:text-blue-500 cursor-pointer">
                   Don't have an account? Sign Up
                 </span>
               </Link>
