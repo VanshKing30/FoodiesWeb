@@ -88,6 +88,7 @@ function Signup() {
 
          // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
           const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
+          // const apiUrl = `http://localhost:8000/api/v1/studentSignUp`;
          try {
 
           setLoading(true);
@@ -97,8 +98,9 @@ function Signup() {
           toast.success("Account Created Successfully!");
           navigate("/home");
         } catch (error) {
-          toast.error("Failed To Create Account. Please try again.");
-          console.error(error);
+          const errorMessage = error.response?.data?.message || "Failed to login. Please try again.";
+      toast.error(errorMessage);
+      console.log("This is our error ", error);
         } finally {
           setLoading(false);
         }
