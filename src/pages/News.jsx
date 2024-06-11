@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import NewsCard from "../components/NewsCard";
 import Loader from "../components/Loader/Loader";
 import Footer from "../components/Footer";
+import FloatBtn from "../components/FloatBtn/FloatBtn";
 
 function News() {
   const [articles, setArticles] = useState([]);
@@ -50,6 +51,7 @@ function News() {
                 </div>
               </main>
               <Footer />
+              <FloatBtn />
             </div>
           )
       }
