@@ -17,6 +17,13 @@ const Footer = () => {
             </div>
             <div className='md:w-1/2 md:flex'>
                 <div className='md:w-1/2'>
+                    <p className='text-gray-200 underline'>Contact</p>
+                    <ul className='text-gray-300 py-4'>
+                        <a href="https://www.linkedin.com/in/vansh-waldeo-81ab31285/"><li className='py-1 cursor-pointer'>Project Admin</li></a>
+                        <a href="https://www.linkedin.com/in/princepal0/"><li className='py-1 cursor-pointer'>Project Mentor</li></a>
+                    </ul>
+                </div>
+                <div className='md:w-1/2'>
                     <p className='text-gray-200 underline'>Company</p>
                     <ul className='text-gray-300 py-4'>
                         <li className='py-1 cursor-pointer' onClick={() => handleNavigation('/about')}>About Us</li>
