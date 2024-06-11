@@ -32,7 +32,7 @@ const About = () => {
                 data-aos="fade-right"
                 className="md:w-1/2 order-2 md:order-1 md:px-20 px-10 text-center md:text-start"
               >
-                <h2 className="text-2xl sm:text-2xl md:text-3xl font-bold text-green-500 mb-2">
+                <h2 className="text-2xl sm:text-2xl md:text-3xl font-bold text-green-500 mb-4">
                   Welcome to Foodies
                 </h2>
                 <p className="text-lg leading-relaxed mb-4 p-4 sm:p-0 dark:text-slate-900">
@@ -68,7 +68,7 @@ const About = () => {
                 data-aos="fade-left"
                 className="md:w-1/2 order-2 md:order-2 md:px-8 text-center md:text-start px-4"
               >
-                <h2 className="text-2xl md:text-3xl font-bold text-green-500 mb-2">
+                <h2 className="text-2xl md:text-3xl font-bold text-green-500 mb-4">
                   Our Journey
                 </h2>
                 <p className="text-lg leading-relaxed mb-4 p-4 sm:p-0 dark:text-slate-900">
