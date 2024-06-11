@@ -28,7 +28,7 @@ const getBreakfast = async(req , res , next) =>{
   
   try{
     const id  = req.params.id;
-    console.log(id);
+  
     const breakfastData = await Breakfast.find({ canteen: id }).select("dish").select("dishId").exec();
 
     
@@ -118,9 +118,9 @@ const addBreakfastDish = asyncHandler(async (req, res, next) => {
 // Controller function to remove a breakfast dish
 const removeBreakfastDish = asyncHandler(async (req, res, next) => {
   const canteenId = req.params.id;
-  const { dish } = req.body;
+  const  dish  = req.body._id;
 
-  await Breakfast.deleteOne({ canteen: canteenId, dish }).exec();
+  await Breakfast.deleteOne({ _id:dish }).exec();
   res.json({ message: 'Dish removed successfully' });
 });
 
@@ -147,9 +147,9 @@ const addLunchDish = asyncHandler(async (req, res, next) => {
 // Controller function to remove a lunch dish
 const removeLunchDish = asyncHandler(async (req, res, next) => {
   const canteenId = req.params.id;
-  const { dish } = req.body;
+  const  dish  = req.body._id;
 
-  await Lunch.deleteOne({ canteen: canteenId, dish }).exec();
+  await Lunch.deleteOne({ _id:dish }).exec();
   res.json({ message: 'Dish removed successfully' });
 
 });
@@ -175,9 +175,9 @@ const addDinnerDish = asyncHandler(async (req, res, next) => {
 // Controller function to remove a dinner dish
 const removeDinnerDish = asyncHandler(async (req, res, next) => {
   const canteenId = req.params.id;
-  const { dish } = req.body;
+  const  dish  = req.body._id;
 
-  await Dinner.deleteOne({ canteen: canteenId, dish }).exec();
+  await Dinner.deleteOne({ _id:dish }).exec();
   res.json({ message: 'Dish removed successfully' });
 
 });

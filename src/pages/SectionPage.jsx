@@ -6,6 +6,7 @@ import Loader from '../components/Loader/Loader';
 import Footer from '../components/Footer';
 import AddFoodItem from './AddFoodItem';
 import EditProfile from './EditProfile';
+import Foodlist from './Foodlist';
 
 const SectionPage = () => {
   const { _id } = useParams();
@@ -18,6 +19,7 @@ const SectionPage = () => {
   const [selectedDinnerRecipes, setSelectedDinnerRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [canteenData, setCanteenData] = useState();
+  const [view, setView] = useState('add');
 
   const getCanteenData = async () => {
     try {
@@ -62,22 +64,36 @@ const SectionPage = () => {
   };
 
   return (
-    <div className=" text-center text-gray-900 min-h-screen pt-[8rem]">
+    <div className="text-center text-gray-900 min-h-screen pt-[8rem]">
       <Navbar />
-     <div className='relative bg-white'>
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          <button
-            className="absolute end-0 right-16 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => navigate(`/edit-profile/${_id}`)}
-          >
-            Edit Profile
-          </button>
-          <AddFoodItem />
-        </>
-      )}
+      <div className='relative bg-white'>
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            <button
+              className="absolute end-0 right-16 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => navigate(`/edit-profile/${_id}`)}
+            >
+              Edit Profile
+            </button>
+            <div className="flex justify-center mt-4">
+              <button
+                className={`mx-4 py-2 px-4 rounded ${view === 'add' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                onClick={() => setView('add')}
+              >
+                Add Product
+              </button>
+              <button
+                className={`mx-4 py-2 px-4 rounded ${view === 'list' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                onClick={() => setView('list')}
+              >
+                Product List
+              </button>
+            </div>
+            {view === 'add' ? <AddFoodItem /> : <Foodlist />}
+          </>
+        )}
       </div>
       <Footer />
     </div>
