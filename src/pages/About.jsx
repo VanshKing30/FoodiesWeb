@@ -4,7 +4,8 @@ import Navbar from "../components/Navbar";
 import AOS from "aos";
 import Loader from "../components/Loader/Loader";
 import "aos/dist/aos.css";
-import Footer from "../components/Footer"
+import Footer from "../components/Footer";
+import FloatBtn from "../components/FloatBtn/FloatBtn";
 
 const About = () => {
   const [loading,setLoading] = useState(false);
@@ -198,6 +199,7 @@ const About = () => {
           </div>
         </div>
         <Footer />
+        <FloatBtn />
       </div>
       )
     }

@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import CanteenList from "../components/CanteenList";
 import Loader from "../components/Loader/Loader";
 import Footer from "../components/Footer";
+import FloatBtn from "../components/FloatBtn/FloatBtn";
 
 function Home() {
 
@@ -56,7 +57,9 @@ function Home() {
           <CanteenList canteenData = {canteenData}/>
         </div>
         <Footer />
+        <FloatBtn />
       </div>
+      
       )
     }
     </>
