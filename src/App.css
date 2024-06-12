@@ -39,3 +39,7 @@ li:hover span {
     transform: rotate(360deg);
   }
 }
+
+.nav-item{
+  font-size: 52px !important;
+}
