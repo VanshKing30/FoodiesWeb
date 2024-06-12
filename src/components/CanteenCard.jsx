@@ -13,24 +13,24 @@ const CanteenCard = ({ canteen }) => {
   };
 
   return (
-    <div className="max-w-(18rem) bg-white border border-white rounded-lg shadow dark:bg-white dark:border-white my-4 mx-2 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-green-500/50">
-      <div className="flex justify-center">
+    <div className="max-w-(18rem) bg-white border border-white rounded-lg shadow dark:bg-white dark:border-white my-6 mx-4 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-green-500/50">
+      <div className="card-image-container">
         <a href="#">
           <img
-            className="rounded-t-lg h-48 w-full object-cover"
+            className="card-image"
             src={canteen.canteenImage ? canteen.canteenImage : myHotel}
             alt={canteen.name}
           />
         </a>
       </div>
-      <div className="p-5">
+      <div className="card-content">
         <a href="#">
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-900 hover:text-green-500 transition duration-300 ease-in-out overflow-x-hidden">
             {canteen.name}
           </h5>
         </a>
         <Link
-          to={`/menu/${canteen._id}`}
+           to={`/canteen/${canteen._id}`}
           className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition duration-300 ease-in-out"
         >
           View Menu
