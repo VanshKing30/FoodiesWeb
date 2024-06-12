@@ -21,9 +21,9 @@ exports.studentSignup = async (req, res) => {
       await req.body;
 
     if (password !== confirmPassword) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
-        message: "password and confirm password didn't match, try again",
+        message: "Password and Confirm password didn't match, try again",
       });
     }
 
