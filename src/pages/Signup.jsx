@@ -86,8 +86,8 @@ function Signup() {
       lengthValidated
     ) {
       if (formData.accountType === "User") {
-        // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
-        const apiUrl = `http://localhost:3000/api/v1/studentSignUp`;
+        const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
+        // const apiUrl = `http://localhost:3000/api/v1/studentSignUp`;
         try {
           setLoading(true);
 
