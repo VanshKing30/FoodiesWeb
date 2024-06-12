@@ -108,7 +108,16 @@ Welcome to Foodies, your go-to college dining companion! Designed for seamless c
    ```
    PORT=3000
    DATABASE_URL="http://localhost:21713/foods"
+   EMAIL="The email from which forgot the password email will be sent"
+   MAILPASS="password for the email ( app password )"
    ``` 
+   ### **STEP TO GENERATE APP PASSWORD**
+   1) Enable 2-step verification if not
+   **In https://myaccount.google.com/security, do you see 2-step verification set to ON**
+   
+   2) Generate APP PASSWORD by clicking on below link 
+   **https://myaccount.google.com/apppasswords?rapt=AEjHL4PAhcbtFEpLwfNtVix3bfiGe71GdrW_Naiuvp_NVnMZyTd0UR07M2mVnEyWzkw9kB99YVhhfEVtjxTi3QWSZ39biK-zGwnghm0u778vwmlh6TFbmh4**
+
 
 6. **Start the Backend Server (in the terminal within the /server directory):** <br>
    In the terminal where you navigated to the /server directory, run the following command to start the backend server:
