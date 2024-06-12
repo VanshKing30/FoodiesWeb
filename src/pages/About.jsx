@@ -35,7 +35,7 @@ const About = () => {
                 <h2 className="text-2xl sm:text-2xl md:text-3xl font-bold text-green-500 mb-2">
                   Welcome to Foodies
                 </h2>
-                <p className="text-lg leading-relaxed mb-4 p-4 sm:p-0 dark:text-slate-900">
+                <p className="text-lg leading-relaxed sm:mb-0 md:mb-4 p-4 sm:p-0 dark:text-slate-900">
                   Hey there, lovely Foodies! We're the passionate minds behind the
                   scenes, and we're thrilled to tell you a little bit about who we
                   are and why we created Foodies.
@@ -56,7 +56,7 @@ const About = () => {
             <div className="flex flex-col md:flex-row justify-between items-center md:space-x-8 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 py-[10%] dark:bg-white dark:bg-none">
               <div
                 data-aos="fade-right"
-                className="md:w-1/2 order-1 md:order-1 md:px-10 md:pl-16 mt-[5rem] flex justify-center"
+                className="md:w-1/2 order-1 md:order-1 md:px-10 md:pl-16 mt-[1rem]  md:mt-[3rem] lg:mt-[5rem] flex justify-center"
               >
                 <img
                   src="https://images.unsplash.com/photo-1455849318743-b2233052fcff?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -85,16 +85,16 @@ const About = () => {
               </div>
             </div>
   
-            <div className="w-full flex-col justify-center py-[7rem] bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 md:bg-gray-900 dark:bg-aliceblue dark:bg-none">
+            <div className="w-full flex-col justify-center py-[2rem] md:py-[4rem] lg:py-[7rem] bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 md:bg-gray-900 dark:bg-aliceblue dark:bg-none">
               <h2
                 data-aos="fade-up"
-                className="text-3xl font-bold text-green-500 mb-2 md:mb-4 text-center"
+                className="text-3xl font-bold text-green-500 mb-1 md:mb-4 py-[1rem] md:py-[3rem] lg:py-[5rem] text-center"
               >
                 Our Mission
               </h2>
               <div
                 data-aos="fade-up"
-                className="w-full flex flex-col md:flex-row justify-center py-[5rem] text-center"
+                className="w-full flex flex-col md:flex-row justify-center py-[2rem]  text-center"
               >
                 <div className="w-[95%] lg:w-[25%] bg-gray-950 p-[2rem] hover:translate-y-2 items-center md:mx-[1rem] mx-auto rounded-xl shadow-2xl shadow-slate-800 mb-[5rem] md:mb-0 dark:bg-cadetblue">
                   <img
