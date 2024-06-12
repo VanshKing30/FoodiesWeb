@@ -28,30 +28,27 @@ function Login() {
     event.preventDefault();
     setLoading(true);
 
-    const apiUrl = formData.accountType === "User"
-      ? `${process.env.REACT_APP_BASE_URL}/studentLogin`
-      : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
-
-
-      //  const apiUrl = `http://localhost:8000/api/v1/studentLogin`;
-      // // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentLogin`;
+    const apiUrl =
+      formData.accountType === "User"
+        ? `${process.env.REACT_APP_BASE_URL}/studentLogin`
+        : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
 
     try {
       const response = await axios.post(apiUrl, formData);
       const { token, cantId } = response.data;
-    
 
       if (formData.accountType === "User") {
         toast.success("User logged in successfully!");
         navigate("/home");
       } else {
         toast.success("User Logged in");
-      localStorage.setItem("token", token);
-      localStorage.setItem("canteenId", cantId);
+        localStorage.setItem("token", token);
+        localStorage.setItem("canteenId", cantId);
         navigate(`/section/${cantId}`);
       }
     } catch (error) {
-      const errorMessage = error.response?.data?.message || "Failed to login. Please try again.";
+      const errorMessage =
+        error.response?.data?.message || "Failed to login. Please try again.";
       toast.error(errorMessage);
     } finally {
       setLoading(false);
@@ -119,7 +116,7 @@ function Login() {
 
               <div className="relative mb-4">
                 <input
-                  required 
+                  required
                   className="w-full py-2 px-3 border border-gray-300 rounded-2xl"
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
@@ -138,7 +135,11 @@ function Login() {
                   )}
                 </span>
               </div>
-              <div className="mb-4 flex justify-end text-red-400">
+              <div className="remember-me mb-4">
+                <input type="checkbox" id="remember-me" />
+                <label htmlFor="remember-me"> Remember me</label>
+              </div>
+              <div className="mb-4 flex justify-center text-red-400">
                 <Link to="/forgotPassword">
                   <h1 className="font-medium">Forgot Password ?</h1>
                 </Link>
