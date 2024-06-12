@@ -39,14 +39,15 @@ function Login() {
     try {
       const response = await axios.post(apiUrl, formData);
       const { token, cantId } = response.data;
-      localStorage.setItem("token", token);
-      localStorage.setItem("canteenId", cantId);
+    
 
       if (formData.accountType === "User") {
         toast.success("User logged in successfully!");
         navigate("/home");
       } else {
         toast.success("User Logged in");
+      localStorage.setItem("token", token);
+      localStorage.setItem("canteenId", cantId);
         navigate(`/section/${cantId}`);
       }
     } catch (error) {
