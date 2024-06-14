@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
@@ -15,13 +15,29 @@ function Login() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false); 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("rememberedEmail");
+    if (storedEmail) {
+      setFormData((prevData) => ({
+        ...prevData,
+        email: storedEmail,
+      }));
+      setRememberMe(true);
+    }
+  }, []);
 
   function changeHandler(event) {
     setFormData((prevData) => ({
       ...prevData,
       [event.target.name]: event.target.value,
     }));
+  }
+
+  function rememberMeHandler(event) {
+    setRememberMe(event.target.checked);
   }
 
   async function submitHandler(event) {
@@ -45,6 +61,13 @@ function Login() {
         localStorage.setItem("token", token);
         localStorage.setItem("canteenId", cantId);
         navigate(`/section/${cantId}`);
+      }
+
+      
+      if (rememberMe) {
+        localStorage.setItem("rememberedEmail", formData.email);
+      } else {
+        localStorage.removeItem("rememberedEmail");
       }
     } catch (error) {
       const errorMessage =
@@ -135,10 +158,17 @@ function Login() {
                   )}
                 </span>
               </div>
+
               <div className="remember-me mb-4">
-                <input type="checkbox" id="remember-me" />
+                <input
+                  type="checkbox"
+                  id="remember-me"
+                  checked={rememberMe}
+                  onChange={rememberMeHandler}
+                />
                 <label htmlFor="remember-me"> Remember me</label>
               </div>
+
               <div className="mb-4 flex justify-center text-red-400">
                 <Link to="/forgotPassword">
                   <h1 className="font-medium">Forgot Password ?</h1>
