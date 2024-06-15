@@ -17,13 +17,16 @@ exports.studentSignup = async (req, res) => {
   console.log("This is jwt", process.env.JWT_SECRET);
   try {
     console.log(req.body);
-    const {
-      name,
-      email,
-      collegeName,
-      accountType,
-      password,
-    } = await req.body;
+    const { name, email, collegeName, accountType, password, confirmPassword } =
+      await req.body;
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "Password and Confirm password didn't match, try again",
+      });
+    }
+
     const existingUser = await User.findOne({
       email,
     });
@@ -38,10 +41,7 @@ exports.studentSignup = async (req, res) => {
     let hashedPassword;
 
     try {
-      hashedPassword = await bcrypt.hash(
-        password,
-        10
-      );
+      hashedPassword = await bcrypt.hash(password, 10);
     } catch (error) {
       console.log(error);
       return res.status(500).json({
@@ -99,19 +99,10 @@ exports.studentLogin = async (req, res) => {
       accountType: user.accountType,
     };
 
-    if (
-      await bcrypt.compare(
-        password,
-        user.password
-      )
-    ) {
-      let token = jwt.sign(
-        payload,
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "2h",
-        }
-      );
+    if (await bcrypt.compare(password, user.password)) {
+      let token = jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: "2h",
+      });
 
       // creating a session
       const session = new Session({
@@ -191,9 +182,7 @@ exports.studentLogout = async (req, res) => {
 
     const token =
       req.cookies?.token ||
-      req
-        ?.header("Authorization")
-        ?.replace("Bearer ", "");
+      req?.header("Authorization")?.replace("Bearer ", "");
 
     if (token) {
       await Session.findOneAndDelete({ token });
@@ -213,17 +202,11 @@ exports.studentLogout = async (req, res) => {
 };
 
 // Controller for changing the student password
-exports.changeStudentPassword = async (
-  req,
-  res
-) => {
+exports.changeStudentPassword = async (req, res) => {
   const { oldPassword, newPassword } = req.body;
   const user = await User.findById(req.user._id);
 
-  const isPasswordCorrect = await bcrypt.compare(
-    oldPassword,
-    user.password
-  );
+  const isPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
 
   if (!isPasswordCorrect) {
     return res.status(400).json({
@@ -232,10 +215,7 @@ exports.changeStudentPassword = async (
     });
   }
 
-  const newHashedPassword = await bcrypt.hash(
-    newPassword,
-    10
-  );
+  const newHashedPassword = await bcrypt.hash(newPassword, 10);
 
   user.password = newHashedPassword;
   user.save();
@@ -251,16 +231,8 @@ exports.changeStudentPassword = async (
 exports.canteenSignup = async (req, res) => {
   console.log("Received signup request with data:", req.body);
   try {
-    const {
-      name,
-      email,
-      collegeName,
-      accountType,
-      password,
-    } = req.body;
-    const existingCanteen = await Canteen.findOne(
-      { email }
-    );
+    const { name, email, collegeName, accountType, password } = req.body;
+    const existingCanteen = await Canteen.findOne({ email });
 
     if (existingCanteen) {
       console.log("User already exists with email:", email);
@@ -273,10 +245,7 @@ exports.canteenSignup = async (req, res) => {
     let hashedPassword;
 
     try {
-      hashedPassword = await bcrypt.hash(
-        password,
-        10
-      );
+      hashedPassword = await bcrypt.hash(password, 10);
     } catch (error) {
       console.error("Error in hashing password:", error);
       return res.status(500).json({
@@ -294,9 +263,13 @@ exports.canteenSignup = async (req, res) => {
     });
 
     // Create a token
-    const token = jwt.sign({ id: canteen._id, email: canteen.email }, process.env.JWT_SECRET, {
-      expiresIn: '1h', // Set token expiration time as needed
-    });
+    const token = jwt.sign(
+      { id: canteen._id, email: canteen.email },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h", // Set token expiration time as needed
+      }
+    );
 
     console.log("User created successfully with ID:", canteen._id);
     return res.status(200).json({
@@ -340,19 +313,10 @@ exports.canteenLogin = async (req, res) => {
       accountType: canteen.accountType,
     };
 
-    if (
-      await bcrypt.compare(
-        password,
-        canteen.password
-      )
-    ) {
-      let token = jwt.sign(
-        payload,
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "2h",
-        }
-      );
+    if (await bcrypt.compare(password, canteen.password)) {
+      let token = jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: "2h",
+      });
       canteen = canteen.toObject();
       canteen.token = token;
       console.log(canteen);
@@ -433,9 +397,7 @@ exports.canteenLogout = async (req, res) => {
 
     const token =
       req.cookies?.token ||
-      req
-        ?.header("Authorization")
-        ?.replace("Bearer ", "");
+      req?.header("Authorization")?.replace("Bearer ", "");
 
     if (token) {
       await Session.findOneAndDelete({ token });
@@ -455,19 +417,11 @@ exports.canteenLogout = async (req, res) => {
 };
 
 // Canteen Reset Password
-exports.changeCanteenPassword = async (
-  req,
-  res
-) => {
+exports.changeCanteenPassword = async (req, res) => {
   const { oldPassword, newPassword } = req.body;
-  const user = await Canteen.findById(
-    req.user._id
-  );
+  const user = await Canteen.findById(req.user._id);
 
-  const isPasswordCorrect = await bcrypt.compare(
-    oldPassword,
-    user.password
-  );
+  const isPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
 
   if (!isPasswordCorrect) {
     return res.status(400).json({
@@ -476,10 +430,7 @@ exports.changeCanteenPassword = async (
     });
   }
 
-  const newHashedPassword = await bcrypt.hash(
-    newPassword,
-    10
-  );
+  const newHashedPassword = await bcrypt.hash(newPassword, 10);
 
   user.password = newHashedPassword;
   user.save();
@@ -494,9 +445,7 @@ exports.changeCanteenPassword = async (
 exports.forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
-    const existingUser = await findUserByEmail(
-      email
-    );
+    const existingUser = await findUserByEmail(email);
 
     if (!existingUser) {
       return res.status(400).json({
@@ -504,20 +453,18 @@ exports.forgotPassword = async (req, res) => {
         message: "User does not exist",
       });
     } else {
-      const tokenReturn =
-        forgotPasswordToken(existingUser);
+      const tokenReturn = forgotPasswordToken(existingUser);
       // const link = `http://localhost:3000/api/v1/newPassword/${existingUser._id}/${tokenReturn}`;
 
       const link = `https://foodies-web-app.vercel.app/api/v1/newPassword/${existingUser._id}/${tokenReturn}`;
 
-      const transporter =
-        nodemailer.createTransport({
-          service: "gmail",
-          auth: {
-            user: process.env.EMAIL,
-            pass: process.env.MAILPASS,
-          },
-        });
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.MAILPASS,
+        },
+      });
 
       const mailOptions = {
         from: process.env.EMAIL,
@@ -540,14 +487,11 @@ exports.forgotPassword = async (req, res) => {
         `,
       };
 
-      await transporter.sendMail(
-        mailOptions,
-        function (error, info) {
-          if (error) {
-            console.log(error);
-          }
+      await transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
         }
-      );
+      });
 
       res.status(201).json({
         msg: "You should receive an email",
@@ -607,23 +551,16 @@ exports.resetPassword = async (req, res) => {
     const oldUser = await findUserById(id);
 
     if (!oldUser) {
-      return res
-        .status(404)
-        .json("User not found");
+      return res.status(404).json("User not found");
     }
 
     const verify = verifyToken(oldUser, token);
     if (verify.id !== id) {
-      return res
-        .status(201)
-        .json({ change: false });
+      return res.status(201).json({ change: false });
     }
 
     const salt = await bcrypt.genSalt(10);
-    const newPassword = await bcrypt.hash(
-      password,
-      salt
-    );
+    const newPassword = await bcrypt.hash(password, salt);
 
     if (oldUser instanceof User) {
       await User.findByIdAndUpdate(id, {
@@ -637,10 +574,7 @@ exports.resetPassword = async (req, res) => {
 
     res.status(201).json({ change: true });
   } catch (error) {
-    console.log(
-      "Error while changing password: ",
-      error
-    );
+    console.log("Error while changing password: ", error);
     res.status(500).json("Some error occurred!");
   }
 };
