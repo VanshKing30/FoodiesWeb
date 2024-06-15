@@ -29,7 +29,7 @@ function Home() {
     try{
       setLoading(true);
       const getCanteen = await fetch(
-        `${process.env.REACT_APP_BASE_URL}/api/v1/getcanteen`,
+        `${process.env.REACT_APP_BASE_URL}/getcanteen`,
         {
           method : "GET",
           headers :{

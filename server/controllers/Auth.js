@@ -3,9 +3,7 @@ const User = require("../models/studentLoginInfo");
 const jwt = require("jsonwebtoken");
 const Canteen = require("../models/canteenLoginInfo");
 const Session = require("../models/session");
-<<<<<<< HEAD
 const Contact = require('../models/Contact');
-=======
 const {
   forgotPasswordToken,
   verifyToken,
@@ -13,7 +11,6 @@ const {
   findUserById,
 } = require("../utils/PasswordTokenAndUser");
 const nodemailer = require("nodemailer");
->>>>>>> upstream/main
 
 require("dotenv").config();
 
@@ -445,7 +442,6 @@ exports.changeCanteenPassword = async (req, res) => {
   });
 };
 
-<<<<<<< HEAD
 
 //contactUs
 
@@ -464,7 +460,6 @@ exports.saveContactMessage = async (req, res) => {
   }
 };
 
-=======
 // verify user for reset password
 exports.forgotPassword = async (req, res) => {
   try {
@@ -602,4 +597,3 @@ exports.resetPassword = async (req, res) => {
     res.status(500).json("Some error occurred!");
   }
 };
->>>>>>> upstream/main
