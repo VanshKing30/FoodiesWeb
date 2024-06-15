@@ -9,16 +9,27 @@ import CanteenList from "../components/CanteenList";
 import Loader from "../components/Loader/Loader";
 import Footer from "../components/Footer";
 
-function Home() {
+import FloatBtn from "../components/FloatBtn/FloatBtn";
+import { useAuth } from "../authContext";
+import { useNavigate } from "react-router-dom";
 
+function Home() {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [canteenData , setCanteenData] = useState();
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+     if(!isAuthenticated){
+       navigate('/')
+     }
+  }, [])
 
   const getCanteenData = async () =>{
     try{
       setLoading(true);
       const getCanteen = await fetch(
-        `http://localhost:8000/api/v1/getcanteen`,
+        `${process.env.REACT_APP_BASE_URL}/api/v1/getcanteen`,
         {
           method : "GET",
           headers :{

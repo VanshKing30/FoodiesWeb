@@ -14,11 +14,12 @@ import Loader from './components/Loader/Loader';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import { ThemeProvider } from './themeContext';
-<<<<<<< HEAD
+
 import ContactUs from './pages/ContactUs';
-=======
+
+import { AuthProvider } from './authContext'
 import EditProfile from './pages/EditProfile';
->>>>>>> upstream/main
+
 
 const Layout = ({ children }) => {
   return (
@@ -30,6 +31,7 @@ const Layout = ({ children }) => {
 
 function App() {
   return (
+    <AuthProvider>
     <ThemeProvider>
       <div className=''>
         <Routes>
@@ -37,12 +39,11 @@ function App() {
           <Route path='/home' element={<Layout><Home /></Layout>} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
-<<<<<<< HEAD
           <Route path='/contact' element={<ContactUs />} />
-=======
+
           <Route path='/forgotPassword' element={<ForgotPassword/>} />
           <Route path='/api/v1/newPassword/:id/:token' element={<ResetPassword/>} />
->>>>>>> upstream/main
+
           <Route path='/about' element={<Layout><About /></Layout>} />
           <Route path='/rateus' element={<Layout><Rateus /></Layout>} />
           <Route path='/section/:_id' element={<Layout><SectionPage /></Layout>} />
@@ -54,6 +55,7 @@ function App() {
         </Routes>
       </div>
     </ThemeProvider>
+    </AuthProvider>
   );
 }
 
