@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import { ThemeContext } from "../themeContext";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import Modalupdate from "../components/Modal-update"; // Import the modal component
 
 const Foodlist = () => {
   const { _id } = useParams();
@@ -13,6 +14,8 @@ const Foodlist = () => {
   const [lunch, setLunch] = useState();
   const [dinner, setDinner] = useState();
   const [loading, setLoading] = useState(false);
+  const [editModal, setEditModal] = useState(false);
+  const [currentDish, setCurrentDish] = useState({});
   const { theme } = useContext(ThemeContext);
 
   const getFoodData = async (mealType, setMeal) => {
@@ -67,6 +70,45 @@ const Foodlist = () => {
     }
   };
 
+  const handleEditClick = (dish, mealType) => {
+    setCurrentDish({ ...dish, mealType });
+    setEditModal(true);
+  };
+
+  const handleUpdateDish = async (updatedDish) => {
+    try {
+      const token = localStorage.getItem("token"); // Retrieve token from local storage
+      if (!token) {
+        toast.error("Token is missing. Please log in.");
+        return;
+      }
+
+      await axios.put(
+        `http://localhost:8000/api/v1/${_id}/${currentDish.mealType}/updateitem`,
+        {
+          dishId: currentDish._id,
+          dish: updatedDish,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+          }
+        }
+      );
+
+      toast.success("Dish updated successfully!");
+      setEditModal(false);
+      // Re-fetch the data to update the list
+      getFoodData("breakfast", setBreakfast);
+      getFoodData("lunch", setLunch);
+      getFoodData("dinner", setDinner);
+    } catch (error) {
+      console.error("Error updating dish: ", error);
+      toast.error("Failed to update dish.");
+    }
+  };
+
   useEffect(() => {
     getFoodData("breakfast", setBreakfast);
     getFoodData("lunch", setLunch);
@@ -116,7 +158,20 @@ const Foodlist = () => {
                       >
                         • {dish.dish}
                         <span
-                          className="absolute right-5 top-2 opacity-0 transition-opacity duration-300"
+                          className="absolute right-12 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleEditClick(dish, "breakfast");
+                          }}
+                        >
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png"
+                            alt="Edit Icon"
+                            className="h-6 w-6"
+                          />
+                        </span>
+                        <span
+                          className="absolute right-5 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleDelete(dish._id, "breakfast");
@@ -155,6 +210,19 @@ const Foodlist = () => {
                         } hover:text-black mt-2`}
                       >
                         • {dish.dish}
+                        <span
+                          className="absolute right-12 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleEditClick(dish, "lunch");
+                          }}
+                        >
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png"
+                            alt="Edit Icon"
+                            className="h-6 w-6"
+                          />
+                        </span>
                         <span
                           className="absolute right-5 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
                           onClick={(e) => {
@@ -196,6 +264,19 @@ const Foodlist = () => {
                       >
                         • {dish.dish}
                         <span
+                          className="absolute right-12 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleEditClick(dish, "dinner");
+                          }}
+                        >
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png"
+                            alt="Edit Icon"
+                            className="h-6 w-6"
+                          />
+                        </span>
+                        <span
                           className="absolute right-5 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
                           onClick={(e) => {
                             e.stopPropagation();
@@ -218,6 +299,15 @@ const Foodlist = () => {
         )}
       </div>
       <Footer />
+
+      {/* Modal for Editing Dish */}
+      {editModal && (
+        <Modalupdate
+          dish={currentDish.dish}
+          onUpdate={(updatedDish) => handleUpdateDish(updatedDish)}
+          onCancel={() => setEditModal(false)}
+        />
+      )}
     </div>
   );
 };
