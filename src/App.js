@@ -14,8 +14,12 @@ import Loader from './components/Loader/Loader';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import { ThemeProvider } from './themeContext';
+
+import ContactUs from './pages/ContactUs';
+
 import { AuthProvider } from './authContext'
 import EditProfile from './pages/EditProfile';
+
 
 const Layout = ({ children }) => {
   return (
@@ -35,8 +39,11 @@ function App() {
           <Route path='/home' element={<Layout><Home /></Layout>} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='/contact' element={<ContactUs />} />
+
           <Route path='/forgotPassword' element={<ForgotPassword/>} />
           <Route path='/api/v1/newPassword/:id/:token' element={<ResetPassword/>} />
+
           <Route path='/about' element={<Layout><About /></Layout>} />
           <Route path='/rateus' element={<Layout><Rateus /></Layout>} />
           <Route path='/section/:_id' element={<Layout><SectionPage /></Layout>} />

@@ -32,6 +32,18 @@ const Navbar = () => {
             </div>
             
             <div className="hidden md:block">
+
+              <div className="ml-16 flex gap-6 items-baseline space-x-4">
+
+                <NavItem to="/home">Home</NavItem>
+                <NavItem to="/about">About</NavItem>
+                <NavItem to="/news">News</NavItem>
+                <NavItem to="/contact">Contact</NavItem>
+                <NavItem to="/home" icon={<IconHome />}>Home</NavItem>
+                <NavItem to="/about" icon={<IconAbout />}>About</NavItem>
+                <NavItem to="/news" icon={<IconNews />}>News</NavItem>
+                <NavItem to="/rateus" icon={<IconRateUs />}>RateUs</NavItem>
+
               <div className="ml-16 flex gap-6 items-baseline space-x-4   ">
                 <NavItem to="/home" className="nav-item" icon={<IconHome />}>Home</NavItem>
                 <NavItem to="/about" className="nav-item"  icon={<IconAbout />}>About</NavItem>
@@ -86,7 +98,10 @@ const Navbar = () => {
               <MobileNavItem to="/home">Home</MobileNavItem>
               <MobileNavItem to="/about">About us</MobileNavItem>
               <MobileNavItem to="/news">News</MobileNavItem>
+              <MobileNavItem to="/contact">Contact</MobileNavItem>
+
               <MobileNavItem to="/rateus">Rateus</MobileNavItem>
+
               <MobileNavItem to="/">
               <Link to="/">
                 <button
