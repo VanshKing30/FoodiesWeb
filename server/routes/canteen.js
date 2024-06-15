@@ -41,4 +41,9 @@ router.delete('/:id/dinner/remove',auth,isCanteen, canteenController.removeDinne
 //router to update profile
 router.put('/:id/update', auth, isCanteen, multerUploads, canteenController.updateCanteen);
 
+// New update routes
+router.put('/:id/breakfast/updateitem',auth,isCanteen, canteenController.updateBreakfastDish);
+router.put('/:id/lunch/updateitem',auth,isCanteen, canteenController.updateLunchDish);
+router.put('/:id/dinner/updateitem',auth,isCanteen, canteenController.updateDinnerDish);
+
 module.exports = router;
