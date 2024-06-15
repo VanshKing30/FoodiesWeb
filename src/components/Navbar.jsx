@@ -47,7 +47,9 @@ const Navbar = () => {
             <div>
               <Link to="/">
                 <button
-                  className="bg-green-400 hover:bg-green-600 hover:shadow-green text-white py-3 px-4 w-full h-auto text-l relative z-0 rounded-full transition-all duration-200 hover:scale-110"
+
+                  className={`py-1 px-2 rounded w-full h-auto text-l relative z-0 rounded-lg transition-all duration-200 hover:scale-110 ${theme === 'dark' ? 'bg-white text-black' : 'bg-green-400 hover:bg-green-600 hover:shadow-green text-white'}`}
+
                 >
                   Log out
                 </button>
@@ -88,7 +90,9 @@ const Navbar = () => {
               <MobileNavItem to="/">
               <Link to="/">
                 <button
-                  className="bg-green-400 hover:bg-green-600 hover:shadow-green text-white py-3 px-4 w-3/2 h-auto text-l relative z-0 rounded-full transition-all duration-200 hover:scale-110"
+
+                  className={`rounded transition duration-300 ease-in-out transform hover:scale-105 ${theme === 'dark' ? 'bg-white text-black' : 'bg-green-500 hover:bg-green-700 text-white py-1 px-2'}`}
+
                 >
                   Log out
                 </button>
@@ -133,4 +137,6 @@ const IconAbout = () => <span>ℹ️</span>;
 const IconNews = () => <span>📰</span>;
 const IconRateUs = () => <span>⭐</span>;
 
+
 export default Navbar;
+
