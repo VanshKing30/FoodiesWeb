@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from "react";
+
+import React, { useState, useContext } from "react";
+
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import logo from "../assets/logo2.png";
 import Loader from "../components/Loader/Loader";
-
+import { useAuth } from "../authContext";
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
     accountType: "",
     password: "",
   });
-
+  const { checkAuthentication } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false); 
@@ -44,17 +46,19 @@ function Login() {
     event.preventDefault();
     setLoading(true);
 
-    const apiUrl =
-      formData.accountType === "User"
-        ? `${process.env.REACT_APP_BASE_URL}/studentLogin`
-        : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
+
+       const apiUrl = `http://localhost:8000/api/v1/studentLogin`;
+      // // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentLogin`;
+
 
     try {
       const response = await axios.post(apiUrl, formData);
       const { token, cantId } = response.data;
 
       if (formData.accountType === "User") {
+        console.log("This is our login response", response.data);
         toast.success("User logged in successfully!");
+        checkAuthentication(token);
         navigate("/home");
       } else {
         toast.success("User Logged in");

@@ -94,7 +94,7 @@ function Signup() {
           const response = await axios.post(apiUrl, formData);
 
           toast.success("Account Created Successfully!");
-          navigate("/home");
+          navigate("/");
         } catch (error) {
           const errorMessage =
             error.response?.data?.message ||
