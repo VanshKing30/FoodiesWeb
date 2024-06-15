@@ -14,6 +14,7 @@ import Loader from './components/Loader/Loader';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import { ThemeProvider } from './themeContext';
+import { AuthProvider } from './authContext'
 import EditProfile from './pages/EditProfile';
 
 const Layout = ({ children }) => {
@@ -26,6 +27,7 @@ const Layout = ({ children }) => {
 
 function App() {
   return (
+    <AuthProvider>
     <ThemeProvider>
       <div className=''>
         <Routes>
@@ -46,6 +48,7 @@ function App() {
         </Routes>
       </div>
     </ThemeProvider>
+    </AuthProvider>
   );
 }
 

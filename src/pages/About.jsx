@@ -6,8 +6,12 @@ import Loader from "../components/Loader/Loader";
 import "aos/dist/aos.css";
 import Footer from "../components/Footer";
 import FloatBtn from "../components/FloatBtn/FloatBtn";
+import { useAuth } from "../authContext";
+import { useNavigate } from "react-router-dom";
 
 const About = () => {
+  const navigate = useNavigate()
+  const { isAuthenticated } = useAuth();
   const [loading,setLoading] = useState(false);
 
   useEffect(() => {
@@ -15,6 +19,12 @@ const About = () => {
     AOS.init({ duration: 800 });
     setLoading(false);
   }, []);
+
+  useEffect(() => {
+    if(!isAuthenticated){
+      navigate('/')
+    }
+ }, [])
 
   return (
     <>

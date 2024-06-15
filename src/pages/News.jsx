@@ -4,10 +4,19 @@ import NewsCard from "../components/NewsCard";
 import Loader from "../components/Loader/Loader";
 import Footer from "../components/Footer";
 import FloatBtn from "../components/FloatBtn/FloatBtn";
-
+import { useAuth } from "../authContext";
+import { useNavigate } from "react-router-dom";
 function News() {
+  const navigate = useNavigate()
+  const { isAuthenticated } = useAuth();
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if(!isAuthenticated){
+      navigate('/')
+    }
+  }, [])
 
   const fetchNews = async (query) => {
     try {

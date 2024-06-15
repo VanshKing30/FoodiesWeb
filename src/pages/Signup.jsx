@@ -16,8 +16,9 @@ function Signup() {
     collegeName: "",
     accountType: "",
     password: "",
+    confirmPassword: "",
   });
-
+  const [showconfirmPassword, setshowconfirmPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [lowerValidated, setLowerValidated] = useState(false);
   const [upperValidated, setUpperValidated] = useState(false);
@@ -85,29 +86,27 @@ function Signup() {
       lengthValidated
     ) {
       if (formData.accountType === "User") {
-
-         // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
-          const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
-          // const apiUrl = `http://localhost:8000/api/v1/studentSignUp`;
-         try {
-
+        const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentSignup`;
+        // const apiUrl = `http://localhost:3000/api/v1/studentSignUp`;
+        try {
           setLoading(true);
 
           const response = await axios.post(apiUrl, formData);
 
           toast.success("Account Created Successfully!");
-          navigate("/home");
+          navigate("/");
         } catch (error) {
-          const errorMessage = error.response?.data?.message || "Failed to login. Please try again.";
-      toast.error(errorMessage);
-      console.log("This is our error ", error);
+          const errorMessage =
+            error.response?.data?.message ||
+            "Failed to login. Please try again.";
+          toast.error(errorMessage);
+          console.log("This is our error ", error);
         } finally {
           setLoading(false);
         }
       } else {
-
-        const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenSignup`
-       // const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
+        const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
+        // const apiUrl = `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
 
         try {
           setLoading(true);
@@ -128,7 +127,6 @@ function Signup() {
       }
     } else {
       toast.error("Password must pass all the criteria");
-
     }
   }
 
@@ -239,6 +237,27 @@ function Signup() {
                   </span>
                 </div>
 
+                <div className="relative mb-4">
+                  <input
+                    required
+                    className="w-full py-2 px-3 border border-gray-300 rounded-2xl"
+                    type={showconfirmPassword ? "text" : "Password"}
+                    placeholder="Confirm Password"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={changeHandler}
+                  />
+                  <span
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                    onClick={() => setshowconfirmPassword((prev) => !prev)}
+                  >
+                    {showconfirmPassword ? (
+                      <AiOutlineEye size={20} />
+                    ) : (
+                      <AiOutlineEyeInvisible size={20} />
+                    )}
+                  </span>
+                </div>
                 <button
                   type="submit"
                   className="w-full bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 py-2 rounded-2xl text-white font-semibold mb-2"

@@ -1,21 +1,35 @@
-import React, { useState } from "react";
+
+import React, { useState, useContext } from "react";
+
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import logo from "../assets/logo2.png";
 import Loader from "../components/Loader/Loader";
-
+import { useAuth } from "../authContext";
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
     accountType: "",
     password: "",
   });
-
+  const { checkAuthentication } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false); 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("rememberedEmail");
+    if (storedEmail) {
+      setFormData((prevData) => ({
+        ...prevData,
+        email: storedEmail,
+      }));
+      setRememberMe(true);
+    }
+  }, []);
 
   function changeHandler(event) {
     setFormData((prevData) => ({
@@ -24,34 +38,44 @@ function Login() {
     }));
   }
 
+  function rememberMeHandler(event) {
+    setRememberMe(event.target.checked);
+  }
+
   async function submitHandler(event) {
     event.preventDefault();
     setLoading(true);
 
-    const apiUrl = formData.accountType === "User"
-      ? `${process.env.REACT_APP_BASE_URL}/studentLogin`
-      : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
 
-
-      //  const apiUrl = `http://localhost:8000/api/v1/studentLogin`;
+       const apiUrl = `http://localhost:8000/api/v1/studentLogin`;
       // // const apiUrl = `${process.env.REACT_APP_BASE_URL}/studentLogin`;
+
 
     try {
       const response = await axios.post(apiUrl, formData);
       const { token, cantId } = response.data;
-    
 
       if (formData.accountType === "User") {
+        console.log("This is our login response", response.data);
         toast.success("User logged in successfully!");
+        checkAuthentication(token);
         navigate("/home");
       } else {
         toast.success("User Logged in");
-      localStorage.setItem("token", token);
-      localStorage.setItem("canteenId", cantId);
+        localStorage.setItem("token", token);
+        localStorage.setItem("canteenId", cantId);
         navigate(`/section/${cantId}`);
       }
+
+      
+      if (rememberMe) {
+        localStorage.setItem("rememberedEmail", formData.email);
+      } else {
+        localStorage.removeItem("rememberedEmail");
+      }
     } catch (error) {
-      const errorMessage = error.response?.data?.message || "Failed to login. Please try again.";
+      const errorMessage =
+        error.response?.data?.message || "Failed to login. Please try again.";
       toast.error(errorMessage);
     } finally {
       setLoading(false);
@@ -119,7 +143,7 @@ function Login() {
 
               <div className="relative mb-4">
                 <input
-                  required 
+                  required
                   className="w-full py-2 px-3 border border-gray-300 rounded-2xl"
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
@@ -138,7 +162,18 @@ function Login() {
                   )}
                 </span>
               </div>
-              <div className="mb-4 flex justify-end text-red-400">
+
+              <div className="remember-me mb-4">
+                <input
+                  type="checkbox"
+                  id="remember-me"
+                  checked={rememberMe}
+                  onChange={rememberMeHandler}
+                />
+                <label htmlFor="remember-me"> Remember me</label>
+              </div>
+
+              <div className="mb-4 flex justify-center text-red-400">
                 <Link to="/forgotPassword">
                   <h1 className="font-medium">Forgot Password ?</h1>
                 </Link>

@@ -212,6 +212,74 @@ const updateCanteen = async (req, res, next) => {
     res.status(500).json({ success: false, error: "Internal Server Error" });
   }
 };
+//controller to update Canteen FoddItem Details
+
+
+// Controller function to update a breakfast dish
+const updateBreakfastDish = asyncHandler(async (req, res, next) => {
+  const canteenId = req.params.id;
+  const { dishId, dish } = req.body;
+
+  try {
+    const updatedDish = await Breakfast.findOneAndUpdate(
+      { _id: dishId, canteen: canteenId },
+      { $set: { dish } },
+      { new: true }
+    ).exec();
+
+    if (!updatedDish) {
+      return res.status(404).json({ message: 'Dish not found' });
+    }
+
+    res.json({ message: 'Dish updated successfully', data: updatedDish });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+//Controller to update Lunch
+const updateLunchDish = asyncHandler(async (req, res, next) => {
+  const canteenId = req.params.id;
+  const { dishId, dish } = req.body;
+
+  try {
+    const updatedDish = await Lunch.findOneAndUpdate(
+      { _id: dishId, canteen: canteenId },
+      { $set: { dish } },
+      { new: true }
+    ).exec();
+
+    if (!updatedDish) {
+      return res.status(404).json({ message: 'Dish not found' });
+    }
+
+    res.json({ message: 'Dish updated successfully', data: updatedDish });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+//Controller to update dinner
+
+const updateDinnerDish = asyncHandler(async (req, res, next) => {
+  const canteenId = req.params.id;
+  const { dishId, dish } = req.body;
+
+  try {
+    const updatedDish = await Dinner.findOneAndUpdate(
+      { _id: dishId, canteen: canteenId },
+      { $set: { dish } },
+      { new: true }
+    ).exec();
+
+    if (!updatedDish) {
+      return res.status(404).json({ message: 'Dish not found' });
+    }
+
+    res.json({ message: 'Dish updated successfully', data: updatedDish });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 
 module.exports = {
   getCanteenDashboard,
@@ -226,4 +294,7 @@ module.exports = {
   getLunch,
   getDinner,
   updateCanteen,
+  updateBreakfastDish,
+  updateLunchDish,
+  updateDinnerDish,
 };
