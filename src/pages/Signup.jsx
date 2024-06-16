@@ -45,7 +45,7 @@ function Signup() {
 
     setFormData((prevData) => ({
       ...prevData,
-      [event.target.name]: event.target.value,
+      [event.target.name]: value,
     }));
   }
 
@@ -96,11 +96,8 @@ function Signup() {
       <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 bg-no-repeat justify-around items-center hidden">
         <div>
           <img src={logo} alt="logo" className="w-48 h-12 mb-2" />
-          <p className="text-white mt-1 ml-3">
-            Connecting You to Your College Canteens
-          </p>
+          <p className="text-white mt-1 ml-3">Connecting You to Your College Canteens</p>
         </div>
-
         <div className="absolute -bottom-32 -left-40 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
         <div className="absolute -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
         <div className="absolute -top-40 -right-0 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
@@ -160,7 +157,7 @@ function Signup() {
               value={formData.accountType}
               className="mt-1 p-2 w-full border rounded-2xl"
             >
-              <option value="" disabled selected hidden>
+              <option value="" disabled hidden>
                 Login as
               </option>
               <option value="User">User</option>
@@ -178,15 +175,8 @@ function Signup() {
               value={formData.password}
               onChange={PasswordChecker}
             />
-            <span
-              className="absolute right-3 top-3 cursor-pointer"
-              onClick={() => setShowPassword((prev) => !prev)}
-            >
-              {showPassword ? (
-                <AiOutlineEye size={20} />
-              ) : (
-                <AiOutlineEyeInvisible size={20} />
-              )}
+            <span className="absolute right-3 top-3 cursor-pointer" onClick={() => setShowPassword((prev) => !prev)}>
+              {showPassword ? <AiOutlineEyeInvisible size={20} />: <AiOutlineEye size={20} /> }
             </span>
           </div>
 
@@ -221,73 +211,46 @@ function Signup() {
           </button>
 
           <Link to="/login">
-            <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">Already have an account? Login</span>
+            <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
+              Already have an account? Login
+            </span>
           </Link>
 
           <main className='tracker-box text-sm font-normal text-red-600'>
             <div className={lowerValidated ? 'validated text-green-600' : 'not-validated'}>
-              {lowerValidated ? (
-                <span className='list-icon green'>
-                  <Icon icon={arrows_circle_check} />
-                </span>
-              ) : (
-                <span className='list-icon'>
-                  <Icon icon={arrows_exclamation} />
-                </span>
-              )}
+              <span className='list-icon'>
+                <Icon icon={lowerValidated ? arrows_circle_check : arrows_exclamation} />
+              </span>
               At least one lowercase letter
             </div>
             <div className={upperValidated ? 'validated text-green-600' : 'not-validated'}>
-              {upperValidated ? (
-                <span className='list-icon green'>
-                  <Icon icon={arrows_circle_check} />
-                </span>
-              ) : (
-                <span className='list-icon'>
-                  <Icon icon={arrows_exclamation} />
-                </span>
-              )}
+              <span className='list-icon'>
+                <Icon icon={upperValidated ? arrows_circle_check : arrows_exclamation} />
+              </span>
               At least one uppercase letter
             </div>
             <div className={numberValidated ? 'validated text-green-600' : 'not-validated'}>
-              {numberValidated ? (
-                <span className='list-icon green'>
-                  <Icon icon={arrows_circle_check} />
-                </span>
-              ) : (
-                <span className='list-icon'>
-                  <Icon icon={arrows_exclamation} />
-                </span>
-              )}
+              <span className='list-icon'>
+                <Icon icon={numberValidated ? arrows_circle_check : arrows_exclamation} />
+              </span>
               At least one number
             </div>
             <div className={specialValidated ? 'validated text-green-600' : 'not-validated'}>
-              {specialValidated ? (
-                <span className='list-icon green'>
-                  <Icon icon={arrows_circle_check} />
-                </span>
-              ) : (
-                <span className='list-icon'>
-                  <Icon icon={arrows_exclamation} />
-                </span>
-              )}
+              <span className='list-icon'>
+                <Icon icon={specialValidated ? arrows_circle_check : arrows_exclamation} />
+              </span>
               At least one special character
             </div>
             <div className={lengthValidated ? 'validated text-green-600' : 'not-validated'}>
-              {lengthValidated ? (
-                <span className='list-icon green'>
-                  <Icon icon={arrows_circle_check} />
-                </span>
-              ) : (
-                <span className='list-icon'>
-                  <Icon icon={arrows_exclamation} />
-                </span>
-              )}
+              <span className='list-icon'>
+                <Icon icon={lengthValidated ? arrows_circle_check : arrows_exclamation} />
+              </span>
               At least 8 characters
             </div>
           </main>
         </form>
       </div>
+
       <style jsx global>
         {`
           .tracker-box{

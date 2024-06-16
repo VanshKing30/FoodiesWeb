@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { IoClose } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { ThemeContext } from '../themeContext';
+
 const Navbar = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isOpen, setIsOpen] = useState(false);
@@ -16,29 +17,22 @@ const Navbar = () => {
 
   return (
     <>
-     <nav className="text-white p-3 shadow-lg top-0 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 w-full fixed z-40 dark:bg-cadetblue dark:bg-none">
-      <motion.div
-        className="left-0 top-0 w-full h-1 bg-blue-500 fixed z-50"
-        style={{ scaleX: scrollYProgress }}
-      />
-      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="flex items-center justify-between h-16">
-          
-           {/* Foodies Web Logo */}
-           <div className="flex-shrink-0">
+      <nav className="text-white p-3 shadow-lg top-0 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 w-full fixed z-40 dark:bg-cadetblue dark:bg-none">
+        <motion.div
+          className="left-0 top-0 w-full h-1 bg-blue-500 fixed z-50"
+          style={{ scaleX: scrollYProgress }}
+        />
+        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-12">
+          <div className="flex items-center justify-between h-16">
+            {/* Foodies Web Logo */}
+            <div className="flex-shrink-0">
               <Link to="/home" className="flex items-center">
                 <img src={logo} alt="Logo" className="h-12" />
               </Link>
             </div>
-            
+
             <div className="hidden md:block">
-
               <div className="ml-16 flex gap-6 items-baseline space-x-4">
-
-                <NavItem to="/home">Home</NavItem>
-                <NavItem to="/about">About</NavItem>
-                <NavItem to="/news">News</NavItem>
-                <NavItem to="/contact">Contact</NavItem>
                 <NavItem to="/home" icon={<IconHome />}>Home</NavItem>
                 <NavItem to="/about" icon={<IconAbout />}>About</NavItem>
                 <NavItem to="/news" icon={<IconNews />}>News</NavItem>
@@ -136,11 +130,11 @@ const NavItem = ({ icon, to, children }) => {
 };
 
 const MobileNavItem = ({ to, children }) => {
-  let classname = "z-[2] text-gray-300 text-center hover:text-white block px-3 py-2 rounded-md text-xl font-medium ";
+  const classname = "z-[2] text-gray-300 text-center hover:text-white block px-3 py-2 rounded-md text-xl font-medium ";
   return (
     <Link
       to={to}
-      className={ children.type === "button" ? classname : classname + "hover:bg-gray-700" }
+      className={classname + "hover:bg-gray-700"}
     >
       {children}
     </Link>
@@ -153,6 +147,4 @@ const IconAbout = () => <span>ℹ️</span>;
 const IconNews = () => <span>📰</span>;
 const IconRateUs = () => <span>⭐</span>;
 
-
 export default Navbar;
-

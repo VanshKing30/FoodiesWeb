@@ -3,9 +3,8 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-
 import logo from "../assets/logo2.png";
-import Loader from "../components/Loader/Loader";
+import Loader from "../components/Loader/Loader"; // Ensure this path is correct
 import { useAuth } from "../authContext";
 
 function Login() {
@@ -42,6 +41,9 @@ function Login() {
 
   function rememberMeHandler(event) {
     setRememberMe(event.target.checked);
+    if (!event.target.checked) {
+      localStorage.removeItem("rememberedEmail");
+    }
   }
 
   async function submitHandler(event) {
