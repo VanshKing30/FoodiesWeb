@@ -1,16 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const RateUs = () => {
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState('');
   const [feedback, setFeedback] = useState('');
 
-  const handleRatingChange = (value) => {
-    setRating(value);
-    updateStars(value);
+  const handleRatingClick = (emoji) => {
+    setRating(emoji);
   };
 
   const handleFeedbackChange = (event) => {
@@ -18,69 +15,43 @@ const RateUs = () => {
   };
 
   const handleSubmit = () => {
-    if (rating > 0 && feedback.trim() !== '') {
-      toast.success("Thanks for Your Feedback :)");
+    if (rating && feedback.trim() !== '') {
       console.log('Rating:', rating);
       console.log('Feedback:', feedback);
     } else {
-      toast.error("Please Fill All The Details :(");
+      console.log("Please Fill All The Details :(");
     }
   };
 
-  const updateStars = (rating) => {
-    const stars = document.querySelectorAll('.stars input[type="radio"]');
-    stars.forEach((star, index) => {
-      if (index < rating) {
-        star.checked = true;
-        star.nextElementSibling.style.color = '#ffcf00';
-      } else {
-        star.checked = false;
-        star.nextElementSibling.style.color = '#ccc';
-      }
-    });
-  };
-
   return (
-    <div style={{ 
+    <div className="flex flex-col min-h-screen" style={{ 
         backgroundImage: "url('https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg')",
         backgroundSize: 'cover',
-        backgroundAttachment: 'fixed',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column'
+        backgroundAttachment: 'fixed'
       }}
     >
       <Navbar />
       <div className="flex items-center justify-center flex-grow">
         <div
-          className="w-full max-w-xl mx-0 p-4 bg-white bg-opacity-90 rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl"
+          className="w-full max-w-xl mx-4 p-8 bg-white bg-opacity-90 rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl"
           style={{ marginBottom: '100px', marginTop: '150px', textAlign: 'center' }}
         >
-          <h1 className="text-3xl font-bold mb-0 text-black">Rate Our Website</h1>
-          <div className="stars mb-7">
-            {[1, 2, 3, 4, 5].map((value) => (
-              <React.Fragment key={value}>
-                <input
-                  type="radio"
-                  name="rating"
-                  id={`star${value}`}
-                  value={value}
-                  checked={rating === value}
-                  onChange={() => handleRatingChange(value)}
-                  className="hidden"
-                />
-                <label
-                  htmlFor={`star${value}`}
-                  className={`cursor-pointer text-3xl ${rating >= value ? 'text-yellow-400' : 'text-gray-400'}`}
-                  onClick={() => handleRatingChange(value)}
-                >
-                  &#9733;
-                </label>
-              </React.Fragment>
+          <h1 className="text-3xl font-bold mb-6 text-black">Rate Our Website</h1>
+          <div className="mb-6">
+            {['😢', '😡', '😐', '😊', '🤩'].map((emoji) => (
+              <span
+                key={emoji}
+                className={`text-3xl cursor-pointer mx-2 transition-transform duration-300 ${
+                  rating === emoji ? 'transform scale-150 brightness-150' : ''
+                } ${rating === '😡' && emoji === '😡' ? 'filter sepia hue-rotate-180 saturate-200' : ''}`}
+                onClick={() => handleRatingClick(emoji)}
+              >
+                {emoji}
+              </span>
             ))}
           </div>
           <textarea
-            className="w-full h-32 p-2 mb-7 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
+            className="w-full h-32 p-2 mb-6 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
             placeholder="Tell us what you think..."
             value={feedback}
             onChange={handleFeedbackChange}
@@ -96,17 +67,6 @@ const RateUs = () => {
         </div>
       </div>
       <Footer />
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </div>
   );
 };
