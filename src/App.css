@@ -12,6 +12,9 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+li:hover span {
+  opacity: 1;
+}
 
 .App-header {
   background-color: #282c34;
@@ -35,4 +38,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.nav-item{
+  font-size: 52px !important;
 }

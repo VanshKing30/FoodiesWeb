@@ -1,45 +1,23 @@
+import { Link } from "react-router-dom"
 
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-
-const Footer = () => {
-    const navigate = useNavigate();
-
-    const handleNavigation = (path) => {
-    navigate(path);
-    window.scrollTo(0, 0);
-  };
-  return (
-    <div className='bg-blue-950 text-white p-10'>
-        <div className='md:flex'>
-            <div className='md:w-1/2 flex mb-8 md:mb-0 items-top'>
-                <img src="https://foodies-web-app.vercel.app/static/media/logo2.db6bd5028bb56c6572c7.png" alt="" className='h-16 w-48'/>
-            </div>
-            <div className='md:w-1/2 md:flex'>
-                <div className='md:w-1/2'>
-                    <p className='text-gray-200 underline'>Company</p>
-                    <ul className='text-gray-300 py-4'>
-                        <li className='py-1 cursor-pointer' onClick={() => handleNavigation('/about')}>About Us</li>
-                        <a href="/news"><li className='py-1 cursor-pointer'>News</li></a>
-                        <li className='py-1 cursor-pointer'>Contact Us</li>
-                    </ul>
-                </div>
-                <div className='md:w-1/2'>
-                <p className='text-gray-200 underline'>Legal Pages</p>
-                    <ul className='text-gray-300 py-4 cursor-pointer'>
-                        <a href="/privacypolicy"><li className='py-1 cursor-pointer'>Privacy Policy</li></a>
-                        <a href="/termsandconditions"><li className='py-1 cursor-pointer'>Terms and Conditions</li></a>
-                        <a href="/licensing"><li className='py-1 cursor-pointer'>Licensing</li></a>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div className='mt-20 text-gray-400 xl:flex justify-center text-xs lg:text-sm xl:text-md'>
-        <span className="text-sm text-white sm:text-center ">© 2024-2025 <a href="#" className="hover:underline">Foodies™</a>. All Rights Reserved.</span>
-        </div>
-    </div>
-  )
+export default function Footer(){
+    return (
+        <footer className="p-4 bg-blue-950 md:p-8 lg:p-10 dark:bg-teal-700">
+  <div className="mx-auto max-w-screen-xl text-center">
+      <a href="#" className="flex justify-center items-center text-2xl font-semibold text-pink-800 ">
+          <img src="https://foodies-web-app.vercel.app/static/media/logo2.db6bd5028bb56c6572c7.png" alt="title" width={"200px"}/> 
+      </a>
+      <p className="my-6 text-white ">Discover culinary bliss with our diverse array of recipes and foodie resources – your ultimate destination for gastronomic inspiration.</p>
+      <ul className="flex flex-wrap justify-center items-center mb-6 text-gray-400 ">
+          <li className="mr-4 hover:underline md:mr-6 hover:text-orange-600">
+          <Link to="/about">About</Link>
+          </li>
+          <li className="mr-4 hover:underline md:mr-6 hover:text-orange-600">
+              <Link to="/news">News</Link>
+          </li>
+      </ul>
+      <span className="text-sm text-white sm:text-center ">© 2024-2025 <a href="#" className="hover:underline">Foodies™</a>. All Rights Reserved.</span>
+  </div>
+</footer>
+    )
 }
-
-export default Footer
-

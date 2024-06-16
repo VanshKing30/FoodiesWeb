@@ -14,14 +14,17 @@ const canteenSchema = new Schema({
     type: String,
     required: true,
   },
-  accountType : {
-    type : String,
-    enum : ["User" , "Canteen"],
-    required : true,
+  accountType: {
+    type: String,
+    enum: ["User", "Canteen"],
+    required: true,
   },
   password: {
     type: String,
     required: true,
+  },
+  canteenImage: {
+    type: String, // Assuming you're storing the URL or base64 string of the image
   },
 });
 

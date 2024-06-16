@@ -23,6 +23,11 @@ code {
   display: none;
 }
 
+.nav-item{
+   font-size: 12px !important;
+   font-weight: bolder !important;
+}
+
 * {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE, Edge */

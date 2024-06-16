@@ -3,15 +3,33 @@ const User = require("../models/studentLoginInfo");
 const jwt = require("jsonwebtoken");
 const Canteen = require("../models/canteenLoginInfo");
 const Session = require("../models/session");
-
+const Contact = require('../models/Contact');
+const {
+  forgotPasswordToken,
+  verifyToken,
+  findUserByEmail,
+  findUserById,
+} = require("../utils/PasswordTokenAndUser");
+const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 exports.studentSignup = async (req, res) => {
   console.log("This is jwt", process.env.JWT_SECRET);
   try {
     console.log(req.body);
-    const { name, email, collegeName, accountType, password } = await req.body;
-    const existingUser = await User.findOne({ email });
+    const { name, email, collegeName, accountType, password, confirmPassword } =
+      await req.body;
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "Password and Confirm password didn't match, try again",
+      });
+    }
+
+    const existingUser = await User.findOne({
+      email,
+    });
 
     if (existingUser) {
       return res.status(400).json({
@@ -87,7 +105,10 @@ exports.studentLogin = async (req, res) => {
       });
 
       // creating a session
-      const session = new Session({ userId: user._id, token });
+      const session = new Session({
+        userId: user._id,
+        token,
+      });
       await session.save();
 
       user = user.toObject();
@@ -107,14 +128,20 @@ exports.studentLogin = async (req, res) => {
       //   message: "User logged in succesfully",
       // });
 
-       // Setting cookie
+      // Setting cookie
       res.cookie("token", token, {
         httpOnly: true,
         secure: true,
         maxAge: 3600000,
       });
-      res.json({ success: true, message: "Logged in successfully", token, user });
+      res.json({
+        success: true,
+        message: "Logged in successfully",
+        token,
+        user,
+      });
     } else {
+      
       return res.status(403).json({
         success: false,
         message: "Pasword Incorrect",
@@ -161,7 +188,10 @@ exports.studentLogout = async (req, res) => {
       await Session.findOneAndDelete({ token });
       res.clearCookie("token");
     }
-    res.status(200).json({ success: true, message: "Logged out successfully" });
+    res.status(200).json({
+      success: true,
+      message: "Logged out successfully",
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -233,9 +263,13 @@ exports.canteenSignup = async (req, res) => {
     });
 
     // Create a token
-    const token = jwt.sign({ id: canteen._id, email: canteen.email }, process.env.JWT_SECRET, {
-      expiresIn: '1h', // Set token expiration time as needed
-    });
+    const token = jwt.sign(
+      { id: canteen._id, email: canteen.email },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h", // Set token expiration time as needed
+      }
+    );
 
     console.log("User created successfully with ID:", canteen._id);
     return res.status(200).json({
@@ -263,7 +297,9 @@ exports.canteenLogin = async (req, res) => {
       });
     }
 
-    let canteen = await Canteen.findOne({ email });
+    let canteen = await Canteen.findOne({
+      email,
+    });
     if (!canteen) {
       return res.status(401).json({
         success: false,
@@ -301,7 +337,10 @@ exports.canteenLogin = async (req, res) => {
       // });
 
       // Create session
-      const session = new Session({ userId: canteen._id, token });
+      const session = new Session({
+        userId: canteen._id,
+        token,
+      });
       await session.save();
 
       // Set cookie
@@ -310,8 +349,13 @@ exports.canteenLogin = async (req, res) => {
         secure: true,
         maxAge: 3600000,
       });
-      res.json({ success: true, message: "Logged in successfully", token, canteen, cantId: canteen._id });
-
+      res.json({
+        success: true,
+        message: "Logged in successfully",
+        token,
+        canteen,
+        cantId: canteen._id,
+      });
     } else {
       return res.status(403).json({
         success: false,
@@ -359,7 +403,10 @@ exports.canteenLogout = async (req, res) => {
       await Session.findOneAndDelete({ token });
       res.clearCookie("token");
     }
-    res.status(200).json({ success: true, message: "Logged out successfully" });
+    res.status(200).json({
+      success: true,
+      message: "Logged out successfully",
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -393,3 +440,158 @@ exports.changeCanteenPassword = async (req, res) => {
     message: "Password updated successfully.",
   });
 };
+
+//contactUs
+
+exports.saveContactMessage = async (req, res) => {
+  try {
+    const { name, email, message } = req.body;
+    if (!name || !email || !message) {
+      return res.status(400).send('All fields are required');
+    }
+    const newContact = new Contact({ name, email, message });
+    await newContact.save();
+    res.status(201).send('Message received');
+  } catch (error) {
+    console.error('Error saving message:', error.message, error);
+    res.status(500).send('Error saving message');
+  }
+};
+// verify user for reset password
+exports.forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const existingUser = await findUserByEmail(email);
+
+    if (!existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: "User does not exist",
+      });
+    } else {
+      const tokenReturn = forgotPasswordToken(existingUser);
+      // const link = `http://localhost:3000/api/v1/newPassword/${existingUser._id}/${tokenReturn}`;
+
+      const link = `https://foodies-web-app.vercel.app/api/v1/newPassword/${existingUser._id}/${tokenReturn}`;
+
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.MAILPASS,
+        },
+      });
+
+      const mailOptions = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: "Password Reset Link",
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px;">
+            <h2 style="text-align: center; color: #333;">Password Reset Request</h2>
+            <p style="color: #333;">Hello,</p>
+            <p style="color: #333;">You have requested to reset your password. Please click the button below to reset your password:</p>
+            <div style="text-align: center; margin: 20px 0;">
+              <a href="${link}" style="background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Reset Password</a>
+            </div>
+            <p style="color: #333;">If you did not request this, please ignore this email.</p>
+            <p style="color: #333;">Thank you,</p>
+            <p style="color: #333;">FoodiesWeb</p>
+            <hr>
+            <p style="color: #999; text-align: center;">&copy; 2024 Your Company Name. All rights reserved.</p>
+          </div>
+        `,
+      };
+
+      await transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        }
+      });
+
+      res.status(201).json({
+        msg: "You should receive an email",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "User verification failed",
+    });
+  }
+};
+
+//for verification of link
+exports.verifyLink = async (req, res) => {
+  const { id, token } = req.params;
+  console.log(req.params);
+
+  const oldUser = await findUserById(id);
+  if (!oldUser) {
+    return res.status(404).json({
+      success: false,
+      message: "User not found!",
+    });
+  }
+
+  try {
+    console.log("Found user: ", oldUser);
+    const verify = verifyToken(oldUser, token);
+    console.log("VerifyToken result: ", verify);
+
+    if (verify.id === id) {
+      res.status(201).json({
+        email: verify.email,
+        status: "Verified",
+      });
+    } else {
+      res.status(201).json({
+        status: "Cannot Verify",
+      });
+    }
+  } catch (error) {
+    res.status(201).json({
+      status: "Not Verified",
+    });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  const { id, token } = req.params;
+  const { password } = req.body;
+
+  console.log(password, " ", id, " ", token);
+
+  try {
+    const oldUser = await findUserById(id);
+
+    if (!oldUser) {
+      return res.status(404).json("User not found");
+    }
+
+    const verify = verifyToken(oldUser, token);
+    if (verify.id !== id) {
+      return res.status(201).json({ change: false });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const newPassword = await bcrypt.hash(password, salt);
+
+    if (oldUser instanceof User) {
+      await User.findByIdAndUpdate(id, {
+        password: newPassword,
+      });
+    } else if (oldUser instanceof Canteen) {
+      await Canteen.findByIdAndUpdate(id, {
+        password: newPassword,
+      });
+    }
+
+    res.status(201).json({ change: true });
+  } catch (error) {
+    console.log("Error while changing password: ", error);
+    res.status(500).json("Some error occurred!");
+  }
+};
+
