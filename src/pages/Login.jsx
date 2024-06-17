@@ -106,7 +106,7 @@ function Login() {
               <div className="mb-4">
                 <input
                   required
-                  className="w-full py-2 px-3 border border-gray-300 rounded-2xl"
+                  className="w-full py-2 px-3 border  rounded-2xl border-b-3 border-customBlue"
                   type="email"
                   placeholder="Email"
                   name="email"
@@ -120,8 +120,7 @@ function Login() {
                   name="accountType"
                   onChange={changeHandler}
                   value={formData.accountType}
-                  className="mt-1 p-2 w-full border rounded-2xl"
-                >
+                  className="mt-1 p-2 w-full border rounded-2xl border-b-3 border-customBlue">
                   <option value="" disabled hidden>
                     Login as
                   </option>
@@ -132,7 +131,7 @@ function Login() {
               <div className="relative mb-4">
                 <input
                   required
-                  className="w-full py-2 px-3 border border-gray-300 rounded-2xl"
+                  className="w-full py-2 px-3 border  rounded-2xl border-b-3 border-customBlue "
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   name="password"
