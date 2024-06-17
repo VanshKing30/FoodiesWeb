@@ -18,7 +18,7 @@ function Signup() {
     confirmPassword: "",
   });
 
-  const [showconfirmPassword, setshowconfirmPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [lowerValidated, setLowerValidated] = useState(false);
   const [upperValidated, setUpperValidated] = useState(false);
@@ -33,7 +33,7 @@ function Signup() {
     const lower = new RegExp('(?=.*[a-z])');
     const upper = new RegExp('(?=.*[A-Z])');
     const number = new RegExp('(?=.*[0-9])');
-    const special = new RegExp('(?=.*[!@#\\$%\\^&\\*])');
+    const special = new RegExp('(?=.*[!@#\$%\^&\*])');
     const length = new RegExp('(?=.{8,})');
     const value = event.target.value;
 
@@ -61,8 +61,8 @@ function Signup() {
     console.log("ENV FILE", process.env.REACT_APP_BASE_URL);
 
     if (lowerValidated && upperValidated && numberValidated && specialValidated && lengthValidated) {
-      const apiUrl = formData.accountType === "User"
-        ? `${process.env.REACT_APP_BASE_URL}/studentSignup`
+      const apiUrl = formData.accountType === "User" 
+        ? `${process.env.REACT_APP_BASE_URL}/studentSignup` 
         : `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
 
       try {
@@ -70,20 +70,19 @@ function Signup() {
 
         const response = await axios.post(apiUrl, formData);
 
-        if (formData.accountType === "Canteen") {
+        toast.success("Account Created Successfully!");
+        if (formData.accountType === "User") {
+          navigate("/");
+        } else {
           const token = response.data.token;
           localStorage.setItem("token", token);
           localStorage.setItem("canteenId", response.data.cantId);
           navigate(`/section/${response.data.cantId}`);
-        } else {
-          navigate("/");
         }
-
-        toast.success("Account Created Successfully!");
       } catch (error) {
         const errorMessage = error.response?.data?.message || "Failed to create account. Please try again.";
         toast.error(errorMessage);
-        console.error("Error:", error);
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -107,8 +106,12 @@ function Signup() {
 
       <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
         <form className="bg-white p-8 rounded shadow-lg w-80" onSubmit={submitHandler}>
-          <h1 className="text-gray-800 font-bold text-2xl mb-1">Hello There!</h1>
-          <p className="text-sm font-normal text-gray-600 mb-7">Create an Account</p>
+          <h1 className="text-gray-800 font-bold text-2xl mb-1">
+            Hello There!
+          </h1>
+          <p className="text-sm font-normal text-gray-600 mb-7">
+            Create an Account
+          </p>
 
           <div className="mb-4">
             <input
@@ -181,17 +184,21 @@ function Signup() {
             <input
               required
               className="w-full py-2 px-3 border border-gray-300 rounded-2xl"
-              type={showconfirmPassword ? "text" : "password"}
+              type={showConfirmPassword ? "text" : "password"}
               placeholder="Confirm Password"
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={changeHandler}
             />
             <span
-              className="absolute right-3 top-3 cursor-pointer"
-              onClick={() => setshowconfirmPassword((prev) => !prev)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+              onClick={() => setShowConfirmPassword((prev) => !prev)}
             >
-              {showconfirmPassword ?  <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+              {showConfirmPassword ? (
+                <AiOutlineEye size={20} />
+              ) : (
+                <AiOutlineEyeInvisible size={20} />
+              )}
             </span>
           </div>
 
@@ -209,7 +216,7 @@ function Signup() {
             </span>
           </Link>
 
-          <main className="tracker-box text-sm font-normal text-red-600">
+          <main className='tracker-box text-sm font-normal text-red-600'>
             <div className={lowerValidated ? 'validated text-green-600' : 'not-validated'}>
               <span className='list-icon'>
                 <Icon icon={lowerValidated ? arrows_circle_check : arrows_exclamation} />
@@ -246,20 +253,23 @@ function Signup() {
 
       <style jsx global>
         {`
-          .tracker-box {
+          .tracker-box{
             font-size: 0.7rem;
             letter-spacing: 0.09em;
             padding: 15px;
             border-radius: 5px;
             margin-top: 5px;
           }
-          .tracker-box div {
+
+          .tracker-box div{
             margin: 5px 0;
           }
-          .list-icon {
+
+          .list-icon{
             padding-right: 0.3rem;
           }
-          .list-icon.green {
+
+          .list-icon.green{
             color: #006400;
           }
         `}
