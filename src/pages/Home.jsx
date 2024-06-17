@@ -19,11 +19,11 @@ function Home() {
   const [canteenData , setCanteenData] = useState();
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-     if(!isAuthenticated){
-       navigate('/')
-     }
-  }, [])
+  // useEffect(() => {
+  //    if(!isAuthenticated){
+  //      navigate('/')
+  //    }
+  // }, [])
 
   const getCanteenData = async () =>{
     try{
