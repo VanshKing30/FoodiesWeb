@@ -48,11 +48,6 @@ function Login() {
 
   async function submitHandler(event) {
     event.preventDefault();
-    setLoading(true);
-
-    if (rememberMe) {
-      localStorage.setItem("rememberedEmail", formData.email);
-    }
 
     const apiUrl =
       formData.accountType === "User"
@@ -62,15 +57,25 @@ function Login() {
     try {
       const response = await axios.post(apiUrl, formData);
       toast.success("User Logged in");
+
+      if (rememberMe) {
+        localStorage.setItem("rememberedEmail", formData.email);
+      } else {
+        localStorage.removeItem("rememberedEmail");
+      }
+
       if (formData.accountType === "User") {
         navigate("/home");
       } else {
         navigate("/home");
+
+        localStorage.setItem("canteenId",response.data.cantId);
+        localStorage.setItem("token",response.data.token);
+        navigate(`/section/${response.data.cantId}`);
+
       }
     } catch (error) {
       toast.error("Failed to login");
-    } finally {
-      setLoading(false);
     }
   }
 
@@ -83,7 +88,7 @@ function Login() {
           <div className="absolute top-0 right-0 m-3">
             <Link to="/contact">
               <button className="hover:shadow-blue-950 hover:shadow-sm text-white py-1 px-2 w-full h-auto text-l relative z-0 rounded-full transition-all duration-200 hover:scale-110">
-                <img src="/c4.png" className="h-10 w-10" />
+                <img src="/c4.png" className="h-10 w-10" alt="Contact" />
               </button>
             </Link>
           </div>
@@ -106,7 +111,7 @@ function Login() {
               <div className="mb-4">
                 <input
                   required
-                  className="w-full py-2 px-3 border border-gray-300 rounded-2xl"
+                  className="w-full py-2 px-3 border  rounded-2xl border-b-3 border-customBlue"
                   type="email"
                   placeholder="Email"
                   name="email"
@@ -120,8 +125,7 @@ function Login() {
                   name="accountType"
                   onChange={changeHandler}
                   value={formData.accountType}
-                  className="mt-1 p-2 w-full border rounded-2xl"
-                >
+                  className="mt-1 p-2 w-full border rounded-2xl border-b-3 border-customBlue">
                   <option value="" disabled hidden>
                     Login as
                   </option>
@@ -132,7 +136,7 @@ function Login() {
               <div className="relative mb-4">
                 <input
                   required
-                  className="w-full py-2 px-3 border border-gray-300 rounded-2xl"
+                  className="w-full py-2 px-3 border  rounded-2xl border-b-3 border-customBlue "
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   name="password"
@@ -143,11 +147,7 @@ function Login() {
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
                   onClick={() => setShowPassword((prev) => !prev)}
                 >
-                  {showPassword ? (
-                    <AiOutlineEyeInvisible size={20} />
-                  ) : (
-                    <AiOutlineEye size={20} />
-                  )}
+                  {showPassword ? <AiOutlineEye size={20} /> : <AiOutlineEyeInvisible size={20} />}
                 </span>
               </div>
               <div className="remember-me mb-4">
@@ -161,7 +161,7 @@ function Login() {
               </div>
               <div className="mb-4 flex justify-center text-red-400">
                 <Link to="/forgotPassword">
-                  <h1 className="font-medium">Forgot Password ?</h1>
+                  <h1 className="font-medium">Forgot Password?</h1>
                 </Link>
               </div>
               <button
