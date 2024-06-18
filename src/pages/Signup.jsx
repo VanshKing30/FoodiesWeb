@@ -77,7 +77,12 @@ function Signup() {
           const token = response.data.token;
           localStorage.setItem("token", token);
           localStorage.setItem("canteenId", response.data.cantId);
+          navigate("/home");
+        } else {
+          navigate("/");
+
           navigate(`/section/${response.data.cantId}`);
+
         }
       } catch (error) {
         const errorMessage = error.response?.data?.message || "Failed to create account. Please try again.";

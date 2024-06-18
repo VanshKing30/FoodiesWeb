@@ -7,6 +7,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { ThemeContext } from '../themeContext';
 
 const Navbar = () => {
+  const canteenId = localStorage.getItem("canteenId");
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isOpen, setIsOpen] = useState(false);
   const { scrollYProgress } = useScroll();
@@ -37,6 +38,13 @@ const Navbar = () => {
                 <NavItem to="/about" icon={<IconAbout />}>About</NavItem>
                 <NavItem to="/news" icon={<IconNews />}>News</NavItem>
                 <NavItem to="/rateus" icon={<IconRateUs />}>RateUs</NavItem>
+                {/* Conditionally render "My Canteen" button */}
+                {canteenId && (
+                  <NavItem to={`/section/${canteenId}`} icon={<IconCanteen />}>My&nbsp;Canteen</NavItem>
+                )}
+              </div>
+            </div>
+
 
               <div className="ml-16 flex gap-6 items-baseline space-x-4   ">
                 <NavItem to="/home" className="nav-item" icon={<IconHome />}>Home</NavItem>
@@ -94,6 +102,38 @@ const Navbar = () => {
               <MobileNavItem to="/news">News</MobileNavItem>
               <MobileNavItem to="/contact">Contact</MobileNavItem>
 
+
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              className="md:hidden absolute left-0 w-full flex flex-col items-center justify-center"
+            >
+              <div className="w-[100%] bg-[#152146] px-[20%] pt-2 pb-3 space-y-1 mt-1 dark:bg-teal-900">
+                <MobileNavItem to="/home">Home</MobileNavItem>
+                <MobileNavItem to="/about">About us</MobileNavItem>
+                <MobileNavItem to="/news">News</MobileNavItem>
+                <MobileNavItem to="/contact">Contact</MobileNavItem>
+                <MobileNavItem to="/rateus">RateUs</MobileNavItem>            
+                {/* Conditionally render "My Canteen" button */}
+                {canteenId && (
+                  <MobileNavItem to={`/section/${canteenId}`}>My Canteen</MobileNavItem>
+                )}
+                <MobileNavItem to="/">
+                  <button
+                    className={`rounded transition duration-300 ease-in-out transform hover:scale-105 ${theme === 'dark' ? 'bg-white text-black' : 'bg-green-500 hover:bg-green-700 text-white py-1 px-2'}`}
+                  >
+                    Log out
+                  </button>
+                </MobileNavItem>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+    </>
               <MobileNavItem to="/rateus">Rateus</MobileNavItem>
 
               <MobileNavItem to="/">
@@ -146,5 +186,6 @@ const IconHome = () => <span>🏠</span>;
 const IconAbout = () => <span>ℹ️</span>;
 const IconNews = () => <span>📰</span>;
 const IconRateUs = () => <span>⭐</span>;
+const IconCanteen = () => <span>🥗</span>
 
 export default Navbar;

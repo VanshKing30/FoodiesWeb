@@ -70,7 +70,9 @@ function Login() {
       } else {
         localStorage.setItem("canteenId", response.data.cantId);
         localStorage.setItem("token", response.data.token);
+
         navigate(`/section/${response.data.cantId}`);
+
       }
     } catch (error) {
       console.error(error);
