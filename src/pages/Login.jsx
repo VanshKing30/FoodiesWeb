@@ -48,37 +48,37 @@ function Login() {
 
   async function submitHandler(event) {
     event.preventDefault();
-
+  
     const apiUrl =
       formData.accountType === "User"
         ? `${process.env.REACT_APP_BASE_URL}/studentLogin`
         : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
-
+  
     try {
       const response = await axios.post(apiUrl, formData);
       toast.success("User Logged in");
-
+      
       if (rememberMe) {
         localStorage.setItem("rememberedEmail", formData.email);
       } else {
         localStorage.removeItem("rememberedEmail");
       }
-
+  
       if (formData.accountType === "User") {
         navigate("/home");
+        localStorage.setItem("token", response.data.token);
       } else {
-        navigate("/home");
+        localStorage.setItem("canteenId", response.data.cantId);
+        localStorage.setItem("token", response.data.token);
 
-        localStorage.setItem("canteenId",response.data.cantId);
-        localStorage.setItem("token",response.data.token);
         navigate(`/section/${response.data.cantId}`);
 
       }
     } catch (error) {
+      console.error(error);
       toast.error("Failed to login");
     }
   }
-
   return (
     <>
       {loading ? (
