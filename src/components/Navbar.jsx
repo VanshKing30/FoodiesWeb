@@ -7,6 +7,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { ThemeContext } from '../themeContext';
 
 const Navbar = () => {
+  const canteenId = localStorage.getItem("canteenId");
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isOpen, setIsOpen] = useState(false);
   const { scrollYProgress } = useScroll();
@@ -37,6 +38,10 @@ const Navbar = () => {
                 <NavItem to="/about" icon={<IconAbout />}>About</NavItem>
                 <NavItem to="/news" icon={<IconNews />}>News</NavItem>
                 <NavItem to="/rateus" icon={<IconRateUs />}>RateUs</NavItem>
+                {/* Conditionally render "My Canteen" button */}
+                {canteenId && (
+                  <NavItem to={`/section/${canteenId}`} icon={<IconCanteen />}>My&nbsp;Canteen</NavItem>
+                )}
               </div>
             </div>
 
@@ -87,7 +92,11 @@ const Navbar = () => {
                 <MobileNavItem to="/about">About us</MobileNavItem>
                 <MobileNavItem to="/news">News</MobileNavItem>
                 <MobileNavItem to="/contact">Contact</MobileNavItem>
-                <MobileNavItem to="/rateus">RateUs</MobileNavItem>
+                <MobileNavItem to="/rateus">RateUs</MobileNavItem>            
+                {/* Conditionally render "My Canteen" button */}
+                {canteenId && (
+                  <MobileNavItem to={`/section/${canteenId}`}>My Canteen</MobileNavItem>
+                )}
                 <MobileNavItem to="/">
                   <button
                     className={`rounded transition duration-300 ease-in-out transform hover:scale-105 ${theme === 'dark' ? 'bg-white text-black' : 'bg-green-500 hover:bg-green-700 text-white py-1 px-2'}`}
@@ -133,5 +142,6 @@ const IconHome = () => <span>🏠</span>;
 const IconAbout = () => <span>ℹ️</span>;
 const IconNews = () => <span>📰</span>;
 const IconRateUs = () => <span>⭐</span>;
+const IconCanteen = () => <span>🥗</span>
 
 export default Navbar;
