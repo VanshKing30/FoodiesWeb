@@ -67,9 +67,12 @@ function Login() {
       if (formData.accountType === "User") {
         navigate("/home");
       } else {
+        navigate("/home");
+
         localStorage.setItem("canteenId",response.data.cantId);
         localStorage.setItem("token",response.data.token);
         navigate(`/section/${response.data.cantId}`);
+
       }
     } catch (error) {
       toast.error("Failed to login");
