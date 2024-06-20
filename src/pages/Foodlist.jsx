@@ -22,7 +22,7 @@ const Foodlist = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:8000/api/v1/${_id}/${mealType}`,
+        `${process.env.REACT_APP_BASE_URL}/${_id}/${mealType}`,
         {
           method: "GET",
           headers: {
@@ -48,7 +48,7 @@ const Foodlist = () => {
       }
 
       await axios.delete(
-        `http://localhost:8000/api/v1/${_id}/${mealType}/remove`,
+        `${process.env.REACT_APP_BASE_URL}/${_id}/${mealType}/remove`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -84,7 +84,7 @@ const Foodlist = () => {
       }
 
       await axios.put(
-        `http://localhost:8000/api/v1/${_id}/${currentDish.mealType}/updateitem`,
+        `${process.env.REACT_APP_BASE_URL}/${_id}/${currentDish.mealType}/updateitem`,
         {
           dishId: currentDish._id,
           dish: updatedDish,

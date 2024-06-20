@@ -17,7 +17,7 @@ const EditProfile = () => {
 
   const fetchCanteenData = async () => {
     try {
-      const getCanteen = await fetch(`http://localhost:8000/api/v1/getcanteen`, {
+      const getCanteen = await fetch(`${process.env.REACT_APP_BASE_URL}/getcanteen`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ const EditProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8000/api/v1/${_id}/update`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/${_id}/update`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

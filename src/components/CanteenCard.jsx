@@ -41,7 +41,7 @@ const CanteenCard = ({ canteen }) => {
           <a href="#">
             <img
               className="rounded-t-lg h-48 w-full object-cover"
-              src={imageSrc || 'default-image-url'}
+              src={canteen.canteenImage ? canteen.canteenImage : imageSrc}
               alt={canteen.name}
             />
           </a>

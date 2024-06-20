@@ -11,6 +11,7 @@ const {
   findUserById,
 } = require("../utils/PasswordTokenAndUser");
 const nodemailer = require("nodemailer");
+
 require("dotenv").config();
 
 exports.studentSignup = async (req, res) => {
@@ -441,6 +442,7 @@ exports.changeCanteenPassword = async (req, res) => {
   });
 };
 
+
 //contactUs
 
 exports.saveContactMessage = async (req, res) => {
@@ -457,6 +459,7 @@ exports.saveContactMessage = async (req, res) => {
     res.status(500).send('Error saving message');
   }
 };
+
 // verify user for reset password
 exports.forgotPassword = async (req, res) => {
   try {
@@ -594,4 +597,3 @@ exports.resetPassword = async (req, res) => {
     res.status(500).json("Some error occurred!");
   }
 };
-
