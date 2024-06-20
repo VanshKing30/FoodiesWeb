@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { toast } from "react-hot-toast";
@@ -7,8 +7,12 @@ import logo from "../assets/logo2.png";
 import Icon from 'react-icons-kit';
 import { arrows_circle_check } from 'react-icons-kit/linea/arrows_circle_check';
 import { arrows_exclamation } from 'react-icons-kit/linea/arrows_exclamation';
+import { useAuth } from "../authContext.js";
 
 function Signup() {
+
+  const { isAuthenticated, signUp } = useAuth();
+  
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -28,6 +32,12 @@ function Signup() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    if(isAuthenticated){
+      navigate('/home');
+    }
+  }) 
 
   function PasswordChecker(event) {
     const lower = new RegExp('(?=.*[a-z])');
@@ -72,11 +82,11 @@ function Signup() {
 
         if (formData.accountType === "Canteen") {
           const token = response.data.token;
-          localStorage.setItem("token", token);
-          localStorage.setItem("canteenId", response.data.cantId);
+          signUp(token);
           navigate("/home");
-        } else {
-          navigate("/");
+        } 
+        if(formData.accountType === "User") {
+          navigate("/login");
         }
 
         toast.success("Account Created Successfully!");

@@ -264,7 +264,7 @@ exports.canteenSignup = async (req, res) => {
 
     // Create a token
     const token = jwt.sign(
-      { id: canteen._id, email: canteen.email },
+      { id: canteen._id, email: canteen.email, accountType: canteen.accountType, },
       process.env.JWT_SECRET,
       {
         expiresIn: "1h", // Set token expiration time as needed
