@@ -71,7 +71,7 @@ const Navbar = () => {
                 <Link to="/">
                   <button
                   onClick={logout}
-                    className={`py-1 px-2 rounded w-full h-auto text-l relative z-0 rounded-lg transition-all duration-200 hover:scale-110 ${theme === 'dark' ? 'bg-white text-black' : 'bg-green-400 hover:bg-green-600 hover:shadow-green text-white'}`}
+                    className={`py-1 px-2  w-full h-auto text-l relative z-0 rounded-lg transition-all duration-200 hover:scale-110 ${theme === 'dark' ? 'bg-white text-black' : 'bg-green-400 hover:bg-green-600 hover:shadow-green text-white'}`}
                   >
                     Log out
                   </button>
@@ -118,6 +118,7 @@ const Navbar = () => {
                 )}
                 <MobileNavItem to="/">
                   <button
+                    onClick={logout}
                     className={`rounded transition duration-300 ease-in-out transform hover:scale-105 ${theme === 'dark' ? 'bg-white text-black' : 'bg-green-500 hover:bg-green-700 text-white py-1 px-2'}`}
                   >
                     Log out
@@ -136,7 +137,7 @@ const NavItem = ({ icon, to, children }) => {
   return (
     <Link
       to={to}
-      className="flex items-center space-x-2 w-full h-auto relative z-0 rounded-lg transition-all duration-200 hover:scale-125 text-xl block hover:bg-opacity-50"
+      className="flex items-center space-x-2 w-full h-auto relative z-0 rounded-lg transition-all duration-200 hover:scale-125 text-xl  hover:bg-opacity-50"
     >
       {icon && <span>{icon}</span>}
       <span>{children}</span>
