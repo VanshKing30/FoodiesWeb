@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
@@ -16,10 +18,9 @@ const RateUs = () => {
 
   const handleSubmit = () => {
     if (rating && feedback.trim() !== '') {
-      console.log('Rating:', rating);
-      console.log('Feedback:', feedback);
+      toast.success('Thank you for your feedback :)');
     } else {
-      console.log("Please Fill All The Details :(");
+      toast.error('Please fill all the details :(');
     }
   };
 
@@ -67,6 +68,17 @@ const RateUs = () => {
         </div>
       </div>
       <Footer />
+      <ToastContainer 
+        position="top-center" 
+        autoClose={5000} 
+        hideProgressBar={false} 
+        newestOnTop={false} 
+        closeOnClick 
+        rtl={false} 
+        pauseOnFocusLoss 
+        draggable 
+        pauseOnHover
+      />
     </div>
   );
 };
