@@ -8,18 +8,25 @@ import Loader from "../components/Loader/Loader"; // Ensure this path is correct
 import { useAuth } from "../authContext";
 
 function Login() {
+
   const [formData, setFormData] = useState({
     email: "",
     accountType: "",
     password: "",
   });
 
-  const { checkAuthentication } = useAuth();
+  const { isAuthenticated, login} = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    if(isAuthenticated){
+      navigate('/home');
+    }
+  })
 
   useEffect(() => {
     const storedEmail = localStorage.getItem("rememberedEmail");
@@ -65,6 +72,7 @@ function Login() {
       }
   
       if (formData.accountType === "User") {
+
         navigate("/home");
         localStorage.setItem("token", response.data.token);
       } else {
@@ -74,6 +82,7 @@ function Login() {
         navigate(`/section/${response.data.cantId}`);
 
       }
+      navigate("/home");
     } catch (error) {
       console.error(error);
       toast.error("Failed to login");
