@@ -82,7 +82,7 @@ function Login() {
         navigate(`/section/${response.data.cantId}`);
 
       }
-      navigate("/home");
+     
     } catch (error) {
       console.error(error);
       toast.error("Failed to login");
