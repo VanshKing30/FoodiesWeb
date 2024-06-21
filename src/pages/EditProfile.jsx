@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const EditProfile = () => {
   const { _id } = useParams(); // Assuming you have canteen ID in the URL
@@ -92,8 +93,8 @@ const EditProfile = () => {
   return (
     <>
     <Navbar/>
-    <div className="relative min-h-screen pt-[120px] flex flex-col items-center justify-center bg-gray-100">
-      <h2 className="text-4xl font-bold mb-8">Edit Profile</h2>
+    <div className="relative min-h-screen pt-[120px] flex flex-col items-center justify-center dark:bg-gray-100">
+      <h2 className="text-4xl text-white font-bold mb-8 dark:text-black">Edit Profile</h2>
       <button
         className="absolute top-[120px] right-[80px] mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         onClick={() => navigate(`/section/${_id}`)}
@@ -186,7 +187,9 @@ const EditProfile = () => {
           )}
         </div>
       </form>
+
     </div>
+   <Footer/>
     </>
   );
 };
