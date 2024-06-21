@@ -86,6 +86,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      </div>
       <AnimatePresence>
         {isOpen && (
           <motion.div
