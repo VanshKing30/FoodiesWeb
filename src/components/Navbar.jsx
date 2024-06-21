@@ -130,15 +130,15 @@ const Navbar = () => {
       </AnimatePresence>
     </nav>
   </>
+
   );
 };
 
 const NavItem = ({ icon, to, children }) => {
   return (
-    <Link
-      to={to}
-      className="flex items-center space-x-2 w-full h-auto relative z-0 rounded-lg transition-all duration-200 hover:scale-125 text-xl  hover:bg-opacity-50"
-    >
+
+    <Link to={to} className="flex items-center space-x-2 w-full h-auto relative z-0 rounded-lg transition-all duration-200 hover:scale-125 text-xl block hover:bg-opacity-50">
+
       {icon && <span>{icon}</span>}
       <span>{children}</span>
     </Link>
@@ -146,22 +146,18 @@ const NavItem = ({ icon, to, children }) => {
 };
 
 const MobileNavItem = ({ to, children }) => {
-  const classname = "z-[2] text-gray-300 text-center hover:text-white block px-3 py-2 rounded-md text-xl font-medium ";
+  const classname = "z-[2] text-gray-300 text-center hover:text-white block px-3 py-2 rounded-md text-xl font-medium";
   return (
-    <Link
-      to={to}
-      className={classname + "hover:bg-gray-700"}
-    >
+    <Link to={to} className={classname + " hover:bg-gray-700"}>
       {children}
     </Link>
   );
 };
 
-// Define your icon components here
 const IconHome = () => <span>🏠</span>;
 const IconAbout = () => <span>ℹ️</span>;
 const IconNews = () => <span>📰</span>;
 const IconRateUs = () => <span>⭐</span>;
-const IconCanteen = () => <span>🥗</span>
+const IconCanteen = () => <span>🥗</span>;
 
 export default Navbar;
