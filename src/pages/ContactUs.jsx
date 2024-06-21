@@ -1,8 +1,8 @@
-import React, { useRef, useState } from "react";
-import { motion } from "framer-motion";
-import emailjs from "@emailjs/browser";
 import axios from "axios";
-
+import emailjs from "@emailjs/browser";
+import logo from "../assets/logo2.png";
+import { Link } from "react-router-dom";
+import React, { useRef, useState } from "react";
 
 const Contact = () => {
   const formRef = useRef();
@@ -84,84 +84,79 @@ const Contact = () => {
   };
 
   return (
-    <div className="absolute overflow-hidden w-screen h-screen bg-gradient-to-t from-blue-950 via-blue-950 to-gray-950 ">
-       <p className="text-white font-medium text-4xl pl-10 pt-8">Get in touch</p>
-       <h3 className="text-white font-medium text-4xl pl-20 pt-3">Contact Us.</h3>
-    <div
-      className={`xl:mt-12 pl-64 flex xl:flex-row flex-col-reverse gap-10 overflow-hidden `}
-    >  
-      
-    <div className="absolute -bottom-32 -left-40 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
-    <div className="absolute -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
-    <div className="absolute -top-40 -right-0 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
-    <div className="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
-   
-
- <div className="ml-20 w-96 h-[20%] px-7 text-black shadow-blue-900 shadow3xl bg-blue-900  bg-gradient-to-t  from-gray-900  rounded-3xl">
-        
-        <form
-          ref={formRef}
-          onSubmit={handleEmailSubmit}
-          className='my-10 flex flex-col gap-8'
-        >
-          <label className='flex flex-col '>
-            <span className=' font-medium mb-2'>Your Name</span>
-            <input
-              type='text'
-              name='name'
-              value={form.name}
-              onChange={handleChange}
-              placeholder="What's your good name?"
-              className='bg-tertiary py-3 px-6 placeholder:text-secondary  rounded-lg outline-none border-none font-medium '
-            />
-          </label>
-          <label className='flex flex-col'>
-            <span className=' font-medium mb-2'>Your email</span>
-            <input
-              type='email'
-              name='email'
-              value={form.email}
-              onChange={handleChange}
-              placeholder="What's your web address?"
-              className='bg-tertiary py-3 px-6 placeholder:text-secondary  rounded-lg outline-none border-none font-medium '
-            />
-          </label>
-          <label className='flex flex-col'>
-            <span className=' font-medium mb-2'>Your Message</span>
-            <textarea
-              rows={5}
-              name='message'
-              value={form.message}
-              onChange={handleChange}
-              placeholder='What you want to say?'
-              className='bg-tertiary py-3 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900'
-            />
-          </label>
-
-          <div className='flex gap-8'>
-            <button
-              type='submit'
-              className='bg-tertiary py-3 px-8 rounded-xl outline-none w-fit text-white font-bold shadow-md shadow-primary bg-cyan-700 hover:scale-[1.1]'
-            >
-              {loading ? "Sending..." : "Send_Mail"}
-            </button>
-            <button
-              type='button'
-              onClick={handleSaveToDB}
-              className='bg-tertiary py-3 px-8 rounded-xl outline-none w-fit text-white font-bold shadow-md shadow-primary bg-cyan-800 hover:scale-[1.1]'
-            >
-              {loading ? "Saving..." : "Submit"}
-            </button>
+      <div>
+        <div className="relative h-screen md:flex">
+          <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 bg-no-repeat justify-around items-center hidden">
+            <div>
+              <img src={logo} alt="logo" className="w-48 h-12 mb-2" />
+              <p className="text-white mt-1 ml-3">
+                Connecting You to Your College Canteens
+              </p>
+            </div>
+            <div className="absolute -bottom-32 -left-40 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
+            <div className="absolute -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
+            <div className="absolute -top-40 -right-0 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
+            <div className="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
           </div>
-        </form></div>
-        <div className=" -mt-10 ml-10 ">
-          <img src="/i9.png" className="w-full h-full"/>
+          <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
+            <form className="bg-white p-8 rounded shadow-lg w-80" onSubmit={handleEmailSubmit}>
+              <h1 className="text-gray-800 font-bold text-2xl mb-1">Get in touch</h1>
+              <p className="text-sm font-normal text-gray-600 mb-7">Contact Us.</p>
+              <div className="mb-4">
+                <input
+                  required
+                  className="w-full py-2 px-3 border  rounded-2xl border-b-3 border-customBlue"
+                  type="text"
+                  placeholder="Name"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-4">
+                <input
+                  required
+                  className="w-full py-2 px-3 border  rounded-2xl border-b-3 border-customBlue"
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-4">
+                <textarea
+                  required
+                  className="w-full py-2 px-3 border  rounded-2xl border-b-3 border-customBlue"
+                  type="text"
+                  placeholder="Message"
+                  name="message"
+                  value={form.message}
+                  onChange={handleChange}
+                  rows={5}
+                />
+              </div>
+                <div className='flex gap-3'>
+                <Link 
+                  className="w-full bg-gradient-to-t bg-white text-blue-950 py-2 rounded-2xl font-semibold mb-2 text-center border-b-3 border-customBlue hover:bg-gray-100 border"
+                  to="/">
+                  <button>
+                    {loading ? "Go Back" : "Go Back"}
+                  </button>
+                </Link>
+                <button
+                    type='button'
+                    onClick={handleSaveToDB}
+                    className="w-full bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 py-2 rounded-2xl text-white font-semibold mb-2"
+                  >
+                  {loading ? "Saving..." : "Submit"}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      
-      </div><div  className="p-10"></div>
-     
       </div>
   );
-};
+}
 
 export default Contact;
