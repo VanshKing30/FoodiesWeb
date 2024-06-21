@@ -25,7 +25,7 @@ const SectionPage = () => {
     try {
       setLoading(true);
       const getCanteen = await fetch(
-        `http://localhost:8000/api/v1/getcanteen`,
+        `${process.env.REACT_APP_BASE_URL}/getcanteen`,
         {
           method: "GET",
           headers: {

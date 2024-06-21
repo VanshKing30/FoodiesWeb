@@ -4,22 +4,29 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import logo from "../assets/logo2.png";
-import Loader from "../components/Loader/Loader";
+import Loader from "../components/Loader/Loader"; // Ensure this path is correct
 import { useAuth } from "../authContext";
 
 function Login() {
+
   const [formData, setFormData] = useState({
     email: "",
     accountType: "",
     password: "",
   });
 
-  const { checkAuthentication } = useAuth();
+  const { isAuthenticated, login} = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    if(isAuthenticated){
+      navigate('/home');
+    }
+  })
 
   useEffect(() => {
     const storedEmail = localStorage.getItem("rememberedEmail");
@@ -41,33 +48,46 @@ function Login() {
 
   function rememberMeHandler(event) {
     setRememberMe(event.target.checked);
+    if (!event.target.checked) {
+      localStorage.removeItem("rememberedEmail");
+    }
   }
 
   async function submitHandler(event) {
     event.preventDefault();
-    setLoading(true);
-
+  
+    const apiUrl =
+      formData.accountType === "User"
+        ? `${process.env.REACT_APP_BASE_URL}/studentLogin`
+        : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
+  
     try {
-      const apiUrl =
-        formData.accountType === "User"
-          ? `${process.env.REACT_APP_BASE_URL}/studentLogin`
-          : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
-
       const response = await axios.post(apiUrl, formData);
-
       toast.success("User Logged in");
-      if (formData.accountType === "User") {
-        navigate("/home");
+      
+      if (rememberMe) {
+        localStorage.setItem("rememberedEmail", formData.email);
       } else {
-        navigate(`/section/${response.data.cantId}`);
+        localStorage.removeItem("rememberedEmail");
       }
+  
+      if (formData.accountType === "User") {
+
+        navigate("/home");
+        localStorage.setItem("token", response.data.token);
+      } else {
+        localStorage.setItem("canteenId", response.data.cantId);
+        localStorage.setItem("token", response.data.token);
+
+        navigate(`/section/${response.data.cantId}`);
+
+      }
+      navigate("/home");
     } catch (error) {
+      console.error(error);
       toast.error("Failed to login");
-    } finally {
-      setLoading(false);
     }
   }
-
   return (
     <>
       {loading ? (
@@ -94,20 +114,13 @@ function Login() {
             <div className="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
           </div>
           <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
-            <form
-              className="bg-white p-8 rounded shadow-lg w-80"
-              onSubmit={submitHandler}
-            >
-              <h1 className="text-gray-800 font-bold text-2xl mb-1">
-                Hello Again!
-              </h1>
-              <p className="text-sm font-normal text-gray-600 mb-7">
-                Welcome Back
-              </p>
+            <form className="bg-white p-8 rounded shadow-lg w-80" onSubmit={submitHandler}>
+              <h1 className="text-gray-800 font-bold text-2xl mb-1">Hello Again!</h1>
+              <p className="text-sm font-normal text-gray-600 mb-7">Welcome Back</p>
               <div className="mb-4">
                 <input
                   required
-                  className="w-full py-2 px-3 border border-gray-300 rounded-2xl"
+                  className="w-full py-2 px-3 border  rounded-2xl border-b-3 border-customBlue"
                   type="email"
                   placeholder="Email"
                   name="email"
@@ -121,8 +134,7 @@ function Login() {
                   name="accountType"
                   onChange={changeHandler}
                   value={formData.accountType}
-                  className="mt-1 p-2 w-full border rounded-2xl"
-                >
+                  className="mt-1 p-2 w-full border rounded-2xl border-b-3 border-customBlue">
                   <option value="" disabled hidden>
                     Login as
                   </option>
@@ -133,7 +145,7 @@ function Login() {
               <div className="relative mb-4">
                 <input
                   required
-                  className="w-full py-2 px-3 border border-gray-300 rounded-2xl"
+                  className="w-full py-2 px-3 border  rounded-2xl border-b-3 border-customBlue "
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   name="password"
@@ -144,11 +156,7 @@ function Login() {
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
                   onClick={() => setShowPassword((prev) => !prev)}
                 >
-                  {showPassword ? (
-                    <AiOutlineEye size={20} />
-                  ) : (
-                    <AiOutlineEyeInvisible size={20} />
-                  )}
+                  {showPassword ? <AiOutlineEye size={20} /> : <AiOutlineEyeInvisible size={20} />}
                 </span>
               </div>
               <div className="remember-me mb-4">

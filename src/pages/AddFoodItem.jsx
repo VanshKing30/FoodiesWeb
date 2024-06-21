@@ -35,13 +35,13 @@ function AddFoodItem() {
 
     switch (mealType) {
       case "Breakfast":
-        apiUrl = `http://localhost:8000/api/v1/${canteenId}/breakfast/add`;
+        apiUrl = `${process.env.REACT_APP_BASE_URL}/${canteenId}/breakfast/add`;
         break;
       case "Lunch":
-        apiUrl = `http://localhost:8000/api/v1/${canteenId}/lunch/add`;
+        apiUrl = `${process.env.REACT_APP_BASE_URL}/${canteenId}/lunch/add`;
         break;
       case "Dinner":
-        apiUrl = `http://localhost:8000/api/v1/${canteenId}/dinner/add`;
+        apiUrl = `${process.env.REACT_APP_BASE_URL}/${canteenId}/dinner/add`;
         break;
       default:
         toast.error("Please select a meal type.");
