@@ -27,8 +27,8 @@ app.use("/api/v1", studentRoutes);
 app.use("/api/v1", uploadFileRouter);
 app.use('/api/contact', contactRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server started succesfully at ${PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server started succesfully at ${process.env.PORT}`);
 });
 
 //getting connected to databse
