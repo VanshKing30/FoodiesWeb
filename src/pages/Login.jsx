@@ -8,18 +8,25 @@ import Loader from "../components/Loader/Loader"; // Ensure this path is correct
 import { useAuth } from "../authContext";
 
 function Login() {
+
   const [formData, setFormData] = useState({
     email: "",
     accountType: "",
     password: "",
   });
 
-  const { checkAuthentication } = useAuth();
+  const { isAuthenticated, login} = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    if(isAuthenticated){
+      navigate('/home');
+    }
+  })
 
   useEffect(() => {
     const storedEmail = localStorage.getItem("rememberedEmail");
@@ -49,13 +56,16 @@ function Login() {
   async function submitHandler(event) {
     event.preventDefault();
   
-    const apiUrl =
-      formData.accountType === "User"
-        ? `${process.env.REACT_APP_BASE_URL}/studentLogin`
-        : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
+    // const apiUrl =
+    //   formData.accountType === "User"
+    //     ? `${process.env.REACT_APP_BASE_URL}/studentLogin`
+    //     : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
+
+    const apiUrl = 'http://localhost:8000/api/v1/studentLogin'
   
     try {
       const response = await axios.post(apiUrl, formData);
+      console.log("This is response data", response.data);
       toast.success("User Logged in");
       
       if (rememberMe) {
@@ -65,6 +75,7 @@ function Login() {
       }
   
       if (formData.accountType === "User") {
+
         navigate("/home");
         localStorage.setItem("token", response.data.token);
       } else {
@@ -74,8 +85,9 @@ function Login() {
         navigate(`/section/${response.data.cantId}`);
 
       }
+     
     } catch (error) {
-      console.error(error);
+      console.error("This is error",error);
       toast.error("Failed to login");
     }
   }

@@ -1,7 +1,3 @@
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -10,8 +6,6 @@ import Navbar from "../components/Navbar";
 import Loader from "../components/Loader/Loader";
 import Footer from "../components/Footer";
 import { ThemeContext } from '../themeContext';
-<<<<<<< Updated upstream
-=======
 
 const StarRating = ({ rating, onRatingChange }) => {
   const [hoverRating, setHoverRating] = useState(0);
@@ -34,7 +28,6 @@ const StarRating = ({ rating, onRatingChange }) => {
   );
 };
 
->>>>>>> Stashed changes
 function MenuPage() {
   const { _id } = useParams();
   const [breakfast, setBreakfast] = useState();
@@ -45,10 +38,7 @@ function MenuPage() {
   const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(false);
   const { theme, toggleTheme } = useContext(ThemeContext);
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
   const getBreakfast = async () => {
     try {
       setLoading(true);
@@ -169,115 +159,6 @@ function MenuPage() {
             <Loader />
           ) : (
             <>
-<<<<<<< Updated upstream
-             <div className="flex flex-col gap-4 p-5 md:flex-row justify-center">
-          
-          {breakfast && (
-      
-            <div className="w-2/3 rounded-lg shadow-md border-2 border-red-300 mt-5">
-            <div className="text-center bg-red-300 text-black py-3 font-xl relative">
-              <img
-                src="https://cdn-icons-png.flaticon.com/128/5025/5025429.png"
-                alt="Breakfast Icon"
-                className="absolute top-0 left-4 h-16 w-16 -mt-8 -ml-8"
-              />
-              Breakfast
-            </div>
-            <div className="p-4">
-              <ul>
-                {breakfast.data.map((dish) => (
-                  <li
-                    key={dish._id}
-                    onClick={() => handleDishClick(dish.dishId)} // Add click handler
-                    className={`cursor-pointer hover:bg-gradient-to-r from-green-300 to-green-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${theme === 'dark' ? 'text-white' : 'text-red-600'} hover:text-black mt-2 `}
-                  >
-                    • {dish.dish}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          
-          )}
-
-          
-          {lunch && (
-        
-
-            <div className=" w-2/3 rounded-lg shadow-md border-green-300 border-2 mt-5" >
-            <div className=" text-center bg-green-300 text-black py-3 font-xl relative" >
-            <img
-                src="https://cdn-icons-png.flaticon.com/128/2082/2082045.png"
-                alt="Breakfast Icon"
-                className="absolute top-0 left-4 h-16 w-16 -mt-8 -ml-8"
-              />
-             Lunch
-            </div>
-            <div>
-            <ul>
-                {lunch.data.map((dish) => (
-                <li
-                  key={dish._id}
-                  onClick={() => handleDishClick(dish.dishId)} // Add click handler
-                  style={{ cursor: "pointer" }}
-                   className={`hover:bg-gradient-to-r from-green-300 to-green-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${theme === 'dark' ? 'text-white' : 'text-green-600'} hover:text-black mt-2 `}
-                 >
-                   • {dish.dish}
-                 </li>
-                ))}
-              </ul>
-            </div>
-           </div>
-          )}
-
-          
-          {dinner && (
-
-            <div className=" w-2/3 rounded-lg shadow-md border-yellow-300 border-2 mt-5" >
-            <div className=" text-center bg-yellow-300 text-black py-3 font-xl relative " >
-            <img
-                src="https://cdn-icons-png.flaticon.com/128/3321/3321601.png"
-                alt="Breakfast Icon"
-                className="absolute top-0 left-4 h-16 w-16 -mt-8 -ml-8"
-              />
-             Dinner
-            </div>
-            <div>
-            <ul>
-                {dinner.data.map((dish) => (
-                <li
-                  key={dish._id}
-                  onClick={() => handleDishClick(dish.dishId)} // Add click handler
-                  style={{ cursor: "pointer" }}
-                   className={`hover:bg-gradient-to-r from-yellow-300 to-yellow-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${theme === 'dark' ? 'text-white' : 'text-yellow-600'} hover:text-black mt-2 `}
-                 >
-                   • {dish.dish}
-                 </li>
-                ))}
-              </ul>
-            </div>
-           </div>
-          )}
-        </div>
-
-        
-        <div className="mt-8 text-purple-800">
-          <h2 className="text-2xl font-bold mb-4 text-white">Meal Feedback</h2>
-          <textarea
-            className="w-full h-32 p-4 border border-purple-300 rounded mb-4"
-            placeholder="Enter your feedback here..."
-            value={feedback} // Set the value of the textarea
-            onChange={(e) => setFeedback(e.target.value)} // Update the state on change
-          ></textarea>
-          <button
-            onClick={handleFeedbackSubmit}
-            className="bg-green-500 hover-bg-green-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Submit Feedback
-          </button>
-        </div>
-
-=======
               <div className="flex flex-col gap-4 p-5 md:flex-row justify-center">
                 {breakfast && (
                   <div className="w-2/3 rounded-lg shadow-md border-2 border-red-300 mt-5">
@@ -373,7 +254,6 @@ function MenuPage() {
                   Submit Feedback
                 </button>
               </div>
->>>>>>> Stashed changes
             </>
           )
         }

@@ -66,7 +66,7 @@ const SectionPage = () => {
   return (
     <div className="text-center text-gray-900 min-h-screen pt-[8rem]">
       <Navbar />
-      <div className='relative bg-white'>
+      <div className='relative'>
         {loading ? (
           <Loader />
         ) : (

@@ -83,7 +83,7 @@ function AddFoodItem() {
   };
 
   return (
-    <div className="flex justify-center items-center h-[80vh] bg-white">
+    <div className="flex justify-center items-center h-[80vh] ">
       <form
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded shadow-lg w-full max-w-sm border-2"

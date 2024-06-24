@@ -3,7 +3,7 @@ const User = require("../models/studentLoginInfo");
 const jwt = require("jsonwebtoken");
 const Canteen = require("../models/canteenLoginInfo");
 const Session = require("../models/session");
-const Contact = require('../models/Contact');
+const Contact = require("../models/Contact");
 const {
   forgotPasswordToken,
   verifyToken,
@@ -76,7 +76,7 @@ exports.studentSignup = async (req, res) => {
 
 exports.studentLogin = async (req, res) => {
   try {
-    console.log(req.body);
+    
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -87,13 +87,16 @@ exports.studentLogin = async (req, res) => {
     }
 
     let user = await User.findOne({ email });
+
     if (!user) {
+      console.log("User not found");
       return res.status(401).json({
         success: false,
         message: "User is not registred",
       });
     }
 
+    console.log("This is our user", user);
     const payload = {
       email: user.email,
       id: user._id,
@@ -115,7 +118,6 @@ exports.studentLogin = async (req, res) => {
       user = user.toObject();
       user.token = token;
       user.password = undefined;
-      console.log(user);
 
       // const options = {
       //   expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
@@ -142,7 +144,6 @@ exports.studentLogin = async (req, res) => {
         user,
       });
     } else {
-      
       return res.status(403).json({
         success: false,
         message: "Pasword Incorrect",
@@ -265,7 +266,11 @@ exports.canteenSignup = async (req, res) => {
 
     // Create a token
     const token = jwt.sign(
-      { id: canteen._id, email: canteen.email },
+      {
+        id: canteen._id,
+        email: canteen.email,
+        accountType: canteen.accountType,
+      },
       process.env.JWT_SECRET,
       {
         expiresIn: "1h", // Set token expiration time as needed
@@ -442,21 +447,20 @@ exports.changeCanteenPassword = async (req, res) => {
   });
 };
 
-
 //contactUs
 
 exports.saveContactMessage = async (req, res) => {
   try {
     const { name, email, message } = req.body;
     if (!name || !email || !message) {
-      return res.status(400).send('All fields are required');
+      return res.status(400).send("All fields are required");
     }
     const newContact = new Contact({ name, email, message });
     await newContact.save();
-    res.status(201).send('Message received');
+    res.status(201).send("Message received");
   } catch (error) {
-    console.error('Error saving message:', error.message, error);
-    res.status(500).send('Error saving message');
+    console.error("Error saving message:", error.message, error);
+    res.status(500).send("Error saving message");
   }
 };
 
