@@ -45,6 +45,7 @@ const Navbar = () => {
               </div>
             </div>
 
+<<<<<<< Updated upstream
 
               <div className="ml-16 flex gap-6 items-baseline space-x-4   ">
                 <NavItem to="/home" className="nav-item" icon={<IconHome />}>Home</NavItem>
@@ -102,6 +103,41 @@ const Navbar = () => {
               <MobileNavItem to="/news">News</MobileNavItem>
               <MobileNavItem to="/contact">Contact</MobileNavItem>
 
+=======
+            <div className="hidden md:flex items-center gap-5">
+              <button onClick={toggleTheme} className="p-2 rounded focus:outline-none text-4xl border-none outline-none">
+                {theme === 'dark' ? '🌞' : '🌙'}
+              </button>
+              <div>
+                <Link to="/">
+                  <button
+                    className={`py-1 px-2 rounded w-full h-auto text-l relative z-0 rounded-lg transition-all duration-200 hover:scale-110 ${theme === 'dark' ? 'bg-white text-black' : 'bg-green-400 hover:bg-green-600 hover:shadow-green text-white'}`}
+                  >
+                    Log out
+                  </button>
+                </Link>
+              </div>
+            </div>
+
+            <div className="-mr-2 flex md:hidden">
+              <button onClick={toggleTheme} className="p-2 rounded focus:outline-none text-2xl border-none outline-none">
+                {theme === 'dark' ? '🌞' : '🌙'}
+              </button>
+              <button
+                onClick={toggleMenu}
+                className="inline-flex items-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
+                aria-expanded="false"
+              >
+                {isOpen ? (
+                  <IoClose className="text-white" />
+                ) : (
+                  <GiHamburgerMenu className="text-white" />
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+>>>>>>> Stashed changes
 
         <AnimatePresence>
           {isOpen && (
@@ -116,7 +152,11 @@ const Navbar = () => {
                 <MobileNavItem to="/about">About us</MobileNavItem>
                 <MobileNavItem to="/news">News</MobileNavItem>
                 <MobileNavItem to="/contact">Contact</MobileNavItem>
+<<<<<<< Updated upstream
                 <MobileNavItem to="/rateus">RateUs</MobileNavItem>            
+=======
+                <MobileNavItem to="/rateus">RateUs</MobileNavItem>
+>>>>>>> Stashed changes
                 {/* Conditionally render "My Canteen" button */}
                 {canteenId && (
                   <MobileNavItem to={`/section/${canteenId}`}>My Canteen</MobileNavItem>
@@ -134,6 +174,7 @@ const Navbar = () => {
         </AnimatePresence>
       </nav>
     </>
+<<<<<<< Updated upstream
               <MobileNavItem to="/rateus">Rateus</MobileNavItem>
 
               <MobileNavItem to="/">
@@ -154,6 +195,8 @@ const Navbar = () => {
       </div>
     </nav>  
   </>
+=======
+>>>>>>> Stashed changes
   );
 };
 
@@ -186,6 +229,10 @@ const IconHome = () => <span>🏠</span>;
 const IconAbout = () => <span>ℹ️</span>;
 const IconNews = () => <span>📰</span>;
 const IconRateUs = () => <span>⭐</span>;
+<<<<<<< Updated upstream
 const IconCanteen = () => <span>🥗</span>
+=======
+const IconCanteen = () => <span>🥗</span>;
+>>>>>>> Stashed changes
 
 export default Navbar;

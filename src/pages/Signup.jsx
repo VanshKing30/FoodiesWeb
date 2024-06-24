@@ -59,11 +59,16 @@ function Signup() {
   async function submitHandler(event) {
     event.preventDefault();
     console.log("ENV FILE", process.env.REACT_APP_BASE_URL);
+<<<<<<< Updated upstream
 
+=======
+  
+>>>>>>> Stashed changes
     if (lowerValidated && upperValidated && numberValidated && specialValidated && lengthValidated) {
       const apiUrl = formData.accountType === "User" 
         ? `${process.env.REACT_APP_BASE_URL}/studentSignup` 
         : `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
+<<<<<<< Updated upstream
 
       try {
         setLoading(true);
@@ -71,18 +76,32 @@ function Signup() {
         const response = await axios.post(apiUrl, formData);
 
         toast.success("Account Created Successfully!");
+=======
+  
+      try {
+        setLoading(true);
+  
+        const response = await axios.post(apiUrl, formData);
+  
+        toast.success("Account Created Successfully!");
+  
+>>>>>>> Stashed changes
         if (formData.accountType === "User") {
           navigate("/");
         } else {
           const token = response.data.token;
           localStorage.setItem("token", token);
           localStorage.setItem("canteenId", response.data.cantId);
+<<<<<<< Updated upstream
           navigate("/home");
         } else {
           navigate("/");
 
           navigate(`/section/${response.data.cantId}`);
 
+=======
+          navigate(`/section/${response.data.cantId}`);
+>>>>>>> Stashed changes
         }
       } catch (error) {
         const errorMessage = error.response?.data?.message || "Failed to create account. Please try again.";
@@ -95,6 +114,7 @@ function Signup() {
       toast.error("Password must pass all the criteria");
     }
   }
+  
 
   return (
     <div className="h-screen md:flex">
