@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -15,7 +15,6 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import { ThemeProvider } from './themeContext';
 import ContactUs from './pages/ContactUs';
-import { AuthProvider } from './authContext';
 import EditProfile from './pages/EditProfile';
 
 const Layout = ({ children }) => {
@@ -28,9 +27,17 @@ const Layout = ({ children }) => {
 
 function App() {
   const usertoken = localStorage.getItem('usertoken');
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   const canteenId = localStorage.getItem('canteenId');
   const hasAnyToken = token || usertoken;
+
+  // Check if either token is undefined and redirect to login if true
+  if (usertoken === undefined || token === undefined) {
+    localStorage.removeItem('usertoken');
+    localStorage.removeItem('token');
+    window.location.href = "/login"; // Redirect to login page
+    return null; // Render nothing else
+  }
 
   return (
     <ThemeProvider>
