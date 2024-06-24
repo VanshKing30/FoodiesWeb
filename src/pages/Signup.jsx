@@ -81,12 +81,13 @@ function Signup() {
 
         toast.success("Account Created Successfully!");
         if (formData.accountType === "User") {
-          navigate("/");
+          localStorage.setItem("usertoken", response.data.token);
+          window.location.href="/home";
         }
         if (formData.accountType === "Canteen") {
-          const token = response.data.token;
-          signUp(token);
-          navigate("/home");
+          localStorage.setItem("userId", response.data.user);
+        localStorage.setItem("token", response.data.token);
+        window.location.href=`/section/${response.data.cantId}`;
         }
       } catch (error) {
         const errorMessage = error.response?.data?.message || "Failed to create account. Please try again.";
