@@ -3,7 +3,7 @@ const Breakfast = require('../models/breakfast');
 const Lunch = require('../models/lunch');
 const Dinner = require('../models/dinner');
 const Canteen = require("../models/canteenLoginInfo");
-const { uploader } = require('../config/cloudinaryConfig');
+const { uploader, uploadImage } = require('../config/cloudinaryConfig');
 
 
 
@@ -24,64 +24,58 @@ const getAllCanteen = async (req ,res , next) =>{
   }
 };
 
-const getBreakfast = async(req , res , next) =>{
-  
-  try{
-    const id  = req.params.id;
-  
-    const breakfastData = await Breakfast.find({ canteen: id }).select("dish").select("dishId").exec();
+const getBreakfast = async (req, res, next) => {
+  try {
+    const id = req.params.id;
 
-    
-    res.status(200)
-    .json({
-      success : true,
-      data : breakfastData,
-      message : "Entire breakfast was fetched"
+    const breakfastData = await Breakfast.find({ canteen: id })
+      .select("dish dishId dishImage description") // Select all fields you need
+      .exec();
+
+    res.status(200).json({
+      success: true,
+      data: breakfastData,
+      message: "Entire breakfast was fetched",
     });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
   }
-  catch(error){
-    res.status(500).json({success : false , error : error});
-  }
-}
+};
 
-const getLunch = async(req , res , next) =>{
-  
-  try{
-    const id  = req.params.id;
+const getLunch = async (req, res, next) => {
+  try {
+    const id = req.params.id;
     
-    const lunchData = await Lunch.find({ canteen: id }).select("dish").select("dishId").exec();
+    const lunchData = await Lunch.find({ canteen: id })
+      .select("dish dishId dishImage description")
+      .exec();
 
-    
-    res.status(200)
-    .json({
-      success : true,
-      data : lunchData,
-      message : "Entire lunch was fetched"
+    res.status(200).json({
+      success: true,
+      data: lunchData,
+      message: "Entire lunch was fetched",
     });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
   }
-  catch(error){
-    res.status(500).json({success : false , error : error});
-  }
-}
-
-const getDinner = async(req , res , next) =>{
-  
-  try{
-    const id  = req.params.id;
-    const dinnerData = await Dinner.find({ canteen: id }).select("dish").select("dishId").exec();
-
+};
+const getDinner = async (req, res, next) => {
+  try {
+    const id = req.params.id;
     
-    res.status(200)
-    .json({
-      success : true,
-      data : dinnerData,
-      message : "Entire dinner was fetched"
+    const dinnerData = await Dinner.find({ canteen: id })
+      .select("dish dishId dishImage description")
+      .exec();
+
+    res.status(200).json({
+      success: true,
+      data: dinnerData,
+      message: "Entire dinner was fetched",
     });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
   }
-  catch(error){
-    res.status(500).json({success : false , error : error});
-  }
-}
+};
 
 // Controller function to get the canteen's dashboard
 const getCanteenDashboard = asyncHandler(async (req, res, next) => {
@@ -101,19 +95,33 @@ const getCanteenDashboard = asyncHandler(async (req, res, next) => {
 // Controller function to add a breakfast dish
 const addBreakfastDish = asyncHandler(async (req, res, next) => {
   const canteenId = req.params.id;
-  const { dish , dishId } = req.body;
+  const { dish, dishId, description, dishImage } = req.body;
+
+  let uploadedImageUrl = null;
+  
+  if (dishImage) {
+    try {
+      const uploadResult = await uploadImage(dishImage); // Assuming dishImage is already a base64 string
+      uploadedImageUrl = uploadResult.secure_url;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      return res.status(500).json({ message: 'Failed to upload image' });
+    }
+  }
 
   const existingDish = await Breakfast.findOne({ canteen: canteenId, dish }).exec();
 
   if (existingDish) {
-    return res.json({ message: 'Dish already added' });
+    return res.status(400).json({ message: 'Dish already added' });
   }
 
-  const newDish = new Breakfast({ canteen: canteenId, dish , dishId });
+  const newDish = new Breakfast({ canteen: canteenId, dish, dishId, dishImage: uploadedImageUrl, description });
   await newDish.save();
 
-  res.json({ message: 'Dish added successfully' });
+  res.status(201).json({ message: 'Dish added successfully', dish: newDish });
 });
+
+
 
 // Controller function to remove a breakfast dish
 const removeBreakfastDish = asyncHandler(async (req, res, next) => {
@@ -124,24 +132,35 @@ const removeBreakfastDish = asyncHandler(async (req, res, next) => {
   res.json({ message: 'Dish removed successfully' });
 });
 
-// Implement similar functions for lunch and dinner dishes
-// addLunchDish, removeLunchDish, addDinnerDish, and removeDinnerDish
+
 
 // Controller function to add a lunch dish
 const addLunchDish = asyncHandler(async (req, res, next) => {
   const canteenId = req.params.id;
-  const { dish, dishId } = req.body;
+  const { dish, dishId, description, dishImage } = req.body;
 
-  const existingDish = await Lunch.findOne({ canteen: canteenId, dish }).exec();
-
-  if (existingDish) {
-    return res.json({ message: 'Dish already added' });
+  let uploadedImageUrl = null;
+  
+  if (dishImage) {
+    try {
+      const uploadResult = await uploadImage(dishImage); // Assuming dishImage is already a base64 string
+      uploadedImageUrl = uploadResult.secure_url;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      return res.status(500).json({ message: 'Failed to upload image' });
+    }
   }
 
-  const newDish = new Lunch({ canteen: canteenId, dish , dishId });
+  const existingDish = await Breakfast.findOne({ canteen: canteenId, dish }).exec();
+
+  if (existingDish) {
+    return res.status(400).json({ message: 'Dish already added' });
+  }
+
+  const newDish = new Lunch({ canteen: canteenId, dish, dishId, dishImage: uploadedImageUrl, description });
   await newDish.save();
 
-  res.json({ message: 'Dish added successfully' });
+  res.status(201).json({ message: 'Dish added successfully', dish: newDish });
 });
 
 // Controller function to remove a lunch dish
@@ -157,18 +176,30 @@ const removeLunchDish = asyncHandler(async (req, res, next) => {
 // Controller function to add a dinner dish
 const addDinnerDish = asyncHandler(async (req, res, next) => {
   const canteenId = req.params.id;
-  const { dish , dishId} = req.body;
+  const { dish, dishId, description, dishImage } = req.body;
 
-  const existingDish = await Dinner.findOne({ canteen: canteenId, dish }).exec();
-
-  if (existingDish) {
-    return res.json({ message: 'Dish already added' });
+  let uploadedImageUrl = null;
+  
+  if (dishImage) {
+    try {
+      const uploadResult = await uploadImage(dishImage); // Assuming dishImage is already a base64 string
+      uploadedImageUrl = uploadResult.secure_url;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      return res.status(500).json({ message: 'Failed to upload image' });
+    }
   }
 
-  const newDish = new Dinner({ canteen: canteenId, dish ,dishId});
+  const existingDish = await Breakfast.findOne({ canteen: canteenId, dish }).exec();
+
+  if (existingDish) {
+    return res.status(400).json({ message: 'Dish already added' });
+  }
+
+  const newDish = new Dinner({ canteen: canteenId, dish, dishId, dishImage: uploadedImageUrl, description });
   await newDish.save();
 
-  res.json({ message: 'Dish added successfully' });
+  res.status(201).json({ message: 'Dish added successfully', dish: newDish });
 
 });
 
