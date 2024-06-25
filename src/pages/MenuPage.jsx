@@ -1,4 +1,3 @@
-// pages/MenuPage.js
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -17,6 +16,8 @@ function MenuPage() {
   const [selectedCategory, setSelectedCategory] = useState('breakfast');
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   const getBreakfast = async () => {
@@ -88,6 +89,36 @@ function MenuPage() {
     getDinner();
   }, []);
 
+  useEffect(() => {
+    const handleSearch = async () => {
+      if (searchTerm.trim() === "") {
+        setSearchResults([]);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        const [breakfastRes, lunchRes, dinnerRes] = await Promise.all([
+          fetch(`${process.env.REACT_APP_BASE_URL}/${_id}/breakfast`).then(res => res.json()),
+          fetch(`${process.env.REACT_APP_BASE_URL}/${_id}/lunch`).then(res => res.json()),
+          fetch(`${process.env.REACT_APP_BASE_URL}/${_id}/dinner`).then(res => res.json())
+        ]);
+
+        const allDishes = [...breakfastRes.data, ...lunchRes.data, ...dinnerRes.data];
+        const filteredDishes = allDishes.filter(dish =>
+          dish.dish.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setSearchResults(filteredDishes);
+      } catch (error) {
+        console.error("Error during search: ", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    handleSearch();
+  }, [searchTerm, _id]);
+
   const handleDishClick = async (dishId) => {
     try {
       const response = await axios.get(
@@ -125,9 +156,18 @@ function MenuPage() {
         items = [];
     }
     if (items.length === 0) {
-      return <p className="absolute w-full text-xl text-red-700  text-center dark:text-red-400">No {selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Available Now</p>;
+      return <p className="absolute w-full text-xl text-red-700 text-center dark:text-red-400">No {selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Available Now</p>;
     }
     return items.map((dish) => (
+      <FoodCard key={dish._id} dish={dish} onClick={() => handleDishClick(dish.dishId)} />
+    ));
+  };
+
+  const renderSearchResults = () => {
+    if (searchResults.length === 0) {
+      return <p className="text-xl text-red-700 text-center dark:text-red-400">No Results Found</p>;
+    }
+    return searchResults.map((dish) => (
       <FoodCard key={dish._id} dish={dish} onClick={() => handleDishClick(dish.dishId)} />
     ));
   };
@@ -147,15 +187,31 @@ function MenuPage() {
             </button>
           ))}
         </div>
-        <h1 className="text-4xl font-bold mb-8 text-white text-center capitalize dark:text-black">{selectedCategory}</h1>
-        {loading ? (
-          <Loader />
-        ) : (
+        <div className="mb-8 flex justify-center">
+          <input
+            type="text"
+            className="w-2/3 p-2 border border-purple-300 rounded"
+            placeholder="Search for a dish..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        {searchTerm ? (
           <div className="grid grid-cols-1 relative md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
-            {renderMenuItems()}
+            {loading ? <Loader /> : renderSearchResults()}
           </div>
+        ) : (
+          <>
+            <h1 className="text-4xl font-bold mb-8 text-white text-center capitalize dark:text-black">{selectedCategory}</h1>
+            {loading ? (
+              <Loader />
+            ) : (
+              <div className="grid grid-cols-1 relative md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
+                {renderMenuItems()}
+              </div>
+            )}
+          </>
         )}
-        
       </div>
       <div className="mt-8 text-purple-800 px-8 mb-4">
           <h2 className="text-2xl font-bold mb-4 text-white text-center dark:text-black">Meal Feedback</h2>
