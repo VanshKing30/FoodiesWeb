@@ -56,10 +56,12 @@ function Login() {
   async function submitHandler(event) {
     event.preventDefault();
   
-    const apiUrl =
-      formData.accountType === "User"
-        ? `${process.env.REACT_APP_BASE_URL}/studentLogin`
-        : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
+    // const apiUrl =
+    //   formData.accountType === "User"
+    //     ? `${process.env.REACT_APP_BASE_URL}/studentLogin`
+    //     : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
+       const apiUrl = formData.accountType === "User" 
+      ? 'http://localhost:4000/api/v1/studentLogin' : 'http://localhost:4000/api/v1/canteenLogin'
   
     try {
       const response = await axios.post(apiUrl, formData);

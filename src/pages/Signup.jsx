@@ -71,9 +71,11 @@ function Signup() {
     console.log("ENV FILE", process.env.REACT_APP_BASE_URL);
 
     if (lowerValidated && upperValidated && numberValidated && specialValidated && lengthValidated) {
+      // const apiUrl = formData.accountType === "User" 
+      //   ? `${process.env.REACT_APP_BASE_URL}/studentSignup` 
+      //   : `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
       const apiUrl = formData.accountType === "User" 
-        ? `${process.env.REACT_APP_BASE_URL}/studentSignup` 
-        : `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
+      ? 'http://localhost:4000/api/v1/studentSignup' : 'http://localhost:4000/api/v1/canteenSignup'
 
       try {
         setLoading(true);
