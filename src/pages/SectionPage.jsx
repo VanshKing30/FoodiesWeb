@@ -11,6 +11,7 @@ import { ThemeContext } from "../themeContext";
 import { FaRegEdit } from "react-icons/fa";
 import { CiBoxList } from "react-icons/ci";
 import { IoMdAdd } from "react-icons/io";
+
 const SectionPage = () => {
   const { _id } = useParams();
   const navigate = useNavigate();
@@ -74,6 +75,7 @@ const SectionPage = () => {
       } min-h-screen pt-[8rem]`}
     >
       <Navbar />
+
       <div className="relative bg-white">
 
         {loading ? (

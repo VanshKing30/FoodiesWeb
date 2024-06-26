@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { ThemeContext } from "../themeContext";
+
 function AddFoodItem() {
   const { theme } = useContext(ThemeContext);
   const [formData, setFormData] = useState({
@@ -102,13 +103,13 @@ function AddFoodItem() {
   };
 
   return (
-    <div className={`flex justify-center items-center h-[80vh] ${theme === 'dark' ? 'bg-[#131b33]' : 'bg-white' }`}>
-
+    <div className={`flex justify-center items-center h-[80vh] ${theme === 'dark' ? 'bg-[#131b33]' : 'bg-white'}`}>
       <form
         onSubmit={handleSubmit}
-        className={`p-6 rounded shadow-lg w-full max-w-sm border-2 ${theme === 'dark' ? 'bg-gray-300' : 'bg-white'} `}
+        className={`p-6 rounded shadow-lg w-full max-w-sm border-2 ${theme === 'dark' ? 'bg-gray-300' : 'bg-white'}`}
       >
-        <h1 className="text-xl font-bold mb-4 text-black ">Add Food Item</h1>
+        <h1 className="text-xl font-bold mb-4 text-black">Add Food Item</h1>
+
         <div className="mb-4">
           <label className="block text-gray-700">Dish Name</label>
           <input
@@ -137,7 +138,7 @@ function AddFoodItem() {
             name="mealType"
             value={formData.mealType}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded mt-1"
+            className="w-full p-2 border border-gray-300 rounded mt-1 text-black "
             required
           >
             <option value="" disabled hidden>
