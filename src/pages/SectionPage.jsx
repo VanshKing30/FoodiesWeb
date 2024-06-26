@@ -75,6 +75,7 @@ const SectionPage = () => {
     >
       <Navbar />
       <div className="relative bg-white">
+
         {loading ? (
           <Loader />
         ) : (

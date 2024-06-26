@@ -3,7 +3,7 @@ const User = require("../models/studentLoginInfo");
 const jwt = require("jsonwebtoken");
 const Canteen = require("../models/canteenLoginInfo");
 const Session = require("../models/session");
-const Contact = require('../models/Contact');
+const Contact = require("../models/Contact");
 const {
   forgotPasswordToken,
   verifyToken,
@@ -18,8 +18,7 @@ exports.studentSignup = async (req, res) => {
   console.log("This is jwt", process.env.JWT_SECRET);
   try {
     console.log(req.body);
-    const { name, email, collegeName, accountType, password, confirmPassword } =
-      await req.body;
+    const { name, email, collegeName, accountType, password, confirmPassword } = req.body;
 
     if (password !== confirmPassword) {
       return res.status(400).json({
@@ -28,14 +27,12 @@ exports.studentSignup = async (req, res) => {
       });
     }
 
-    const existingUser = await User.findOne({
-      email,
-    });
+    const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.status(400).json({
         success: false,
-        message: "User alredy exist",
+        message: "User already exists",
       });
     }
 
@@ -59,24 +56,49 @@ exports.studentSignup = async (req, res) => {
       password: hashedPassword,
     });
 
-    await user.save();
+    const payload = {
+      email: user.email,
+      id: user._id,
+      accountType: user.accountType,
+    };
+
+    let token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "2h",
+    });
+
+    // creating a session
+    const session = new Session({
+      userId: user._id,
+      token,
+    });
+    await session.save();
+
+    user.password = undefined;
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 3600000,
+    });
 
     return res.status(200).json({
       success: true,
-      message: "User created succesfully",
+      message: "User created successfully",
+      token,
+      user,
     });
   } catch (error) {
     console.error(error);
     return res.status(500).json({
       success: false,
-      message: "USer can not be registred",
+      message: "User cannot be registered",
     });
   }
 };
 
 exports.studentLogin = async (req, res) => {
   try {
-    console.log(req.body);
+    
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -87,13 +109,16 @@ exports.studentLogin = async (req, res) => {
     }
 
     let user = await User.findOne({ email });
+
     if (!user) {
+      console.log("User not found");
       return res.status(401).json({
         success: false,
         message: "User is not registred",
       });
     }
 
+    console.log("This is our user", user);
     const payload = {
       email: user.email,
       id: user._id,
@@ -115,7 +140,6 @@ exports.studentLogin = async (req, res) => {
       user = user.toObject();
       user.token = token;
       user.password = undefined;
-      console.log(user);
 
       // const options = {
       //   expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
@@ -142,7 +166,6 @@ exports.studentLogin = async (req, res) => {
         user,
       });
     } else {
-      
       return res.status(403).json({
         success: false,
         message: "Pasword Incorrect",
@@ -265,7 +288,11 @@ exports.canteenSignup = async (req, res) => {
 
     // Create a token
     const token = jwt.sign(
-      { id: canteen._id, email: canteen.email, accountType: canteen.accountType, },
+      {
+        id: canteen._id,
+        email: canteen.email,
+        accountType: canteen.accountType,
+      },
       process.env.JWT_SECRET,
       {
         expiresIn: "1h", // Set token expiration time as needed
@@ -442,21 +469,20 @@ exports.changeCanteenPassword = async (req, res) => {
   });
 };
 
-
 //contactUs
 
 exports.saveContactMessage = async (req, res) => {
   try {
     const { name, email, message } = req.body;
     if (!name || !email || !message) {
-      return res.status(400).send('All fields are required');
+      return res.status(400).send("All fields are required");
     }
     const newContact = new Contact({ name, email, message });
     await newContact.save();
-    res.status(201).send('Message received');
+    res.status(201).send("Message received");
   } catch (error) {
-    console.error('Error saving message:', error.message, error);
-    res.status(500).send('Error saving message');
+    console.error("Error saving message:", error.message, error);
+    res.status(500).send("Error saving message");
   }
 };
 

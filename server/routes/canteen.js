@@ -7,7 +7,8 @@ const { auth, isCanteen } = require('../middlewares/auth');
 const multerUploads = require('../middleware/multer.middleware');
 
 router.get('/getcanteen' , canteenController.getAllCanteen);
-
+router.post("/feedback", canteenController.feedback)
+router.get("/reviews", canteenController.canteenFeedbackRender)
 //yeh mere routes
 router.get('/:id/breakfast' , canteenController.getBreakfast);
 
@@ -21,7 +22,7 @@ router.get('/:id/dinner' , canteenController.getDinner);
 // router.get('/:id', canteenController.getCanteenDashboard);
 
 // Route to add a breakfast dish for a specific canteen
-router.post('/:id/breakfast/add',auth,isCanteen, canteenController.addBreakfastDish);
+router.post('/:id/breakfast/add',auth,isCanteen,multerUploads, canteenController.addBreakfastDish);
 
 // Route to remove a breakfast dish for a specific canteen
 router.delete('/:id/breakfast/remove',auth,isCanteen, canteenController.removeBreakfastDish);

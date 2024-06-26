@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { toast } from "react-hot-toast";
@@ -7,12 +7,8 @@ import logo from "../assets/logo2.png";
 import Icon from 'react-icons-kit';
 import { arrows_circle_check } from 'react-icons-kit/linea/arrows_circle_check';
 import { arrows_exclamation } from 'react-icons-kit/linea/arrows_exclamation';
-import { useAuth } from "../authContext.js";
 
 function Signup() {
-
-  const { isAuthenticated, signUp } = useAuth();
-  
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -32,12 +28,6 @@ function Signup() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  
-  useEffect(() => {
-    if(isAuthenticated){
-      navigate('/home');
-    }
-  }) 
 
   function PasswordChecker(event) {
     const lower = new RegExp('(?=.*[a-z])');
@@ -69,27 +59,33 @@ function Signup() {
   async function submitHandler(event) {
     event.preventDefault();
     console.log("ENV FILE", process.env.REACT_APP_BASE_URL);
-
+  
     if (lowerValidated && upperValidated && numberValidated && specialValidated && lengthValidated) {
       // const apiUrl = formData.accountType === "User" 
       //   ? `${process.env.REACT_APP_BASE_URL}/studentSignup` 
       //   : `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
       const apiUrl = formData.accountType === "User" 
+
       ? 'http://localhost:4000/api/v1/studentSignup' : 'http://localhost:4000/api/v1/canteenSignup'
+
+  
 
       try {
         setLoading(true);
-
+  
         const response = await axios.post(apiUrl, formData);
-
+  
         toast.success("Account Created Successfully!");
+  
         if (formData.accountType === "User") {
-          navigate("/");
-        } 
-        if(formData.accountType === "Canteen") {
-          const token = response.data.token;
-          signUp(token);
-          navigate("/home");
+          localStorage.setItem("usertoken", response.data.token);
+          window.location.href="/home";
+        }
+        if (formData.accountType === "Canteen") {
+          localStorage.setItem("userId", response.data.user);
+        localStorage.setItem("token", response.data.token);
+        window.location.href=`/section/${response.data.cantId}`;
+
         }
       } catch (error) {
         const errorMessage = error.response?.data?.message || "Failed to create account. Please try again.";
@@ -102,6 +98,7 @@ function Signup() {
       toast.error("Password must pass all the criteria");
     }
   }
+  
 
   return (
     <div className="h-screen md:flex">

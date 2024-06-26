@@ -8,6 +8,8 @@ function AddFoodItem() {
     dish: "",
     dishId: "",
     mealType: "",
+    dishImage: "", // New field for dish image URL or base64 string
+    description: "", // New field for dish description
   });
 
   const [loading, setLoading] = useState(false);
@@ -26,11 +28,25 @@ function AddFoodItem() {
     });
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prevData) => ({
+          ...prevData,
+          dishImage: reader.result,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
 
-    const { mealType, dish, dishId } = formData;
+    const { mealType, dish, dishId, dishImage, description } = formData;
     const canteenId = localStorage.getItem("canteenId");
     let apiUrl = "";
 
@@ -51,7 +67,7 @@ function AddFoodItem() {
     }
 
     // Get token from local storage or cookies
-    const token = localStorage.getItem("token"); // or use cookies
+    const token = localStorage.getItem("token");
 
     if (!token) {
       toast.error("Token is missing. Please log in again.");
@@ -62,7 +78,7 @@ function AddFoodItem() {
     try {
       await axios.post(
         apiUrl,
-        { dish, dishId },
+        { dish, dishId, dishImage, description },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -74,6 +90,8 @@ function AddFoodItem() {
         dish: "",
         dishId: "",
         mealType: "",
+        dishImage: "", // Reset image field
+        description: "", // Reset description field
       });
     } catch (error) {
       toast.error("Failed to add dish. Please try again.");
@@ -85,6 +103,7 @@ function AddFoodItem() {
 
   return (
     <div className={`flex justify-center items-center h-[80vh] ${theme === 'dark' ? 'bg-[#131b33]' : 'bg-white' }`}>
+
       <form
         onSubmit={handleSubmit}
         className={`p-6 rounded shadow-lg w-full max-w-sm border-2 ${theme === 'dark' ? 'bg-gray-300' : 'bg-white'} `}
@@ -129,6 +148,33 @@ function AddFoodItem() {
             <option value="Dinner">Dinner</option>
           </select>
         </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">Description</label>
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded mt-1"
+            rows="3"
+          ></textarea>
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">Dish Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="w-full p-2 border border-gray-300 rounded mt-1"
+          />
+          {formData.dishImage && (
+            <img
+              src={formData.dishImage}
+              alt="Dish"
+              className="mt-4 w-32 h-32 object-cover rounded"
+            />
+          )}
+        </div>
+      
         <button
           type="submit"
           className="w-full bg-green-500 text-white p-2 rounded-full mt-4"

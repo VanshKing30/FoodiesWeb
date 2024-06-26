@@ -298,8 +298,7 @@ const Foodlist = () => {
           </div>
         )}
       </div>
-      <Footer />
-
+   
       {/* Modal for Editing Dish */}
       {editModal && (
         <Modalupdate
