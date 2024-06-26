@@ -18,8 +18,7 @@ exports.studentSignup = async (req, res) => {
   console.log("This is jwt", process.env.JWT_SECRET);
   try {
     console.log(req.body);
-    const { name, email, collegeName, accountType, password, confirmPassword } =
-      await req.body;
+    const { name, email, collegeName, accountType, password, confirmPassword } = req.body;
 
     if (password !== confirmPassword) {
       return res.status(400).json({
@@ -28,14 +27,12 @@ exports.studentSignup = async (req, res) => {
       });
     }
 
-    const existingUser = await User.findOne({
-      email,
-    });
+    const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.status(400).json({
         success: false,
-        message: "User alredy exist",
+        message: "User already exists",
       });
     }
 
@@ -59,17 +56,42 @@ exports.studentSignup = async (req, res) => {
       password: hashedPassword,
     });
 
-    await user.save();
+    const payload = {
+      email: user.email,
+      id: user._id,
+      accountType: user.accountType,
+    };
+
+    let token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "2h",
+    });
+
+    // creating a session
+    const session = new Session({
+      userId: user._id,
+      token,
+    });
+    await session.save();
+
+    user.password = undefined;
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 3600000,
+    });
 
     return res.status(200).json({
       success: true,
-      message: "User created succesfully",
+      message: "User created successfully",
+      token,
+      user,
     });
   } catch (error) {
     console.error(error);
     return res.status(500).json({
       success: false,
-      message: "USer can not be registred",
+      message: "User cannot be registered",
     });
   }
 };

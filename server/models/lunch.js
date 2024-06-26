@@ -11,10 +11,18 @@ const lunchSchema = new Schema({
     type: String,
     required: true,
   },
-  dishId : {
-    type : String,
-    required : true
-  }
+  dishId: {
+    type: String,
+    required: true,
+  },
+  dishImage: {
+    type: String, // Store URL or base64 representation of image
+    default: '', // Default value if not provided
+  },
+  description: {
+    type: String,
+    default: '', // Default value if not provided
+  },
 });
 
 const Lunch = mongoose.model('Lunch', lunchSchema);
