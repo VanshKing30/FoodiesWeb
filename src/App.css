@@ -42,4 +42,53 @@ li:hover span {
 
 .nav-item{
   font-size: 52px !important;
+<<<<<<< Updated upstream
+=======
+}
+
+.star-rating {
+  display: flex;
+  flex-direction: row;
+}
+
+.star {
+  font-size: 2rem;
+  color: #d3d3d3;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star.on {
+  color: #ffc107;
+}
+
+.star.off {
+  color: #d3d3d3;
+}
+.reviews-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  
+}
+.review-card{
+  width: calc(90vw/3);
+  border: 1px solid green;
+  background-color: white;
+  background-color: aquamarine;
+}
+.stdfeedback{
+  background-color: white;
+  padding: 2% 3%;
+}
+.stdname{
+  margin: 2% 3%;
+}
+
+.stars {
+  color: yellow;
+  font-size: 24px; /* Increase the font size to make the stars bigger */
+>>>>>>> Stashed changes
 }
