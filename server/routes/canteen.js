@@ -22,7 +22,7 @@ router.get('/:id/dinner' , canteenController.getDinner);
 // router.get('/:id', canteenController.getCanteenDashboard);
 
 // Route to add a breakfast dish for a specific canteen
-router.post('/:id/breakfast/add',auth,isCanteen, canteenController.addBreakfastDish);
+router.post('/:id/breakfast/add',auth,isCanteen,multerUploads, canteenController.addBreakfastDish);
 
 // Route to remove a breakfast dish for a specific canteen
 router.delete('/:id/breakfast/remove',auth,isCanteen, canteenController.removeBreakfastDish);
