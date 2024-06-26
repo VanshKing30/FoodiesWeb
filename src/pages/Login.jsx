@@ -57,8 +57,10 @@ function Login() {
     event.preventDefault();
   
 
+
        const apiUrl = formData.accountType === "User" 
       ? 'http://localhost:4000/api/v1/studentLogin' : 'http://localhost:4000/api/v1/canteenLogin'
+
 
 
 

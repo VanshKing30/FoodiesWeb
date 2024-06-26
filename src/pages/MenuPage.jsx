@@ -37,6 +37,8 @@ function MenuPage() {
   const [feedback, setFeedback] = useState("");
   const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   const getBreakfast = async () => {
@@ -108,6 +110,36 @@ function MenuPage() {
     getDinner();
   }, []);
 
+  useEffect(() => {
+    const handleSearch = async () => {
+      if (searchTerm.trim() === "") {
+        setSearchResults([]);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        const [breakfastRes, lunchRes, dinnerRes] = await Promise.all([
+          fetch(`${process.env.REACT_APP_BASE_URL}/${_id}/breakfast`).then(res => res.json()),
+          fetch(`${process.env.REACT_APP_BASE_URL}/${_id}/lunch`).then(res => res.json()),
+          fetch(`${process.env.REACT_APP_BASE_URL}/${_id}/dinner`).then(res => res.json())
+        ]);
+
+        const allDishes = [...breakfastRes.data, ...lunchRes.data, ...dinnerRes.data];
+        const filteredDishes = allDishes.filter(dish =>
+          dish.dish.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setSearchResults(filteredDishes);
+      } catch (error) {
+        console.error("Error during search: ", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    handleSearch();
+  }, [searchTerm, _id]);
+
   const handleDishClick = async (dishId) => {
     try {
       const response = await axios.get(
@@ -124,6 +156,28 @@ function MenuPage() {
     if (feedback.trim() === '' && rating === 0) {
       toast.error("Please provide your feedback and rating before submitting.");
     } else {
+      setFeedback('');
+      toast.success('Feedback Submitted!');
+    }
+  }
+
+  const renderMenuItems = () => {
+    let items = [];
+    switch (selectedCategory) {
+      case 'breakfast':
+        items = breakfast;
+        break;
+      case 'lunch':
+        items = lunch;
+        break;
+      case 'dinner':
+        items = dinner;
+        break;
+      default:
+        items = [];
+    }
+    if (items.length === 0) {
+      return <p className="absolute w-full text-xl text-red-700 text-center dark:text-red-400">No {selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Available Now</p>;
       try {
         const response = await axios.post(
           `${process.env.REACT_APP_BASE_URL}/feedback`,
@@ -149,9 +203,55 @@ function MenuPage() {
     }
   };
 
+  const renderSearchResults = () => {
+    if (searchResults.length === 0) {
+      return <p className="text-xl text-red-700 text-center dark:text-red-400">No Results Found</p>;
+    }
+    return searchResults.map((dish) => (
+      <FoodCard key={dish._id} dish={dish} onClick={() => handleDishClick(dish.dishId)} />
+    ));
+  };
+
   return (
     <div className="text-purple-800 min-h-screen pt-5">
       <Navbar />
+      <div className="container px-8 mx-auto p-4 mt-20 min-h-screen bg-transparent dark:bg-slate-200">
+        <div className="flex justify-center space-x-4 mb-8">
+          {['breakfast', 'lunch', 'dinner'].map((category) => (
+            <button
+              key={category}
+              className={`px-4 py-2 rounded-lg ${selectedCategory === category ? 'bg-green-300' : 'bg-gray-300'} focus:outline-none`}
+              onClick={() => setSelectedCategory(category)}
+            >
+              {category.charAt(0).toUpperCase() + category.slice(1)}
+            </button>
+          ))}
+        </div>
+        <div className="mb-8 flex justify-center">
+          <input
+            type="text"
+            className="w-2/3 p-2 border border-purple-300 rounded"
+            placeholder="Search for a dish..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        {searchTerm ? (
+          <div className="grid grid-cols-1 relative md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
+            {loading ? <Loader /> : renderSearchResults()}
+          </div>
+        ) : (
+          <>
+            <h1 className="text-4xl font-bold mb-8 text-white text-center capitalize dark:text-black">{selectedCategory}</h1>
+            {loading ? (
+              <Loader />
+            ) : (
+              <div className="grid grid-cols-1 relative md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
+                {renderMenuItems()}
+              </div>
+            )}
+          </>
+        )}
       <div className="container mx-auto p-4">
         <h1 className="text-4xl font-bold mb-8 text-white">Today's Menu</h1>
         {
