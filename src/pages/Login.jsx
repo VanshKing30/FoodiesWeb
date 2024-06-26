@@ -56,12 +56,11 @@ function Login() {
   async function submitHandler(event) {
     event.preventDefault();
   
-    // const apiUrl =
-    //   formData.accountType === "User"
-    //     ? `${process.env.REACT_APP_BASE_URL}/studentLogin`
-    //     : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
+    const apiUrl =
+      formData.accountType === "User"
+        ? `${process.env.REACT_APP_BASE_URL}/studentLogin`
+        : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
 
-    const apiUrl = 'http://localhost:8000/api/v1/studentLogin'
   
     try {
       const response = await axios.post(apiUrl, formData);
@@ -75,14 +74,16 @@ function Login() {
       }
   
       if (formData.accountType === "User") {
-
-        navigate("/home");
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("usertoken", response.data.token)
+         window.location.href='/home'
+       
+        
+        
       } else {
         localStorage.setItem("canteenId", response.data.cantId);
         localStorage.setItem("token", response.data.token);
 
-        navigate(`/section/${response.data.cantId}`);
+        window.location.href=`/section/${response.data.cantId}`;
 
       }
      

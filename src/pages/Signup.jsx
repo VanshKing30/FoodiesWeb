@@ -73,12 +73,14 @@ function Signup() {
         toast.success("Account Created Successfully!");
   
         if (formData.accountType === "User") {
-          navigate("/");
-        } else {
-          const token = response.data.token;
-          localStorage.setItem("token", token);
-          localStorage.setItem("canteenId", response.data.cantId);
-          navigate(`/section/${response.data.cantId}`);
+          localStorage.setItem("usertoken", response.data.token);
+          window.location.href="/home";
+        }
+        if (formData.accountType === "Canteen") {
+          localStorage.setItem("userId", response.data.user);
+        localStorage.setItem("token", response.data.token);
+        window.location.href=`/section/${response.data.cantId}`;
+
         }
       } catch (error) {
         const errorMessage = error.response?.data?.message || "Failed to create account. Please try again.";
