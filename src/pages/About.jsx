@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 const About = () => {
   const navigate = useNavigate()
-  const { isAuthenticated } = localStorage.getItem('token');
+  // const { isAuthenticated } = localStorage.getItem('token');
   const [loading,setLoading] = useState(false);
 
   useEffect(() => {
