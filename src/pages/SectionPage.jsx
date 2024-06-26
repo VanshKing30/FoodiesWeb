@@ -75,7 +75,9 @@ const SectionPage = () => {
       } min-h-screen pt-[8rem]`}
     >
       <Navbar />
+
       <div className="relative bg-white">
+
         {loading ? (
           <Loader />
         ) : (
