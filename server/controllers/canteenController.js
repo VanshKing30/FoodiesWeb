@@ -5,6 +5,10 @@ const Dinner = require('../models/dinner');
 const Canteen = require("../models/canteenLoginInfo");
 const { uploader, uploadImage } = require('../config/cloudinaryConfig');
 
+const Feedback = require("../models/feedback")
+const Session = require("../models/session")
+
+
 
 
 const getAllCanteen = async (req ,res , next) =>{
@@ -41,6 +45,87 @@ const getBreakfast = async (req, res, next) => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
+  catch(error){
+    res.status(500).json({success : false , error : error});
+  }
+}
+const feedback = async (req, res) => {
+  const { canteenId, feedback, rating } = req.body;
+  const token = req.body.studentId; // This is the token
+
+  try {
+    // Find the session with the given token
+    const session = await Session.findOne({ token });
+
+    if (!session) {
+      return res.status(404).json({ message: 'Session not found' });
+    }
+
+    const userId = session.userId; // Extract userId from the session
+
+    const newFeedback = new Feedback({
+      canteen: canteenId,
+      student: userId,
+      comment: feedback,
+      rating: rating,
+    });
+
+    const savedFeedback = await newFeedback.save();
+    res.status(201).json(savedFeedback);
+  } catch (error) {
+    res.status(500).json({ message: 'Error saving feedback', error: error.message });
+  }
+};
+const canteenFeedbackRender = async (req, res) => {
+  try {
+    const reviews = await Feedback.aggregate([
+      { $sample: { size: 3 } }, // Fetch 3 random feedback entries
+      {
+        $lookup: {
+          from: 'students', // Collection name for students
+          localField: 'student',
+          foreignField: '_id',
+          as: 'studentInfo'
+        }
+      },
+      {
+        $lookup: {
+          from: 'canteens', // Collection name for canteens
+          localField: 'canteen',
+          foreignField: '_id',
+          as: 'canteenInfo'
+        }
+      },
+      {
+        $addFields: {
+          studentName: { $arrayElemAt: ['$studentInfo.name', 0] },
+          canteenName: { $arrayElemAt: ['$canteenInfo.name', 0] }
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          comment: 1,
+          rating: 1,
+          createdAt: 1,
+          studentName: 1,
+          canteenName: 1
+        }
+      }
+    ]);
+
+    res.json(reviews);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const getLunch = async(req , res , next) =>{
+  
+  try{
+    const id  = req.params.id;
+    
+    const lunchData = await Lunch.find({ canteen: id }).select("dish").select("dishId").exec();
 
 const getLunch = async (req, res, next) => {
   try {
@@ -328,4 +413,7 @@ module.exports = {
   updateBreakfastDish,
   updateLunchDish,
   updateDinnerDish,
+
+  feedback,
+  canteenFeedbackRender
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { toast } from "react-hot-toast";
@@ -7,11 +7,8 @@ import logo from "../assets/logo2.png";
 import Icon from 'react-icons-kit';
 import { arrows_circle_check } from 'react-icons-kit/linea/arrows_circle_check';
 import { arrows_exclamation } from 'react-icons-kit/linea/arrows_exclamation';
-import { useAuth } from "../authContext.js";
 
 function Signup() {
-  const { isAuthenticated, signUp } = useAuth();
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -31,12 +28,6 @@ function Signup() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/home');
-    }
-  }, [isAuthenticated, navigate]);
 
   function PasswordChecker(event) {
     const lower = new RegExp('(?=.*[a-z])');
@@ -68,25 +59,28 @@ function Signup() {
   async function submitHandler(event) {
     event.preventDefault();
     console.log("ENV FILE", process.env.REACT_APP_BASE_URL);
-
+  
     if (lowerValidated && upperValidated && numberValidated && specialValidated && lengthValidated) {
-      const apiUrl = formData.accountType === "User"
-        ? `${process.env.REACT_APP_BASE_URL}/studentSignup`
+      const apiUrl = formData.accountType === "User" 
+        ? `${process.env.REACT_APP_BASE_URL}/studentSignup` 
         : `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
-
+  
       try {
         setLoading(true);
-
+  
         const response = await axios.post(apiUrl, formData);
-
+  
         toast.success("Account Created Successfully!");
+  
         if (formData.accountType === "User") {
-          navigate("/");
+          localStorage.setItem("usertoken", response.data.token);
+          window.location.href="/home";
         }
         if (formData.accountType === "Canteen") {
-          const token = response.data.token;
-          signUp(token);
-          navigate("/home");
+          localStorage.setItem("userId", response.data.user);
+        localStorage.setItem("token", response.data.token);
+        window.location.href=`/section/${response.data.cantId}`;
+
         }
       } catch (error) {
         const errorMessage = error.response?.data?.message || "Failed to create account. Please try again.";
@@ -99,10 +93,11 @@ function Signup() {
       toast.error("Password must pass all the criteria");
     }
   }
+  
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
-      <div className="md:flex w-full md:w-1/2 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 bg-no-repeat justify-around items-center hidden">
+    <div className="h-screen md:flex">
+      <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 bg-no-repeat justify-around items-center hidden">
         <div>
           <img src={logo} alt="logo" className="w-48 h-12 mb-2" />
           <p className="text-white mt-1 ml-3">Connecting You to Your College Canteens</p>
@@ -113,15 +108,12 @@ function Signup() {
         <div className="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
       </div>
 
-      <div className="flex flex-col justify-center items-center w-full md:w-1/2 py-10 bg-white">
-        <form
-          className="bg-white p-8 rounded shadow-lg w-full max-w-md overflow-y-auto"
-          onSubmit={submitHandler}
-        >
-          <h1 className="text-gray-800 font-bold text-2xl mb-1 text-center md:text-left">
+      <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
+        <form className="bg-white p-8 rounded shadow-lg w-80" onSubmit={submitHandler}>
+          <h1 className="text-gray-800 font-bold text-2xl mb-1">
             Hello There!
           </h1>
-          <p className="text-sm font-normal text-gray-600 mb-7 text-center md:text-left">
+          <p className="text-sm font-normal text-gray-600 mb-7">
             Create an Account
           </p>
 
@@ -187,13 +179,8 @@ function Signup() {
               value={formData.password}
               onChange={PasswordChecker}
             />
-
-            <span
-              className="absolute right-3 top-3 cursor-pointer"
-              onClick={() => setShowPassword((prev) => !prev)}
-            >
-              {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
-
+            <span className="absolute right-3 top-3 cursor-pointer" onClick={() => setShowPassword((prev) => !prev)}>
+              {showPassword ? <AiOutlineEyeInvisible size={20} />: <AiOutlineEye size={20} /> }
             </span>
           </div>
 
@@ -211,48 +198,86 @@ function Signup() {
               className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
               onClick={() => setShowConfirmPassword((prev) => !prev)}
             >
-              {showConfirmPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+              {showConfirmPassword ? (
+                <AiOutlineEye size={20} />
+              ) : (
+                <AiOutlineEyeInvisible size={20} />
+              )}
             </span>
           </div>
 
-          <div className="mb-4">
-            <div className={`flex items-center ${lowerValidated ? "text-green-600" : "text-red-500"}`}>
-              <span className="mr-2">{lowerValidated ? <Icon icon={arrows_circle_check} /> : <Icon icon={arrows_exclamation} />}</span>
-              <p className="text-xs">At least one lowercase letter</p>
-            </div>
-            <div className={`flex items-center ${upperValidated ? "text-green-600" : "text-red-500"}`}>
-              <span className="mr-2">{upperValidated ? <Icon icon={arrows_circle_check} /> : <Icon icon={arrows_exclamation} />}</span>
-              <p className="text-xs">At least one uppercase letter</p>
-            </div>
-            <div className={`flex items-center ${numberValidated ? "text-green-600" : "text-red-500"}`}>
-              <span className="mr-2">{numberValidated ? <Icon icon={arrows_circle_check} /> : <Icon icon={arrows_exclamation} />}</span>
-              <p className="text-xs">At least one number</p>
-            </div>
-            <div className={`flex items-center ${specialValidated ? "text-green-600" : "text-red-500"}`}>
-              <span className="mr-2">{specialValidated ? <Icon icon={arrows_circle_check} /> : <Icon icon={arrows_exclamation} />}</span>
-              <p className="text-xs">At least one special character</p>
-            </div>
-            <div className={`flex items-center ${lengthValidated ? "text-green-600" : "text-red-500"}`}>
-              <span className="mr-2">{lengthValidated ? <Icon icon={arrows_circle_check} /> : <Icon icon={arrows_exclamation} />}</span>
-              <p className="text-xs">Minimum 8 characters</p>
-            </div>
-          </div>
-          <div className="flex justify-center">
           <button
-            className={`w-full bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 py-2 rounded-2xl text-white font-semibold mb-2 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
-            disabled={loading}
             type="submit"
+            className="w-full bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 py-2 rounded-2xl text-white font-semibold mb-2"
+            disabled={loading}
           >
-            {loading ? "Signing up..." : "Sign Up"}
+            {loading ? "Loading..." : "Sign Up"}
           </button>
-          </div>
-          <div className="mt-4 text-center">
-            <Link to="/" className="text-gray-600 text-sm font-semibold hover:underline">
-              Already have an account? Log In
-            </Link>
-          </div>
+
+          <Link to="/login">
+            <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
+              Already have an account? Login
+            </span>
+          </Link>
+
+          <main className='tracker-box text-sm font-normal text-red-600'>
+            <div className={lowerValidated ? 'validated text-green-600' : 'not-validated'}>
+              <span className='list-icon'>
+                <Icon icon={lowerValidated ? arrows_circle_check : arrows_exclamation} />
+              </span>
+              At least one lowercase letter
+            </div>
+            <div className={upperValidated ? 'validated text-green-600' : 'not-validated'}>
+              <span className='list-icon'>
+                <Icon icon={upperValidated ? arrows_circle_check : arrows_exclamation} />
+              </span>
+              At least one uppercase letter
+            </div>
+            <div className={numberValidated ? 'validated text-green-600' : 'not-validated'}>
+              <span className='list-icon'>
+                <Icon icon={numberValidated ? arrows_circle_check : arrows_exclamation} />
+              </span>
+              At least one number
+            </div>
+            <div className={specialValidated ? 'validated text-green-600' : 'not-validated'}>
+              <span className='list-icon'>
+                <Icon icon={specialValidated ? arrows_circle_check : arrows_exclamation} />
+              </span>
+              At least one special character
+            </div>
+            <div className={lengthValidated ? 'validated text-green-600' : 'not-validated'}>
+              <span className='list-icon'>
+                <Icon icon={lengthValidated ? arrows_circle_check : arrows_exclamation} />
+              </span>
+              At least 8 characters
+            </div>
+          </main>
         </form>
       </div>
+
+      <style jsx global>
+        {`
+          .tracker-box{
+            font-size: 0.7rem;
+            letter-spacing: 0.09em;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 5px;
+          }
+
+          .tracker-box div{
+            margin: 5px 0;
+          }
+
+          .list-icon{
+            padding-right: 0.3rem;
+          }
+
+          .list-icon.green{
+            color: #006400;
+          }
+        `}
+      </style>
     </div>
   );
 }

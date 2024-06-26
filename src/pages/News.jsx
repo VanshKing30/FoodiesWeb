@@ -12,11 +12,7 @@ function News() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if(!isAuthenticated){
-      navigate('/')
-    }
-  }, [])
+
 
   const fetchNews = async (query) => {
     try {

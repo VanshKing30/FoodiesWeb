@@ -75,14 +75,16 @@ function Login() {
       }
   
       if (formData.accountType === "User") {
-
-        navigate("/home");
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("usertoken", response.data.token)
+         window.location.href='/home'
+       
+        
+        
       } else {
         localStorage.setItem("canteenId", response.data.cantId);
         localStorage.setItem("token", response.data.token);
 
-        navigate(`/section/${response.data.cantId}`);
+        window.location.href=`/section/${response.data.cantId}`;
 
       }
      
