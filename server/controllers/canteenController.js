@@ -45,10 +45,10 @@ const getBreakfast = async (req, res, next) => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
-  catch(error){
-    res.status(500).json({success : false , error : error});
-  }
-}
+//   catch(error){
+//     res.status(500).json({success : false , error : error});
+//   }
+// }
 const feedback = async (req, res) => {
   const { canteenId, feedback, rating } = req.body;
   const token = req.body.studentId; // This is the token
@@ -120,12 +120,12 @@ const canteenFeedbackRender = async (req, res) => {
   }
 };
 
-const getLunch = async(req , res , next) =>{
+// const getLunch = async(req , res , next) =>{
   
-  try{
-    const id  = req.params.id;
+//   try{
+//     const id  = req.params.id;
     
-    const lunchData = await Lunch.find({ canteen: id }).select("dish").select("dishId").exec();
+//     const lunchData = await Lunch.find({ canteen: id }).select("dish").select("dishId").exec();
 
 const getLunch = async (req, res, next) => {
   try {

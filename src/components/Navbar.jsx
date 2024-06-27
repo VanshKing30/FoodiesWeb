@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo2.png";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { IoClose } from "react-icons/io5";
@@ -7,6 +7,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { ThemeContext } from '../themeContext';
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const canteenId = localStorage.getItem("canteenId");
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isOpen, setIsOpen] = useState(false);
@@ -15,6 +16,12 @@ const Navbar = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem('usertoken');
+    navigate('/')
+  }
+
 
   return (
     <>
@@ -52,6 +59,7 @@ const Navbar = () => {
               <div>
                 <Link to="/">
                   <button
+                    onClick={handleLogout}
                     className={`py-1 px-2 rounded w-full h-auto text-l relative z-0 rounded-lg transition-all duration-200 hover:scale-110 ${theme === 'dark' ? 'bg-white text-black' : 'bg-green-400 hover:bg-green-600 hover:shadow-green text-white'}`}
                   >
                     Log out
@@ -99,6 +107,7 @@ const Navbar = () => {
                 )}
                 <MobileNavItem to="/">
                   <button
+                  onClick={handleLogout}
                     className={`rounded transition duration-300 ease-in-out transform hover:scale-105 ${theme === 'dark' ? 'bg-white text-black' : 'bg-green-500 hover:bg-green-700 text-white py-1 px-2'}`}
                   >
                     Log out
