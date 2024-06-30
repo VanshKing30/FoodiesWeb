@@ -11,12 +11,12 @@ const StarRating = ({ rating, onRatingChange }) => {
   const [hoverRating, setHoverRating] = useState(0);
 
   return (
-    <div className="star-rating">
+    <div className="StarRating ">
       {[1, 2, 3, 4, 5].map((star) => (
         <button
           type="button"
           key={star}
-          className={`star ${star <= (hoverRating || rating) ? "on" : "off"}`}
+          className={`StarRating__star ${star <= (hoverRating || rating) ? "StarRating__star--on" : "StarRating__star--off"}`}
           onClick={() => onRatingChange(star)}
           onMouseEnter={() => setHoverRating(star)}
           onMouseLeave={() => setHoverRating(0)}
