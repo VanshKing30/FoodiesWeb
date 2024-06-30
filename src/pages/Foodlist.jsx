@@ -83,17 +83,24 @@ const Foodlist = () => {
         return;
       }
 
+      const formData = new FormData();
+      formData.append("dishId", currentDish._id);
+      formData.append("dish", updatedDish.dish);
+      formData.append("description", updatedDish.description);
+
+      if (updatedDish.dishImage) {
+        const base64Image = await convertToBase64(updatedDish.dishImage);
+        formData.append("dishImage", base64Image);
+      }
+
       await axios.put(
         `${process.env.REACT_APP_BASE_URL}/${_id}/${currentDish.mealType}/updateitem`,
-        {
-          dishId: currentDish._id,
-          dish: updatedDish,
-        },
+        formData,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`, // Include the token in the Authorization header
-          }
+          },
         }
       );
 
@@ -107,6 +114,15 @@ const Foodlist = () => {
       console.error("Error updating dish: ", error);
       toast.error("Failed to update dish.");
     }
+  };
+
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
   };
 
   useEffect(() => {
@@ -243,8 +259,8 @@ const Foodlist = () => {
               </div>
             )}
             {dinner && (
-              <div className="w-2/3 rounded-lg shadow-md border-yellow-300 border-2 mt-5">
-                <div className="text-center bg-yellow-300 text-black py-3 font-xl relative">
+              <div className="w-2/3 rounded-lg shadow-md border-blue-300 border-2 mt-5">
+                <div className="text-center bg-blue-300 text-black py-3 font-xl relative">
                   <img
                     src="https://cdn-icons-png.flaticon.com/128/3321/3321601.png"
                     alt="Dinner Icon"
@@ -258,8 +274,8 @@ const Foodlist = () => {
                       <li
                         key={dish._id}
                         onClick={() => handleDishClick(dish._id)}
-                        className={`cursor-pointer relative text-start hover:bg-gradient-to-r from-yellow-300 to-yellow-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${
-                          theme === "dark" ? "text-white" : "text-yellow-600"
+                        className={`cursor-pointer relative text-start hover:bg-gradient-to-r from-green-300 to-green-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${
+                          theme === "dark" ? "text-white" : "text-blue-600"
                         } hover:text-black mt-2`}
                       >
                         • {dish.dish}
@@ -298,13 +314,12 @@ const Foodlist = () => {
           </div>
         )}
       </div>
-   
-      {/* Modal for Editing Dish */}
+      <Footer />
       {editModal && (
         <Modalupdate
-          dish={currentDish.dish}
-          onUpdate={(updatedDish) => handleUpdateDish(updatedDish)}
-          onCancel={() => setEditModal(false)}
+          dish={currentDish}
+          onClose={() => setEditModal(false)}
+          onUpdate={handleUpdateDish}
         />
       )}
     </div>
