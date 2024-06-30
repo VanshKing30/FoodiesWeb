@@ -5,37 +5,16 @@ import { toast } from "react-hot-toast";
 import Navbar from "../components/Navbar";
 import Loader from "../components/Loader/Loader";
 import Footer from "../components/Footer";
+import FoodCard from "../components/FoodCard";
 import { ThemeContext } from '../themeContext';
-
-const StarRating = ({ rating, onRatingChange }) => {
-  const [hoverRating, setHoverRating] = useState(0);
-
-  return (
-    <div className="star-rating">
-      {[1, 2, 3, 4, 5].map((star) => (
-        <button
-          type="button"
-          key={star}
-          className={`star ${star <= (hoverRating || rating) ? "on" : "off"}`}
-          onClick={() => onRatingChange(star)}
-          onMouseEnter={() => setHoverRating(star)}
-          onMouseLeave={() => setHoverRating(0)}
-        >
-          &#9733;
-        </button>
-      ))}
-    </div>
-  );
-};
 
 function MenuPage() {
   const { _id } = useParams();
-  const [breakfast, setBreakfast] = useState();
-  const [lunch, setLunch] = useState();
-  const [dinner, setDinner] = useState();
-  const [selectedDish, setSelectedDish] = useState(null);
+  const [breakfast, setBreakfast] = useState([]);
+  const [lunch, setLunch] = useState([]);
+  const [dinner, setDinner] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('breakfast');
   const [feedback, setFeedback] = useState("");
-  const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -54,7 +33,7 @@ function MenuPage() {
         }
       );
       const res = await getBreakfast.json();
-      setBreakfast(res);
+      setBreakfast(res.data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -75,7 +54,7 @@ function MenuPage() {
         }
       );
       const res = await getLunch.json();
-      setLunch(res);
+      setLunch(res.data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -96,7 +75,7 @@ function MenuPage() {
         }
       );
       const res = await getDinner.json();
-      setDinner(res);
+      setDinner(res.data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -152,9 +131,9 @@ function MenuPage() {
     }
   };
 
-  const handleFeedbackSubmit = async () => {
-    if (feedback.trim() === '' && rating === 0) {
-      toast.error("Please provide your feedback and rating before submitting.");
+  function handleFeedbackSubmit() {
+    if (feedback.trim() === '') {
+      toast.error("Please provide your feedback before submitting.");
     } else {
       setFeedback('');
       toast.success('Feedback Submitted!');
@@ -178,29 +157,10 @@ function MenuPage() {
     }
     if (items.length === 0) {
       return <p className="absolute w-full text-xl text-red-700 text-center dark:text-red-400">No {selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Available Now</p>;
-      try {
-        const response = await axios.post(
-          `${process.env.REACT_APP_BASE_URL}/feedback`,
-          {
-            canteenId: _id,
-            feedback: feedback,
-            rating: rating,
-            studentId: localStorage.getItem('token')
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        setFeedback('');
-        setRating(0);
-        toast.success('Feedback Submitted!');
-      } catch (error) {
-        console.error("Error submitting feedback: ", error);
-        toast.error("Failed to submit feedback. Please try again.");
-      }
     }
+    return items.map((dish) => (
+      <FoodCard key={dish._id} dish={dish} onClick={() => handleDishClick(dish.dishId)} />
+    ));
   };
 
   const renderSearchResults = () => {
@@ -213,7 +173,7 @@ function MenuPage() {
   };
 
   return (
-    <div className="text-purple-800 min-h-screen pt-5">
+    <div className="text-purple-800 min-h-screen pt-5 bg-transparent dark:bg-slate-200">
       <Navbar />
       <div className="container px-8 mx-auto p-4 mt-20 min-h-screen bg-transparent dark:bg-slate-200">
         <div className="flex justify-center space-x-4 mb-8">
@@ -252,112 +212,22 @@ function MenuPage() {
             )}
           </>
         )}
-      <div className="container mx-auto p-4">
-        <h1 className="text-4xl font-bold mb-8 text-white">Today's Menu</h1>
-        {
-          loading ? (
-            <Loader />
-          ) : (
-            <>
-              <div className="flex flex-col gap-4 p-5 md:flex-row justify-center">
-                {breakfast && (
-                  <div className="w-2/3 rounded-lg shadow-md border-2 border-red-300 mt-5">
-                    <div className="text-center bg-red-300 text-black py-3 font-xl relative">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/128/5025/5025429.png"
-                        alt="Breakfast Icon"
-                        className="absolute top-0 left-4 h-16 w-16 -mt-8 -ml-8"
-                      />
-                      Breakfast
-                    </div>
-                    <div className="p-4">
-                      <ul>
-                        {breakfast.data.map((dish) => (
-                          <li
-                            key={dish._id}
-                            onClick={() => handleDishClick(dish.dishId)}
-                            className={`cursor-pointer hover:bg-gradient-to-r from-green-300 to-green-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${theme === 'dark' ? 'text-white' : 'text-red-600'} hover:text-black mt-2 `}
-                          >
-                            • {dish.dish}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                )}
-                {lunch && (
-                  <div className="w-2/3 rounded-lg shadow-md border-green-300 border-2 mt-5">
-                    <div className="text-center bg-green-300 text-black py-3 font-xl relative">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/128/2082/2082045.png"
-                        alt="Lunch Icon"
-                        className="absolute top-0 left-4 h-16 w-16 -mt-8 -ml-8"
-                      />
-                      Lunch
-                    </div>
-                    <div>
-                      <ul>
-                        {lunch.data.map((dish) => (
-                          <li
-                            key={dish._id}
-                            onClick={() => handleDishClick(dish.dishId)}
-                            className={`hover:bg-gradient-to-r from-green-300 to-green-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${theme === 'dark' ? 'text-white' : 'text-green-600'} hover:text-black mt-2 `}
-                          >
-                            • {dish.dish}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                )}
-                {dinner && (
-                  <div className="w-2/3 rounded-lg shadow-md border-yellow-300 border-2 mt-5">
-                    <div className="text-center bg-yellow-300 text-black py-3 font-xl relative">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/128/3321/3321601.png"
-                        alt="Dinner Icon"
-                        className="absolute top-0 left-4 h-16 w-16 -mt-8 -ml-8"
-                      />
-                      Dinner
-                    </div>
-                    <div>
-                      <ul>
-                        {dinner.data.map((dish) => (
-                          <li
-                            key={dish._id}
-                            onClick={() => handleDishClick(dish.dishId)}
-                            className={`hover:bg-gradient-to-r from-yellow-300 to-yellow-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${theme === 'dark' ? 'text-white' : 'text-yellow-600'} hover:text-black mt-2 `}
-                          >
-                            • {dish.dish}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <div className="mt-8 text-purple-800">
-                <h2 className="text-2xl font-bold mb-4 text-white dark:text-slate-900">Meal Feedback</h2>
-                <textarea
-                  className="w-full h-32 p-4 border border-purple-300 rounded mb-4"
-                  placeholder="Enter your feedback here..."
-                  value={feedback}
-                  onChange={(e) => setFeedback(e.target.value)}
-                ></textarea>
-                <div className="mb-4">
-                  <StarRating rating={rating} onRatingChange={setRating} />
-                </div>
-                <button
-                  onClick={handleFeedbackSubmit}
-                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                >
-                  Submit Feedback
-                </button>
-              </div>
-            </>
-          )
-        }
       </div>
+      <div className="mt-8 text-purple-800 px-8 mb-4">
+          <h2 className="text-2xl font-bold mb-4 text-white text-center dark:text-black">Meal Feedback</h2>
+          <textarea
+            className="w-full h-32 p-4 border border-purple-300 rounded mb-4"
+            placeholder="Enter your feedback here..."
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+          ></textarea>
+          <button
+            onClick={handleFeedbackSubmit}
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Submit Feedback
+          </button>
+        </div>
       <Footer />
     </div>
   );
