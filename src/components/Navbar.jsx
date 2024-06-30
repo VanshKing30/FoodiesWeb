@@ -1,5 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
 import logo from "../assets/logo2.png";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { IoClose } from "react-icons/io5";
@@ -9,9 +10,10 @@ import { jwtDecode } from "jwt-decode";
 import { useAuth } from "../authContext";
 
 const Navbar = () => {
-  
+  const navigate = useNavigate();
+  const canteenId = localStorage.getItem("canteenId");
   const { logout} = useAuth();
-  // const [canteenId, setCanteenId] = useState(null);
+
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isOpen, setIsOpen] = useState(false);
   const { scrollYProgress } = useScroll();
@@ -34,6 +36,12 @@ const Navbar = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem('usertoken');
+    navigate('/')
+  }
+
 
   return (
     <>
@@ -62,19 +70,21 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className="hidden md:flex items-center gap-5">
-            <button onClick={toggleTheme} className="p-2 rounded focus:outline-none text-4xl border-none outline-none">
-              {theme === 'dark' ? '🌞' : '🌙'}
-            </button>
-            <div>
-              <Link to="/">
-                <button
-                  onClick={logout}
-                  className={`py-1 px-2  w-full h-auto text-l relative z-0 rounded-lg transition-all duration-200 hover:scale-110 ${theme === 'dark' ? 'bg-white text-black' : 'bg-green-400 hover:bg-green-600 hover:shadow-green text-white'}`}
-                >
-                  Log out
-                </button>
-              </Link>
+            <div className="hidden md:flex items-center gap-5">
+              <button onClick={toggleTheme} className="p-2 rounded focus:outline-none text-4xl border-none outline-none">
+                {theme === 'dark' ? '🌞' : '🌙'}
+              </button>
+              <div>
+                <Link to="/">
+                  <button
+                    onClick={handleLogout}
+                    className={`py-1 px-2 rounded w-full h-auto text-l relative z-0 rounded-lg transition-all duration-200 hover:scale-110 ${theme === 'dark' ? 'bg-white text-black' : 'bg-green-400 hover:bg-green-600 hover:shadow-green text-white'}`}
+                  >
+                    Log out
+                  </button>
+                </Link>
+              </div>
+
             </div>
           </div>
 
@@ -129,6 +139,39 @@ const Navbar = () => {
       </AnimatePresence>
     </nav>
   </>
+
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              className="md:hidden absolute left-0 w-full flex flex-col items-center justify-center"
+            >
+              <div className="w-[100%] bg-[#152146] px-[20%] pt-2 pb-3 space-y-1 mt-1 dark:bg-teal-900">
+                <MobileNavItem to="/home">Home</MobileNavItem>
+                <MobileNavItem to="/about">About us</MobileNavItem>
+                <MobileNavItem to="/news">News</MobileNavItem>
+                <MobileNavItem to="/contact">Contact</MobileNavItem>
+                <MobileNavItem to="/rateus">RateUs</MobileNavItem>
+                {/* Conditionally render "My Canteen" button */}
+                {canteenId && (
+                  <MobileNavItem to={`/section/${canteenId}`}>My Canteen</MobileNavItem>
+                )}
+                <MobileNavItem to="/">
+                  <button
+                  onClick={handleLogout}
+                    className={`rounded transition duration-300 ease-in-out transform hover:scale-105 ${theme === 'dark' ? 'bg-white text-black' : 'bg-green-500 hover:bg-green-700 text-white py-1 px-2'}`}
+                  >
+                    Log out
+                  </button>
+                </MobileNavItem>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+    </>
 
   );
 };
