@@ -1,22 +1,30 @@
-
-import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
-import Modal from '../components/Modal';
-import Navbar from '../components/Navbar';
-import Loader from '../components/Loader/Loader';
+import React, { useState, useEffect, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import Modal from "../components/Modal";
+import Navbar from "../components/Navbar";
+import Loader from "../components/Loader/Loader";
+import Footer from "../components/Footer";
+import AddFoodItem from "./AddFoodItem";
+import EditProfile from "./EditProfile";
+import Foodlist from "./Foodlist";
+import { ThemeContext } from "../themeContext";
+import { FaRegEdit } from "react-icons/fa";
+import { CiBoxList } from "react-icons/ci";
+import { IoMdAdd } from "react-icons/io";
 
 const SectionPage = () => {
   const { _id } = useParams();
+  const navigate = useNavigate();
+  const { theme } = useContext(ThemeContext);
   const [showModal, setShowModal] = useState(false);
-  const [selectedSection, setSelectedSection] = useState('');
+  const [selectedSection, setSelectedSection] = useState("");
   const [formData, setFormData] = useState(null);
   const [selectedBreakfastRecipes, setSelectedBreakfastRecipes] = useState([]);
   const [selectedLunchRecipes, setSelectedLunchRecipes] = useState([]);
   const [selectedDinnerRecipes, setSelectedDinnerRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
-
   const [canteenData, setCanteenData] = useState();
-
+  const [view, setView] = useState("add");
 
   const getCanteenData = async () => {
     try {
@@ -31,72 +39,90 @@ const SectionPage = () => {
         }
       );
       const res = await getCanteen.json();
-      setCanteenData(res);
-    }
-    catch (error) {
+      setCanteenData(res.data.find((canteen) => canteen._id === _id));
+    } catch (error) {
       console.error(error);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     getCanteenData();
-  }, [])
+  }, [_id]);
 
   const handleSectionClick = (sectionName) => {
     setSelectedSection(sectionName);
     setShowModal(true);
-
   };
 
-
   const handleFormSubmit = (data) => {
-
-
-    // Determine the selected section and update the corresponding state variable
-    if (selectedSection === 'Breakfast') {
+    if (selectedSection === "Breakfast") {
       setSelectedBreakfastRecipes([...selectedBreakfastRecipes, data]);
-    } else if (selectedSection === 'Lunch') {
+    } else if (selectedSection === "Lunch") {
       setSelectedLunchRecipes([...selectedLunchRecipes, data]);
-    } else if (selectedSection === 'Dinner') {
+    } else if (selectedSection === "Dinner") {
       setSelectedDinnerRecipes([...selectedDinnerRecipes, data]);
     }
-
     setFormData(data);
-    setShowModal(false); // Close the modal after form submission
+    setShowModal(false);
   };
 
   return (
-    <div className=" text-center text-gray-900 min-h-screen">
+    <div
+      className={`text-center ${
+        theme === "dark" ? "text-white bg-[#131b33]" : "text-gray-900 bg-white"
+      } min-h-screen pt-[8rem]`}
+    >
       <Navbar />
-      <h1 className="text-4xl font-bold mb-8 text-white">Select Today's Menu</h1>
-      {
-        loading ? (
+
+      <div className="relative bg-white">
+
+        {loading ? (
           <Loader />
         ) : (
           <>
-            <div className="flex space-x-4 justify-center">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleSectionClick('Breakfast')}>
-                Breakfast
+            <button
+              className="absolute mt-2 end-0 right-16 bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-full flex gap-2 "
+              onClick={() => navigate(`/edit-profile/${_id}`)}
+            >
+              Edit Profile <FaRegEdit />
+            </button>
+            <div
+              className={`flex justify-center mt-4 ${
+                theme === "dark"
+                  ? "text-white bg-[#131b33]"
+                  : "text-gray-900 bg-white"
+              } `}
+            >
+              <button
+                className={`mx-4 mt-2 py-3 px-4 rounded-full ${
+                  view === "add"
+                    ? "bg-green-500 text-white"
+                    : "bg-green-500 text-white"
+                } flex gap-2 `}
+                onClick={() => setView("add")}
+              >
+                Add Product <IoMdAdd />
               </button>
-              <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleSectionClick('Lunch')}>
-                Lunch
-              </button>
-              <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleSectionClick('Dinner')}>
-                Dinner
+              <button
+                className={`mx-4 mt-2 py-3 px-4 rounded-full border-green-400 border-2 ${
+                  view === "list"
+                    ? " bg-transparent text-green-500"
+                    : "bg-transparent text-green-500"
+                } flex gap-2 `}
+                onClick={() => setView("list")}
+              >
+                Product List <CiBoxList />
               </button>
             </div>
-            <Modal showModal={showModal} setShowModal={setShowModal} sectionName={selectedSection} canteenData={canteenData} onSubmit={handleFormSubmit} id={_id} />
+            {view === "add" ? <AddFoodItem /> : <Foodlist />}
           </>
-        )
-      }
-
-
-
+        )}
+      </div>
+      <Footer />
     </div>
   );
 };
 
 export default SectionPage;
-

@@ -4,9 +4,11 @@ const router = express.Router();
 // Import canteen controller functions
 const canteenController = require('../controllers/canteenController');
 const { auth, isCanteen } = require('../middlewares/auth');
+const multerUploads = require('../middleware/multer.middleware');
 
 router.get('/getcanteen' , canteenController.getAllCanteen);
-
+router.post("/feedback", canteenController.feedback)
+router.get("/reviews", canteenController.canteenFeedbackRender)
 //yeh mere routes
 router.get('/:id/breakfast' , canteenController.getBreakfast);
 
@@ -20,7 +22,7 @@ router.get('/:id/dinner' , canteenController.getDinner);
 // router.get('/:id', canteenController.getCanteenDashboard);
 
 // Route to add a breakfast dish for a specific canteen
-router.post('/:id/breakfast/add',auth,isCanteen, canteenController.addBreakfastDish);
+router.post('/:id/breakfast/add',auth,isCanteen,multerUploads, canteenController.addBreakfastDish);
 
 // Route to remove a breakfast dish for a specific canteen
 router.delete('/:id/breakfast/remove',auth,isCanteen, canteenController.removeBreakfastDish);
@@ -36,5 +38,13 @@ router.post('/:id/dinner/add',auth,isCanteen, canteenController.addDinnerDish);
 
 // Route to remove a dinner dish for a specific canteen
 router.delete('/:id/dinner/remove',auth,isCanteen, canteenController.removeDinnerDish);
+
+//router to update profile
+router.put('/:id/update', auth, isCanteen, multerUploads, canteenController.updateCanteen);
+
+// New update routes
+router.put('/:id/breakfast/updateitem',auth,isCanteen, canteenController.updateBreakfastDish);
+router.put('/:id/lunch/updateitem',auth,isCanteen, canteenController.updateLunchDish);
+router.put('/:id/dinner/updateitem',auth,isCanteen, canteenController.updateDinnerDish);
 
 module.exports = router;

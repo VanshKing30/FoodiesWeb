@@ -7,6 +7,9 @@ router.post("/studentSignup", authController.studentSignup);
 router.post("/studentLogin", authController.studentLogin);
 router.post("/canteenSignup", authController.canteenSignup);
 router.post("/canteenLogin", authController.canteenLogin);
+router.post("/VerifyUser",authController.forgotPassword);
+router.get("/resetPassword/:id/:token",authController.verifyLink);
+router.post("/newPassword/:id/:token",authController.resetPassword);
 router.get("/studentLogout", studentAuth, authController.studentLogout);
 router.get("/canteenLogout", auth, authController.canteenLogout);
 router.post(
@@ -20,4 +23,5 @@ router.post(
   isCanteen,
   authController.changeCanteenPassword
 );
+
 module.exports = router;
