@@ -30,6 +30,17 @@ const Navbar = () => {
         }
     }
   }, []);
+  const removetoken = ()=>{
+      const usertoken=localStorage.getItem("usertoken");
+      const token=localStorage.getItem("token");
+      if(usertoken) {
+        localStorage.removeItem("usertoken");
+      }
+      if(token) {
+        localStorage.removeItem("token")
+        localStorage.removeItem("canteenId")
+      }
+  }
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);

@@ -8,6 +8,28 @@ import Footer from "../components/Footer";
 import FoodCard from "../components/FoodCard";
 import { ThemeContext } from '../themeContext';
 
+
+const StarRating = ({ rating, onRatingChange }) => {
+  const [hoverRating, setHoverRating] = useState(0);
+
+  return (
+    <div className="StarRating ">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <button
+          type="button"
+          key={star}
+          className={`StarRating__star ${star <= (hoverRating || rating) ? "StarRating__star--on" : "StarRating__star--off"}`}
+          onClick={() => onRatingChange(star)}
+          onMouseEnter={() => setHoverRating(star)}
+          onMouseLeave={() => setHoverRating(0)}
+        >
+          &#9733;
+        </button>
+      ))}
+    </div>
+  );
+};
+
 function MenuPage() {
   const { _id } = useParams();
   const [breakfast, setBreakfast] = useState([]);
