@@ -80,7 +80,8 @@ const Navbar = () => {
             <div>
               <Link to="/">
                 <button
-                  onClick={removetoken}
+                  onClick={logout}
+
                   className={`py-1 px-2  w-full h-auto text-l relative z-0 rounded-lg transition-all duration-200 hover:scale-110 ${theme === 'dark' ? 'bg-white text-black' : 'bg-green-400 hover:bg-green-600 hover:shadow-green text-white'}`}
                 >
                   Log out

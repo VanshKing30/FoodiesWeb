@@ -30,7 +30,6 @@ const StarRating = ({ rating, onRatingChange }) => {
   );
 };
 
-
 function MenuPage() {
   const { _id } = useParams();
   const [breakfast, setBreakfast] = useState([]);
