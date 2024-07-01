@@ -42,8 +42,6 @@ li:hover span {
 
 .Nav__item{
   font-size: 52px !important;
-<<<<<<< Updated upstream
-=======
 }
 
 .StarRating  {
@@ -90,5 +88,4 @@ li:hover span {
 .stars {
   color: yellow;
   font-size: 24px; /* Increase the font size to make the stars bigger */
->>>>>>> Stashed changes
 }
