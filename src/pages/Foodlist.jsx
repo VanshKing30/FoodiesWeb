@@ -80,17 +80,24 @@ const Foodlist = () => {
         return;
       }
 
+      const formData = new FormData();
+      formData.append("dishId", currentDish._id);
+      formData.append("dish", updatedDish.dish);
+      formData.append("description", updatedDish.description);
+
+      if (updatedDish.dishImage) {
+        const base64Image = await convertToBase64(updatedDish.dishImage);
+        formData.append("dishImage", base64Image);
+      }
+
       await axios.put(
         `${process.env.REACT_APP_BASE_URL}/${_id}/${currentDish.mealType}/updateitem`,
-        {
-          dishId: currentDish._id,
-          dish: updatedDish,
-        },
+        formData,
         {
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          }
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+          },
         }
       );
 
@@ -103,6 +110,15 @@ const Foodlist = () => {
     }
   };
 
+
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+
   const getMealSetter = (mealType) => {
     switch (mealType) {
       case "breakfast":
@@ -112,8 +128,9 @@ const Foodlist = () => {
       case "dinner":
         return setDinner;
       default:
-        return () => {};
+        return;
     }
+
   };
 
   useEffect(() => {
@@ -180,16 +197,176 @@ const Foodlist = () => {
         {loading ? (
           <Loader />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {renderMenuItems()}
+          <div className="flex flex-col gap-4 p-5 md:flex-row justify-center">
+            {breakfast && (
+              <div className="w-2/3 rounded-lg shadow-md border-2 border-red-300 mt-5">
+                <div className="text-center bg-red-300 text-black py-3 font-xl relative">
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/128/5025/5025429.png"
+                    alt="Breakfast Icon"
+                    className="absolute top-0 left-4 h-16 w-16 -mt-8 -ml-8"
+                  />
+                  Breakfast
+                </div>
+                <div className="p-4">
+                  <ul>
+                    {breakfast.data.map((dish) => (
+                      <li
+                        key={dish._id}
+                        onClick={() => handleDishClick(dish._id)}
+                        className={`cursor-pointer relative text-start hover:bg-gradient-to-r from-green-300 to-green-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${
+                          theme === "dark" ? "text-white" : "text-red-600"
+                        } hover:text-black mt-2`}
+                      >
+                        • {dish.dish}
+                        <span
+                          className="absolute right-12 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleEditClick(dish, "breakfast");
+                          }}
+                        >
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png"
+                            alt="Edit Icon"
+                            className="h-6 w-6"
+                          />
+                        </span>
+                        <span
+                          className="absolute right-5 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDelete(dish._id, "breakfast");
+                          }}
+                        >
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png"
+                            alt="Delete Icon"
+                            className="h-6 w-6"
+                          />
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
+            {lunch && (
+              <div className="w-2/3 rounded-lg shadow-md border-green-300 border-2 mt-5">
+                <div className="text-center bg-green-300 text-black py-3 font-xl relative">
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/128/2082/2082045.png"
+                    alt="Lunch Icon"
+                    className="absolute top-0 left-4 h-16 w-16 -mt-8 -ml-8"
+                  />
+                  Lunch
+                </div>
+                <div className="p-4">
+                  <ul>
+                    {lunch.data.map((dish) => (
+                      <li
+                        key={dish._id}
+                        onClick={() => handleDishClick(dish._id)}
+                        className={`cursor-pointer relative text-start hover:bg-gradient-to-r from-green-300 to-green-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${
+                          theme === "dark" ? "text-white" : "text-green-600"
+                        } hover:text-black mt-2`}
+                      >
+                        • {dish.dish}
+                        <span
+                          className="absolute right-12 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleEditClick(dish, "lunch");
+                          }}
+                        >
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png"
+                            alt="Edit Icon"
+                            className="h-6 w-6"
+                          />
+                        </span>
+                        <span
+                          className="absolute right-5 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDelete(dish._id, "lunch");
+                          }}
+                        >
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png"
+                            alt="Delete Icon"
+                            className="h-6 w-6"
+                          />
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
+            {dinner && (
+              <div className="w-2/3 rounded-lg shadow-md border-blue-300 border-2 mt-5">
+                <div className="text-center bg-blue-300 text-black py-3 font-xl relative">
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/128/3321/3321601.png"
+                    alt="Dinner Icon"
+                    className="absolute top-0 left-4 h-16 w-16 -mt-8 -ml-8"
+                  />
+                  Dinner
+                </div>
+                <div className="p-4">
+                  <ul>
+                    {dinner.data.map((dish) => (
+                      <li
+                        key={dish._id}
+                        onClick={() => handleDishClick(dish._id)}
+                        className={`cursor-pointer relative text-start hover:bg-gradient-to-r from-green-300 to-green-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${
+                          theme === "dark" ? "text-white" : "text-blue-600"
+                        } hover:text-black mt-2`}
+                      >
+                        • {dish.dish}
+                        <span
+                          className="absolute right-12 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleEditClick(dish, "dinner");
+                          }}
+                        >
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png"
+                            alt="Edit Icon"
+                            className="h-6 w-6"
+                          />
+                        </span>
+                        <span
+                          className="absolute right-5 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDelete(dish._id, "dinner");
+                          }}
+                        >
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png"
+                            alt="Delete Icon"
+                            className="h-6 w-6"
+                          />
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
+      <Footer />
+
       {editModal && (
         <Modalupdate
-          dish={currentDish.dish}
-          onUpdate={(updatedDish) => handleUpdateDish(updatedDish)}
-          onCancel={() => setEditModal(false)}
+          dish={currentDish}
+          onClose={() => setEditModal(false)}
+          onUpdate={handleUpdateDish}
         />
       )}
       <Footer />

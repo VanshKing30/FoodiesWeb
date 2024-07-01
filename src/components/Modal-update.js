@@ -1,8 +1,15 @@
-
 import React, { useState } from "react";
 
 const Modalupdate = ({ dish, onUpdate, onCancel }) => {
-  const [updatedDish, setUpdatedDish] = useState(dish);
+  const [updatedDish, setUpdatedDish] = useState({
+    dish: dish.dish,
+    description: dish.description || "",
+    dishImage: null, // For the new image file
+  });
+
+  const handleFileChange = (e) => {
+    setUpdatedDish({ ...updatedDish, dishImage: e.target.files[0] });
+  };
 
   const handleUpdate = () => {
     onUpdate(updatedDish);
@@ -14,8 +21,19 @@ const Modalupdate = ({ dish, onUpdate, onCancel }) => {
         <h2 className="text-2xl mb-4">Edit Dish</h2>
         <input
           type="text"
-          value={updatedDish}
-          onChange={(e) => setUpdatedDish(e.target.value)}
+          value={updatedDish.dish}
+          onChange={(e) => setUpdatedDish({ ...updatedDish, dish: e.target.value })}
+          className="border border-gray-300 p-2 w-full mb-4"
+        />
+        <textarea
+          value={updatedDish.description}
+          onChange={(e) => setUpdatedDish({ ...updatedDish, description: e.target.value })}
+          className="border border-gray-300 p-2 w-full mb-4"
+          placeholder="Description"
+        />
+        <input
+          type="file"
+          onChange={handleFileChange}
           className="border border-gray-300 p-2 w-full mb-4"
         />
         <div className="flex justify-end">
