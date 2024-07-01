@@ -30,11 +30,11 @@ const Reviews = () => {
   };
 
   return (
-    <div className="reviews-container">
+    <div className="Reviews__container">
       {reviews.map(review => (
-        <div key={review._id} className="review-card">
-          <p className='stdname'>{review.studentName}</p>
-          <div className="stdfeedback">
+        <div key={review._id} className="Reviews__card ">
+          <p className='Feedback__name'>{review.studentName}</p>
+          <div className="Feedback__standard">
             <h3>Rating: {renderStars(review.rating)}</h3>
             <p>{review.comment}</p>
             <p><strong>Canteen:</strong> {review.canteenName}</p>
