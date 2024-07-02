@@ -3,12 +3,14 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import logo from "../assets/logo2.png";
 import Loader from "../components/Loader/Loader";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-function ForgotPassword() {
+function OtpVerify() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [formData, setFormData] = useState({
-    email: "",
+    email: location.state?.userData?.email || "", // Get email from location state
+    otp: "",
   });
   const [loading, setLoading] = useState(false);
 
@@ -19,45 +21,20 @@ function ForgotPassword() {
     }));
   }
 
-  function LinksubmitHandler(event) {
-    event.preventDefault();
-
-    setLoading(true);
-
-    const apiUrl = `${process.env.REACT_APP_BASE_URL}/VerifyUser`;
-    // const apiUrl = `http://localhost:4000/api/v1/VerifyUser `;
-
-    axios
-      .post(apiUrl, formData)
-      .then((response) => {
-        setLoading(false);
-        toast.success("Link sent to your email");
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-        toast.error("Failed to send Link");
-      });
-  }
-
   const submitHandler = async (event) => {
     event.preventDefault();
     try {
-      if (!formData.email) {
-        alert("Enter The Email First");
-        return;
-      }
       setLoading(true); // Start loading
       const response = await axios.post(
-        "http://localhost:5000/api/v1/otp/sendotp",
-        { email: formData.email }
+        "http://localhost:5000/api/v1/otp/verifyotp",
+        formData
       );
       setLoading(false); // Stop loading
       toast.success(response.data.message);
-      navigate("/otpverify", { state: { userData: formData } });
+      navigate("/resetpassword", { state: { userData: formData } });
     } catch (error) {
       setLoading(false); // Stop loading
-      toast.error(error.response?.data?.message || "Failed to send OTP");
+      toast.error(error.response?.data?.message || "Failed to verify OTP");
     }
   };
 
@@ -85,20 +62,20 @@ function ForgotPassword() {
               className="bg-white p-8 rounded shadow-lg w-80"
               onSubmit={submitHandler}>
               <h1 className="text-gray-800 font-bold text-2xl mb-1">
-                Recover Password
+                Verify OTP
               </h1>
               <p className="text-sm font-normal text-gray-600 mb-3">
-                Please enter your email
+                Please enter the OTP sent to {formData.email}
               </p>
 
               <div className="mb-4">
                 <input
                   required
                   className="w-full py-2 px-3 border border-gray-300 rounded-2xl"
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                  value={formData.email}
+                  type="text"
+                  placeholder="OTP"
+                  name="otp"
+                  value={formData.otp}
                   onChange={changeHandler}
                 />
               </div>
@@ -115,4 +92,4 @@ function ForgotPassword() {
   );
 }
 
-export default ForgotPassword;
+export default OtpVerify;

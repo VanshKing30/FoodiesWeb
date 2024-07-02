@@ -110,7 +110,6 @@ const Foodlist = () => {
     }
   };
 
-
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -118,6 +117,7 @@ const Foodlist = () => {
       reader.onload = () => resolve(reader.result);
       reader.onerror = (error) => reject(error);
     });
+  };
 
   const getMealSetter = (mealType) => {
     switch (mealType) {
@@ -130,7 +130,6 @@ const Foodlist = () => {
       default:
         return;
     }
-
   };
 
   useEffect(() => {
@@ -167,18 +166,25 @@ const Foodlist = () => {
         items = [];
     }
     if (items.length === 0) {
-      return <p className="text-xl text-red-700 text-center">No {selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Available Now</p>;
+      return (
+        <p className="text-xl text-red-700 text-center">
+          No{" "}
+          {selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)}{" "}
+          Available Now
+        </p>
+      );
     }
     return items.map((dish) => (
-      <FoodCard 
-        key={dish._id} 
-        dish={dish} 
-        onClick={() => handleDishClick(dish.dishId)}   
-        onEdit={() => handleEditClick(dish, selectedCategory)} 
-        onDelete={() => handleDelete(dish._id, selectedCategory)}  
+      <FoodCard
+        key={dish._id}
+        dish={dish}
+        onClick={() => handleDishClick(dish.dishId)}
+        onEdit={() => handleEditClick(dish, selectedCategory)}
+        onDelete={() => handleDelete(dish._id, selectedCategory)}
       />
     ));
   };
+
   return (
     <div className="text-purple-800 min-h-screen pt-5 bg-transparent">
       <Navbar />
@@ -187,9 +193,10 @@ const Foodlist = () => {
           {["breakfast", "lunch", "dinner"].map((category) => (
             <button
               key={category}
-              className={`px-4 py-2 rounded-lg ${selectedCategory === category ? 'bg-green-300' : 'bg-gray-300'} focus:outline-none`}
-              onClick={() => setSelectedCategory(category)}
-            >
+              className={`px-4 py-2 rounded-lg ${
+                selectedCategory === category ? "bg-green-300" : "bg-gray-300"
+              } focus:outline-none`}
+              onClick={() => setSelectedCategory(category)}>
               {category.charAt(0).toUpperCase() + category.slice(1)}
             </button>
           ))}
@@ -198,7 +205,7 @@ const Foodlist = () => {
           <Loader />
         ) : (
           <div className="flex flex-col gap-4 p-5 md:flex-row justify-center">
-            {breakfast && (
+            {breakfast.length > 0 && (
               <div className="w-2/3 rounded-lg shadow-md border-2 border-red-300 mt-5">
                 <div className="text-center bg-red-300 text-black py-3 font-xl relative">
                   <img
@@ -210,22 +217,20 @@ const Foodlist = () => {
                 </div>
                 <div className="p-4">
                   <ul>
-                    {breakfast.data.map((dish) => (
+                    {breakfast.map((dish) => (
                       <li
                         key={dish._id}
                         onClick={() => handleDishClick(dish._id)}
                         className={`cursor-pointer relative text-start hover:bg-gradient-to-r from-green-300 to-green-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${
                           theme === "dark" ? "text-white" : "text-red-600"
-                        } hover:text-black mt-2`}
-                      >
+                        } hover:text-black mt-2`}>
                         • {dish.dish}
                         <span
                           className="absolute right-12 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleEditClick(dish, "breakfast");
-                          }}
-                        >
+                          }}>
                           <img
                             src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png"
                             alt="Edit Icon"
@@ -237,8 +242,7 @@ const Foodlist = () => {
                           onClick={(e) => {
                             e.stopPropagation();
                             handleDelete(dish._id, "breakfast");
-                          }}
-                        >
+                          }}>
                           <img
                             src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png"
                             alt="Delete Icon"
@@ -251,7 +255,7 @@ const Foodlist = () => {
                 </div>
               </div>
             )}
-            {lunch && (
+            {lunch.length > 0 && (
               <div className="w-2/3 rounded-lg shadow-md border-green-300 border-2 mt-5">
                 <div className="text-center bg-green-300 text-black py-3 font-xl relative">
                   <img
@@ -263,22 +267,20 @@ const Foodlist = () => {
                 </div>
                 <div className="p-4">
                   <ul>
-                    {lunch.data.map((dish) => (
+                    {lunch.map((dish) => (
                       <li
                         key={dish._id}
                         onClick={() => handleDishClick(dish._id)}
                         className={`cursor-pointer relative text-start hover:bg-gradient-to-r from-green-300 to-green-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${
                           theme === "dark" ? "text-white" : "text-green-600"
-                        } hover:text-black mt-2`}
-                      >
+                        } hover:text-black mt-2`}>
                         • {dish.dish}
                         <span
                           className="absolute right-12 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleEditClick(dish, "lunch");
-                          }}
-                        >
+                          }}>
                           <img
                             src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png"
                             alt="Edit Icon"
@@ -290,8 +292,7 @@ const Foodlist = () => {
                           onClick={(e) => {
                             e.stopPropagation();
                             handleDelete(dish._id, "lunch");
-                          }}
-                        >
+                          }}>
                           <img
                             src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png"
                             alt="Delete Icon"
@@ -304,7 +305,7 @@ const Foodlist = () => {
                 </div>
               </div>
             )}
-            {dinner && (
+            {dinner.length > 0 && (
               <div className="w-2/3 rounded-lg shadow-md border-blue-300 border-2 mt-5">
                 <div className="text-center bg-blue-300 text-black py-3 font-xl relative">
                   <img
@@ -316,22 +317,20 @@ const Foodlist = () => {
                 </div>
                 <div className="p-4">
                   <ul>
-                    {dinner.data.map((dish) => (
+                    {dinner.map((dish) => (
                       <li
                         key={dish._id}
                         onClick={() => handleDishClick(dish._id)}
                         className={`cursor-pointer relative text-start hover:bg-gradient-to-r from-green-300 to-green-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${
                           theme === "dark" ? "text-white" : "text-blue-600"
-                        } hover:text-black mt-2`}
-                      >
+                        } hover:text-black mt-2`}>
                         • {dish.dish}
                         <span
                           className="absolute right-12 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleEditClick(dish, "dinner");
-                          }}
-                        >
+                          }}>
                           <img
                             src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png"
                             alt="Edit Icon"
@@ -343,8 +342,7 @@ const Foodlist = () => {
                           onClick={(e) => {
                             e.stopPropagation();
                             handleDelete(dish._id, "dinner");
-                          }}
-                        >
+                          }}>
                           <img
                             src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png"
                             alt="Delete Icon"
@@ -369,7 +367,6 @@ const Foodlist = () => {
           onUpdate={handleUpdateDish}
         />
       )}
-      <Footer />
     </div>
   );
 };
