@@ -14,7 +14,7 @@ const sendMail = async ({ receiver, otp }) => {
         pass: process.env.MAIL_AUTH_PASSWORD,
       },
     });
-    // console.log("OTP is: ", otp);
+    console.log("OTP is: ", otp);
 
     const info = await transporter.sendMail({
       from: "no-reply@example.com", // sender address

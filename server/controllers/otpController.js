@@ -1,6 +1,4 @@
-// const { Student } = require("../models/studentLoginInfo.js");
 const OTP = require("../models/otp-model.js");
-const { Canteen } = require("../models/canteenLoginInfo.js");
 const User = require("../models/studentLoginInfo");
 const otpGenerator = require("otp-generator");
 const { sendMail } = require("../utils/Mailer.js");
@@ -10,12 +8,10 @@ const sendOTP = async (req, res) => {
     const { email } = req.body;
     if (!email) {
       return res.status(400).json({
-        message: "You Havent Entered the Email!",
+        message: "You Haven't Entered the Email!",
         success: false,
       });
     }
-    // const canteenExists = await Canteen.findOne({ email });
-    // const studentExists = await Student.findOne({ email });
 
     const studentExists = await User.findOne({ email });
 
@@ -25,8 +21,6 @@ const sendOTP = async (req, res) => {
         message: "No user with the given email is registered!",
       });
     }
-
-    // Generating a unique OTP
 
     let otp = otpGenerator.generate(6, {
       upperCaseAlphabets: false,
@@ -59,12 +53,10 @@ const sendOTP = async (req, res) => {
     const info = await sendMail({ receiver: email, otp });
     if (!info) {
       console.log("Something went wrong while sending email");
-      return res
-        .status(500)
-        .json({
-          message: "Something Went Wrong in mailing the person",
-          success: false,
-        });
+      return res.status(500).json({
+        message: "Something Went Wrong in mailing the person",
+        success: false,
+      });
     }
 
     return res.status(200).json({
@@ -80,4 +72,48 @@ const sendOTP = async (req, res) => {
   }
 };
 
-module.exports = sendOTP;
+const verifyOTP = async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+    if (!email || !otp) {
+      return res.status(400).json({
+        message: "Email or OTP not provided!",
+        success: false,
+      });
+    }
+
+    const otpRecord = await OTP.findOne({ email, otp });
+    if (!otpRecord) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid OTP or Email!",
+      });
+    }
+
+    // Optional: Check if OTP is expired (depending on your expiration logic)
+    // const isExpired = checkOtpExpiration(otpRecord); // Implement this function if needed
+    // if (isExpired) {
+    //   return res.status(401).json({
+    //     success: false,
+    //     message: "OTP is expired!",
+    //   });
+    // }
+
+    // OTP is valid, perform necessary actions (e.g., mark user as verified)
+
+    // Optionally delete the OTP record after verification
+    await OTP.deleteOne({ email, otp });
+
+    return res.status(200).json({
+      success: true,
+      message: "OTP Verified Successfully",
+    });
+  } catch (err) {
+    console.log("Something went wrong while verifying OTP", err);
+    return res
+      .status(500)
+      .json({ message: "Internal server error", success: false, err });
+  }
+};
+
+module.exports = { sendOTP, verifyOTP };
