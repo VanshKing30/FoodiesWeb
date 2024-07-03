@@ -83,7 +83,7 @@ const SectionPage = () => {
         ) : (
           <>
             <button
-              className="absolute mt-2 end-0 right-16 bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-full flex gap-2 "
+              className="absolute mt-2 end-0 right-16 bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-full flex items-center gap-2 "
               onClick={() => navigate(`/edit-profile/${_id}`)}
             >
               Edit Profile <FaRegEdit />
@@ -96,7 +96,7 @@ const SectionPage = () => {
               } `}
             >
               <button
-                className={`mx-4 mt-2 py-3 px-4 rounded-full ${
+                className={`mx-4 mt-2 py-3 px-4 flex items-center rounded-full ${
                   view === "add"
                     ? "bg-green-500 text-white"
                     : "bg-green-500 text-white"
@@ -106,7 +106,7 @@ const SectionPage = () => {
                 Add Product <IoMdAdd />
               </button>
               <button
-                className={`mx-4 mt-2 py-3 px-4 rounded-full border-green-400 border-2 ${
+                className={`mx-4 mt-2 py-3 px-4 flex items-center rounded-full border-green-400 border-2 ${
                   view === "list"
                     ? " bg-transparent text-green-500"
                     : "bg-transparent text-green-500"
