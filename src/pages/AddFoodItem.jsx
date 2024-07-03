@@ -60,6 +60,7 @@ function AddFoodItem() {
         break;
       case "Dinner":
         apiUrl = `${process.env.REACT_APP_BASE_URL}/${canteenId}/dinner/add`;
+        console.log("This is api url",apiUrl);
         break;
       default:
         toast.error("Please select a meal type.");
@@ -103,7 +104,7 @@ function AddFoodItem() {
   };
 
   return (
-    <div className={`flex justify-center items-center h-[80vh] ${theme === 'dark' ? 'bg-[#131b33]' : 'bg-white'}`}>
+    <div className={`flex py-10 justify-center items-center h-[80vh] ${theme === 'dark' ? 'bg-[#131b33]' : 'bg-white'}`}>
       <form
         onSubmit={handleSubmit}
         className={`p-6 rounded shadow-lg w-full max-w-sm border-2 ${theme === 'dark' ? 'bg-gray-300' : 'bg-white'}`}

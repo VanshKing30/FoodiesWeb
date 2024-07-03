@@ -116,7 +116,9 @@ const SectionPage = () => {
                 Product List <CiBoxList />
               </button>
             </div>
+            <div className={ ` py-[10%] ${theme === 'dark' ? 'bg-[#131b33]' : 'bg-white'}` }>
             {view === "add" ? <AddFoodItem /> : <Foodlist />}
+            </div>
           </>
         )}
       </div>
