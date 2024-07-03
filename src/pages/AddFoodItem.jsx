@@ -103,10 +103,10 @@ function AddFoodItem() {
   };
 
   return (
-    <div className={`flex justify-center items-center h-[80vh] ${theme === 'dark' ? 'bg-[#131b33]' : 'bg-white'}`}>
+    <div className={`flex justify-center items-center h-[auto] ${theme === 'dark' ? 'bg-[#131b33]' : 'bg-white'}`}>
       <form
         onSubmit={handleSubmit}
-        className={`p-6 rounded shadow-lg w-full max-w-sm border-2 ${theme === 'dark' ? 'bg-gray-300' : 'bg-white'}`}
+        className={`p-6 rounded shadow-lg w-full max-w-sm mt-[40px] mb-[20px] border-2 ${theme === 'dark' ? 'bg-gray-300' : 'bg-white'}`}
       >
         <h1 className="text-xl font-bold mb-4 text-black">Add Food Item</h1>
 
@@ -117,7 +117,7 @@ function AddFoodItem() {
             name="dish"
             value={formData.dish}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded mt-1"
+            className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
             required
           />
         </div>
@@ -128,7 +128,7 @@ function AddFoodItem() {
             name="dishId"
             value={formData.dishId}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded mt-1"
+            className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
             required
           />
         </div>
@@ -155,7 +155,7 @@ function AddFoodItem() {
             name="description"
             value={formData.description}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded mt-1"
+            className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
             rows="3"
           ></textarea>
         </div>
