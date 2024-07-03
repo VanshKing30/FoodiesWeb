@@ -49,7 +49,7 @@ function ForgotPassword() {
       }
       setLoading(true); // Start loading
       const response = await axios.post(
-        "http://localhost:5000/api/v1/otp/sendotp",
+        "http://localhost:4000/api/v1/otp/sendotp",
         { email: formData.email }
       );
       setLoading(false); // Stop loading

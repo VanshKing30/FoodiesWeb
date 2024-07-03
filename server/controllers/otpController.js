@@ -2,6 +2,12 @@ const OTP = require("../models/otp-model.js");
 const User = require("../models/studentLoginInfo");
 const otpGenerator = require("otp-generator");
 const { sendMail } = require("../utils/Mailer.js");
+const {
+  forgotPasswordToken,
+  verifyToken,
+  findUserByEmail,
+  findUserById,
+} = require("../utils/PasswordTokenAndUser.js");
 
 const sendOTP = async (req, res) => {
   try {
@@ -103,13 +109,25 @@ const verifyOTP = async (req, res) => {
 
     // Optionally delete the OTP record after verification
     await OTP.deleteOne({ email, otp });
+    const existingUser = await findUserByEmail(email);
 
-    return res.status(200).json({
-      success: true,
-      message: "OTP Verified Successfully",
-    });
+    if (existingUser) {
+      const tokenReturn = forgotPasswordToken(existingUser);
+      const link = `/api/v1/newPassword/${existingUser._id}/${tokenReturn}`;
+      console.log("Link is: ", link);
+      return res.status(200).json({
+        success: true,
+        message: "OTP Verified Successfully",
+        link: link,
+      });
+    } else {
+      return res.status(401).json({
+        success: false,
+        message: "The Email cant be found in the database!",
+      });
+    }
   } catch (err) {
-    console.log("Something went wrong while verifying OTP", err);
+    console.log("Something went wrong while verifying OTP ", err);
     return res
       .status(500)
       .json({ message: "Internal server error", success: false, err });

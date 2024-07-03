@@ -12,6 +12,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 function ResetPassword() {
   const { id, token } = useParams();
   const [formData, setFormData] = useState({
+    email: "",
     password: "",
   });
   const [loading, setLoading] = useState(false);

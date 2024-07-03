@@ -8,33 +8,39 @@ import { useLocation, useNavigate } from "react-router-dom";
 function OtpVerify() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [formData, setFormData] = useState({
-    email: location.state?.userData?.email || "", // Get email from location state
-    otp: "",
-  });
+  const { userData } = location.state || { email: "" };
+  const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
 
   function changeHandler(event) {
-    setFormData((prevData) => ({
-      ...prevData,
-      [event.target.name]: event.target.value,
-    }));
+    setOtp(event.target.value);
   }
 
   const submitHandler = async (event) => {
     event.preventDefault();
     try {
-      setLoading(true); // Start loading
+      if (!otp) {
+        alert("Enter the OTP first");
+        return;
+      }
+      setLoading(true);
       const response = await axios.post(
-        "http://localhost:5000/api/v1/otp/verifyotp",
-        formData
+        "http://localhost:4000/api/v1/otp/verifyotp",
+        { email: userData.email, otp }
       );
-      setLoading(false); // Stop loading
-      toast.success(response.data.message);
-      navigate("/resetpassword", { state: { userData: formData } });
+      setLoading(false);
+      if (response.data.success) {
+        toast.success("OTP Verified Successfully");
+        const link = response.data.link;
+        console.log("Link is:-> ", link);
+        navigate(`${link}`); // Redirect to home or another page after successful verification
+      } else {
+        toast.error(response.data.message);
+      }
     } catch (error) {
-      setLoading(false); // Stop loading
-      toast.error(error.response?.data?.message || "Failed to verify OTP");
+      setLoading(false);
+      toast.error("Failed to verify OTP");
+      console.error(error);
     }
   };
 
@@ -65,7 +71,7 @@ function OtpVerify() {
                 Verify OTP
               </h1>
               <p className="text-sm font-normal text-gray-600 mb-3">
-                Please enter the OTP sent to {formData.email}
+                Please enter the OTP sent to your email
               </p>
 
               <div className="mb-4">
@@ -74,8 +80,7 @@ function OtpVerify() {
                   className="w-full py-2 px-3 border border-gray-300 rounded-2xl"
                   type="text"
                   placeholder="OTP"
-                  name="otp"
-                  value={formData.otp}
+                  value={otp}
                   onChange={changeHandler}
                 />
               </div>
