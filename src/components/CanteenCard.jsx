@@ -30,8 +30,10 @@ const CanteenCard = ({ canteen }) => {
     }));
   };
 
+  const truncatedName = canteen.name.length > 14 ? canteen.name.substring(0, 14) + "..." : canteen.name;
+
   return (
-    <div className="max-w-(18rem) bg-white border border-white rounded-lg shadow dark:bg-none dark:border-white my-4 mx-2 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-green-500/50 ...">
+    <div className="sm:w-64 w-[80vw] px-5 bg-white flex flex-col justify-between border pt-5 h-[45vh] border-white rounded-lg shadow dark:bg-none dark:border-white my-4 mx-2 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-green-500/50 ...">
       {loading ? (
         <div className="flex justify-center items-center h-48 w-full">
           <ClipLoader size={50} color={"#123abc"} loading={loading} />
@@ -39,21 +41,21 @@ const CanteenCard = ({ canteen }) => {
       ) : (
         <div className="flex justify-center">
           <a href="#">
-            <img
+            <div className=""><img
               className="rounded-t-lg h-48 w-full object-cover"
               src={canteen.canteenImage ? canteen.canteenImage : imageSrc}
               alt={canteen.name}
-            />
+            /></div>
           </a>
         </div>
       )}
       <div className="p-5">
         <a href="#">
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-900 hover:text-green-500 transition duration-300 ease-in-out overflow-x-hidden">
-            {canteen.name}
+            {truncatedName}
           </h5>
         </a>
-
+        
         <Link
           to={`/menu/${canteen._id}`}
           className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition duration-300 ease-in-out"
