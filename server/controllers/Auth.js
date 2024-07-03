@@ -18,7 +18,8 @@ exports.studentSignup = async (req, res) => {
   console.log("This is jwt", process.env.JWT_SECRET);
   try {
     console.log(req.body);
-    const { name, email, collegeName, accountType, password, confirmPassword } = req.body;
+    const { name, email, collegeName, accountType, password, confirmPassword } =
+      req.body;
 
     if (password !== confirmPassword) {
       return res.status(400).json({
@@ -98,7 +99,6 @@ exports.studentSignup = async (req, res) => {
 
 exports.studentLogin = async (req, res) => {
   try {
-    
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -502,6 +502,7 @@ exports.forgotPassword = async (req, res) => {
       // const link = `http://localhost:3000/api/v1/newPassword/${existingUser._id}/${tokenReturn}`;
 
       const link = `https://foodies-web-app.vercel.app/api/v1/newPassword/${existingUser._id}/${tokenReturn}`;
+      console.log("Link is: ", link);
 
       const transporter = nodemailer.createTransport({
         service: "gmail",

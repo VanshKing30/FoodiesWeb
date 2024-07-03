@@ -334,12 +334,29 @@ const updateCanteen = async (req, res, next) => {
 // Controller function to update a breakfast dish
 const updateBreakfastDish = asyncHandler(async (req, res, next) => {
   const canteenId = req.params.id;
-  const { dishId, dish } = req.body;
+  const { dishId, dish, description, dishImage } = req.body;
+
+  let uploadedImageUrl = null;
+
+  if (dishImage) {
+    try {
+      const uploadResult = await uploadImage(dishImage);
+      uploadedImageUrl = uploadResult.secure_url;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      return res.status(500).json({ message: 'Failed to upload image' });
+    }
+  }
 
   try {
+    const updateFields = { dish, description };
+    if (uploadedImageUrl) {
+      updateFields.dishImage = uploadedImageUrl;
+    }
+
     const updatedDish = await Breakfast.findOneAndUpdate(
       { _id: dishId, canteen: canteenId },
-      { $set: { dish } },
+      { $set: updateFields },
       { new: true }
     ).exec();
 
@@ -355,12 +372,29 @@ const updateBreakfastDish = asyncHandler(async (req, res, next) => {
 //Controller to update Lunch
 const updateLunchDish = asyncHandler(async (req, res, next) => {
   const canteenId = req.params.id;
-  const { dishId, dish } = req.body;
+  const { dishId, dish, description, dishImage } = req.body;
+
+  let uploadedImageUrl = null;
+
+  if (dishImage) {
+    try {
+      const uploadResult = await uploadImage(dishImage);
+      uploadedImageUrl = uploadResult.secure_url;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      return res.status(500).json({ message: 'Failed to upload image' });
+    }
+  }
 
   try {
+    const updateFields = { dish, description };
+    if (uploadedImageUrl) {
+      updateFields.dishImage = uploadedImageUrl;
+    }
+
     const updatedDish = await Lunch.findOneAndUpdate(
       { _id: dishId, canteen: canteenId },
-      { $set: { dish } },
+      { $set: updateFields },
       { new: true }
     ).exec();
 
@@ -377,12 +411,29 @@ const updateLunchDish = asyncHandler(async (req, res, next) => {
 
 const updateDinnerDish = asyncHandler(async (req, res, next) => {
   const canteenId = req.params.id;
-  const { dishId, dish } = req.body;
+  const { dishId, dish, description, dishImage } = req.body;
+
+  let uploadedImageUrl = null;
+
+  if (dishImage) {
+    try {
+      const uploadResult = await uploadImage(dishImage);
+      uploadedImageUrl = uploadResult.secure_url;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      return res.status(500).json({ message: 'Failed to upload image' });
+    }
+  }
 
   try {
+    const updateFields = { dish, description };
+    if (uploadedImageUrl) {
+      updateFields.dishImage = uploadedImageUrl;
+    }
+
     const updatedDish = await Dinner.findOneAndUpdate(
       { _id: dishId, canteen: canteenId },
-      { $set: { dish } },
+      { $set: updateFields },
       { new: true }
     ).exec();
 
@@ -395,6 +446,7 @@ const updateDinnerDish = asyncHandler(async (req, res, next) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
+
 
 
 module.exports = {

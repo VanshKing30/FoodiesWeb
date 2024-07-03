@@ -3,61 +3,44 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import logo from "../assets/logo2.png";
 import Loader from "../components/Loader/Loader";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-function ForgotPassword() {
+function OtpVerify() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: "",
-  });
+  const location = useLocation();
+  const { userData } = location.state || { email: "" };
+  const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
 
   function changeHandler(event) {
-    setFormData((prevData) => ({
-      ...prevData,
-      [event.target.name]: event.target.value,
-    }));
-  }
-
-  function LinksubmitHandler(event) {
-    event.preventDefault();
-
-    setLoading(true);
-
-    const apiUrl = `${process.env.REACT_APP_BASE_URL}/VerifyUser`;
-    // const apiUrl = `http://localhost:4000/api/v1/VerifyUser `;
-
-    axios
-      .post(apiUrl, formData)
-      .then((response) => {
-        setLoading(false);
-        toast.success("Link sent to your email");
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-        toast.error("Failed to send Link");
-      });
+    setOtp(event.target.value);
   }
 
   const submitHandler = async (event) => {
     event.preventDefault();
     try {
-      if (!formData.email) {
-        alert("Enter The Email First");
+      if (!otp) {
+        alert("Enter the OTP first");
         return;
       }
-      setLoading(true); // Start loading
+      setLoading(true);
       const response = await axios.post(
-        "http://localhost:4000/api/v1/otp/sendotp",
-        { email: formData.email }
+        "http://localhost:4000/api/v1/otp/verifyotp",
+        { email: userData.email, otp }
       );
-      setLoading(false); // Stop loading
-      toast.success(response.data.message);
-      navigate("/otpverify", { state: { userData: formData } });
+      setLoading(false);
+      if (response.data.success) {
+        toast.success("OTP Verified Successfully");
+        const link = response.data.link;
+        console.log("Link is:-> ", link);
+        navigate(`${link}`); // Redirect to home or another page after successful verification
+      } else {
+        toast.error(response.data.message);
+      }
     } catch (error) {
-      setLoading(false); // Stop loading
-      toast.error(error.response?.data?.message || "Failed to send OTP");
+      setLoading(false);
+      toast.error("Failed to verify OTP");
+      console.error(error);
     }
   };
 
@@ -85,20 +68,19 @@ function ForgotPassword() {
               className="bg-white p-8 rounded shadow-lg w-80"
               onSubmit={submitHandler}>
               <h1 className="text-gray-800 font-bold text-2xl mb-1">
-                Recover Password
+                Verify OTP
               </h1>
               <p className="text-sm font-normal text-gray-600 mb-3">
-                Please enter your email
+                Please enter the OTP sent to your email
               </p>
 
               <div className="mb-4">
                 <input
                   required
                   className="w-full py-2 px-3 border border-gray-300 rounded-2xl"
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                  value={formData.email}
+                  type="text"
+                  placeholder="OTP"
+                  value={otp}
                   onChange={changeHandler}
                 />
               </div>
@@ -115,4 +97,4 @@ function ForgotPassword() {
   );
 }
 
-export default ForgotPassword;
+export default OtpVerify;
