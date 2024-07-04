@@ -33,7 +33,7 @@ const CanteenCard = ({ canteen }) => {
   const truncatedName = canteen.name.length > 14 ? canteen.name.substring(0, 14) + "..." : canteen.name;
 
   return (
-    <div className="sm:w-64 w-[80vw] px-5 bg-white flex flex-col justify-between border pt-5 h-[45vh] border-white rounded-lg shadow dark:bg-none dark:border-white my-4 mx-2 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-green-500/50 ...">
+    <div className="sm:w-64 w-[80vw] px-5 bg-white flex flex-col  border pt-5 h-[320px] border-white rounded-lg shadow dark:bg-none dark:border-white my-4 mx-2 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-green-500/50 ... md:justify-center h-[380px]">
       {loading ? (
         <div className="flex justify-center items-center h-48 w-full">
           <ClipLoader size={50} color={"#123abc"} loading={loading} />
