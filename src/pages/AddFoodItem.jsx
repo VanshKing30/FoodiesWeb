@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -103,38 +104,43 @@ function AddFoodItem() {
   };
 
   return (
-    <div className={`flex justify-center items-center h-[80vh] ${theme === 'dark' ? 'bg-[#131b33]' : 'bg-white'}`}>
+    <div className={`flex justify-center p-10 w-screen items-start h-fit ${theme === 'dark' ? 'bg-[#131b33]' : 'bg-white'}`}>
       <form
         onSubmit={handleSubmit}
-        className={`p-6 rounded shadow-lg w-full max-w-sm border-2 ${theme === 'dark' ? 'bg-gray-300' : 'bg-white'}`}
+        className={`p-6 rounded shadow-lg w-full sm:w-2/5 rounded-3xl border-2 ${theme === 'dark' ? 'bg-gray-300' : 'bg-white'}`}
       >
         <h1 className="text-xl font-bold mb-4 text-black">Add Food Item</h1>
 
         <div className="mb-4">
-          <label className="block text-gray-700">Dish Name</label>
+          
           <input
             type="text"
+            id="dish"
             name="dish"
             value={formData.dish}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded mt-1"
             required
+            placeholder="Enter dish name"
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Dish ID</label>
+          
           <input
             type="text"
+            id="dishId"
             name="dishId"
             value={formData.dishId}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded mt-1"
             required
+            placeholder="Enter dish ID"
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Meal Type</label>
+          
           <select
+            id="mealType"
             name="mealType"
             value={formData.mealType}
             onChange={handleChange}
@@ -150,19 +156,22 @@ function AddFoodItem() {
           </select>
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Description</label>
+          
           <textarea
+            id="description"
             name="description"
             value={formData.description}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded mt-1"
             rows="3"
+            placeholder="Enter dish description"
           ></textarea>
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Dish Image</label>
+          
           <input
             type="file"
+            id="dishImage"
             accept="image/*"
             onChange={handleImageChange}
             className="w-full p-2 border border-gray-300 rounded mt-1"
@@ -189,3 +198,4 @@ function AddFoodItem() {
 }
 
 export default AddFoodItem;
+
