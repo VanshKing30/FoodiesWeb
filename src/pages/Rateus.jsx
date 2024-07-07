@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { ThemeContext } from "../themeContext";
 
 const RateUs = () => {
   const [rating, setRating] = useState('');
   const [feedback, setFeedback] = useState('');
+  const { theme } = useContext(ThemeContext);
 
   const handleRatingClick = (emoji) => {
     setRating(emoji);
@@ -32,12 +34,12 @@ const RateUs = () => {
       }}
     >
       <Navbar />
-      <div className="flex items-center justify-center flex-grow">
+      <div className={` flex items-center justify-center flex-grow`}>
         <div
-          className="w-full max-w-xl mx-4 p-8 bg-white bg-opacity-90 rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl"
+          className={`w-full ${theme=='dark'?"bg-[#172554]":""} max-w-xl mx-4 p-8 bg-white bg-opacity-90 rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl`}
           style={{ marginBottom: '100px', marginTop: '150px', textAlign: 'center' }}
         >
-          <h1 className="text-3xl font-bold mb-6 text-black">Rate Our Website</h1>
+          <h1 className={`text-3xl font-bold mb-6 text-black ${theme=='dark'?"text-white":""}`}>Rate Our Website</h1>
           <div className="mb-6">
             {['😢', '😡', '😐', '😊', '🤩'].map((emoji) => (
               <span

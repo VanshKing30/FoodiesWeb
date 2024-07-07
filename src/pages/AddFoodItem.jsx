@@ -61,6 +61,7 @@ function AddFoodItem() {
         break;
       case "Dinner":
         apiUrl = `${process.env.REACT_APP_BASE_URL}/${canteenId}/dinner/add`;
+        console.log("This is api url",apiUrl);
         break;
       default:
         toast.error("Please select a meal type.");
@@ -108,6 +109,7 @@ function AddFoodItem() {
       <form
         onSubmit={handleSubmit}
         className={`p-6 rounded shadow-lg w-full sm:w-2/5 rounded-3xl border-2 ${theme === 'dark' ? 'bg-gray-300' : 'bg-white'}`}
+
       >
         <h1 className="text-xl font-bold mb-4 text-black">Add Food Item</h1>
 
@@ -119,7 +121,7 @@ function AddFoodItem() {
             name="dish"
             value={formData.dish}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded mt-1"
+            className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
             required
             placeholder="Enter dish name"
           />
@@ -132,7 +134,7 @@ function AddFoodItem() {
             name="dishId"
             value={formData.dishId}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded mt-1"
+            className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
             required
             placeholder="Enter dish ID"
           />
@@ -162,7 +164,7 @@ function AddFoodItem() {
             name="description"
             value={formData.description}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded mt-1"
+            className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
             rows="3"
             placeholder="Enter dish description"
           ></textarea>

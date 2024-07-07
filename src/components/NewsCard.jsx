@@ -1,9 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function NewsCard({ article }) {
   const { title, description, source, publishedAt, url, image } = article;
   console.log(image)
-
+ const maxDescriptionLength = 100;
+  const truncatedDescription = description.length > maxDescriptionLength
+  ? description.substring(0, maxDescriptionLength) + "..."
+  : description;
   const defaultImage =
     "https://images.7news.com.au/publication/C-14905251/b0baa6a78bc17d1185f03003c8f7989917db9b9f-16x9-x0y75w800h450.jpg?imwidth=1200";
 
@@ -25,7 +29,8 @@ function NewsCard({ article }) {
         <h6 className="text-gray-600 text-sm">{`${source.name} • ${new Date(
           publishedAt
         ).toLocaleString()}`}</h6>
-        <p className="text-gray-700 mt-2">{description}</p>
+        <p className="text-gray-700 mt-2">{truncatedDescription}</p>
+        <Link to={url} className=" mt-2 text-blue-500 underline " >Read More</Link>
       </div>
       <a
         href={url}
