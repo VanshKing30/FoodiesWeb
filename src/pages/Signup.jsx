@@ -66,7 +66,7 @@ function Signup() {
       //   : `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
       const apiUrl = formData.accountType === "User" 
 
-      ? 'http://localhost:4000/api/v1/studentSignup' : 'http://localhost:4000/api/v1/canteenSignup'
+      ? 'http://localhost:8000/api/v1/studentSignup' : 'http://localhost:8000/api/v1/canteenSignup'
 
   
 
@@ -74,6 +74,8 @@ function Signup() {
         setLoading(true);
   
         const response = await axios.post(apiUrl, formData);
+
+        console.log("This is response", response.data);
   
         toast.success("Account Created Successfully!");
   
