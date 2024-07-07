@@ -24,8 +24,7 @@ const Foodlist = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `${process.env.REACT_APP_BASE_URL}/${_id}/${mealType}`,
-        {
+        `${process.env.REACT_APP_BASE_URL}/${_id}/${mealType}`,        {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -40,7 +39,10 @@ const Foodlist = () => {
       setLoading(false);
     }
   };
-
+  function handleClose(){
+    setEditModal(false)
+    console.log(editModal)
+  }
   const handleDelete = async (dishId, mealType) => {
     try {
       const token = localStorage.getItem("token");
@@ -135,7 +137,7 @@ const Foodlist = () => {
   useEffect(() => {
     fetchData("breakfast", setBreakfast);
     fetchData("lunch", setLunch);
-    fetchData("dinner", setDinner);
+    fetchData("dinner", setLunch);
   }, [_id]);
 
   const handleDishClick = async (dishId) => {
@@ -186,7 +188,7 @@ const Foodlist = () => {
   };
 
   return (
-    <div className="text-purple-800 min-h-screen pt-5 bg-transparent">
+    <div className={` text-purple-800 min-h-screen pt-5  ${theme=="dark"?"bg-[#131b33]":""}` }>
       <Navbar />
       <div className="container px-8 mx-auto p-4 mt-20 min-h-screen bg-transparent">
         <div className="flex justify-center space-x-4 mb-8">
@@ -363,7 +365,7 @@ const Foodlist = () => {
       {editModal && (
         <Modalupdate
           dish={currentDish}
-          onClose={() => setEditModal(false)}
+          onCancel={handleClose}
           onUpdate={handleUpdateDish}
         />
       )}
