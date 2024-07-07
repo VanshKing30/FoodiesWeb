@@ -119,7 +119,9 @@ const EditProfile = () => {
             value={formData.name}
             disabled={!editName}
             onChange={handleChange}
+
             className=" appearance-none border-none rounded w-full py-2 px-3 text-gray-700 leading-tight outline-none"
+
           />
           <MdEdit className=' text-2xl self-center cursor-pointer' onClick={() => setEditName(!editName)} />
          </div>
