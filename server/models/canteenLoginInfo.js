@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+ 
 
 const canteenSchema = new Schema({
   name: {
@@ -26,6 +27,24 @@ const canteenSchema = new Schema({
   canteenImage: {
     type: String, // Assuming you're storing the URL or base64 string of the image
   },
+  canteenSocialMediaLinks: {
+    Instagram: {
+      type: String,
+      default : ''
+    },
+    Facebook : {
+      type: String,
+      default: ''
+    },
+    LinkedIn: {
+      type: String,
+      default: ''
+    },
+    Youtube: {
+      type: String,
+      default : ''
+    }
+  }
 });
 
 const Canteen = mongoose.model('Canteen', canteenSchema);

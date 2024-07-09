@@ -11,7 +11,6 @@ import { ThemeContext } from "../themeContext";
 import { FaRegEdit } from "react-icons/fa";
 import { CiBoxList } from "react-icons/ci";
 import { IoMdAdd } from "react-icons/io";
-
 const SectionPage = () => {
   const { _id } = useParams();
   const navigate = useNavigate();
@@ -25,7 +24,7 @@ const SectionPage = () => {
   const [loading, setLoading] = useState(false);
   const [canteenData, setCanteenData] = useState();
   const [view, setView] = useState("add");
-
+   
   const getCanteenData = async () => {
     try {
       setLoading(true);

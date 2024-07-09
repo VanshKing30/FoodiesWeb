@@ -46,5 +46,6 @@ router.put('/:id/update', auth, isCanteen, multerUploads, canteenController.upda
 router.put('/:id/breakfast/updateitem',auth,isCanteen,multerUploads, canteenController.updateBreakfastDish);
 router.put('/:id/lunch/updateitem',auth,isCanteen,multerUploads, canteenController.updateLunchDish);
 router.put('/:id/dinner/updateitem',auth,isCanteen,multerUploads, canteenController.updateDinnerDish);
+router.post('/addsocialmedialinks', canteenController.addSocialMediaLinks);
 
 module.exports = router;

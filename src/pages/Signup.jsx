@@ -7,7 +7,6 @@ import logo from "../assets/logo2.png";
 import Icon from 'react-icons-kit';
 import { arrows_circle_check } from 'react-icons-kit/linea/arrows_circle_check';
 import { arrows_exclamation } from 'react-icons-kit/linea/arrows_exclamation';
-
 function Signup() {
   const [formData, setFormData] = useState({
     name: "",
@@ -58,15 +57,13 @@ function Signup() {
 
   async function submitHandler(event) {
     event.preventDefault();
-    console.log("ENV FILE", process.env.REACT_APP_BASE_URL);
+    console.log("ENV FILE", process.env.process.env.REACT_APP_BASE_URL);
   
     if (lowerValidated && upperValidated && numberValidated && specialValidated && lengthValidated) {
-      // const apiUrl = formData.accountType === "User" 
-      //   ? `${process.env.REACT_APP_BASE_URL}/studentSignup` 
-      //   : `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
       const apiUrl = formData.accountType === "User" 
-
-      ? 'http://localhost:8000/api/v1/studentSignup' : 'http://localhost:8000/api/v1/canteenSignup'
+        ? `${process.env.REACT_APP_BASE_URL}/studentSignup` 
+        : `${process.env.REACT_APP_BASE_URL}/canteenSignup`;
+      
 
   
 
