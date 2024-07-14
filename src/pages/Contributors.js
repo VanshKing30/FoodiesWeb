@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Navbar from '../components/Navbar';
 import { Link } from 'react-router-dom';
-
+import { ThemeContext } from '../themeContext';
 
 
 
 
 export const Contributors = () => {
-    
+    console.log(ThemeContext)
     const [data , setData] = useState([])
     const [page , setPage ] = useState(1)
     const [scroll, setScroll] = useState(false)
-    console.log(page)
     
+    const {theme} = useContext(ThemeContext)
 
     const fetch_data = async () =>{
       try{
@@ -31,7 +31,7 @@ export const Contributors = () => {
 
     useEffect(()=>{
 
-      // fetch_data()
+      fetch_data()
 
     },[page])
 
@@ -57,7 +57,7 @@ export const Contributors = () => {
     <div className='mb-10'> 
          
       
-        <p className='text-2xl mt-[88px]  font-bold text-white  text-center p-4 '>A <span className="text-3xl font-bold bg-gradient-to-r from-orange-700 via-blue-500 to-green-400 text-transparent bg-clip-text animate-gradient "> Big Thanks </span> to all our Contributors.</p>
+        <p className={theme === 'dark' ? 'text-2xl mt-[88px]  font-bold text-white  text-center p-4 ' : 'text-2xl mt-[88px]  font-bold text-black  text-center p-4 ' }>A <span className="text-3xl font-bold bg-gradient-to-r from-orange-700 via-blue-500 to-green-400 text-transparent bg-clip-text animate-gradient "> Big Thanks </span> to all our Contributors.</p>
         
 
          <div className='p-3 text-gray-300 font-normal'>
@@ -71,12 +71,12 @@ export const Contributors = () => {
     {
         !data ? <p className='text-white font-serif text-center'>Loading...</p> : data?.map((i )=>(
   
-        <div key={i.login} className="border w-96 h-20 sm: ml-4 lg:ml-6 flex items-center p-2 m-2 rounded-md border-slate-700 bg-slate-800 hover:scale-105 hover:border-l-white">
+        <div key={i.login} className={theme === 'light' ? "border w-96 h-20 sm: ml-4 lg:ml-6 flex items-center p-2 m-2 rounded-md border-slate-700 bg-gray-300 hover:scale-105 hover:border-l-gray-300" : "border w-96 h-20 sm: ml-4 lg:ml-6 flex items-center p-2 m-2 rounded-md border-slate-700 bg-slate-800 hover:scale-105 hover:border-l-gray-300"}>
               <img src={i.avatar_url} className="w-12 h-12 rounded-full mr-4 hover:scale-110" alt="avatar" />
               <div className="flex-1">
-                <p className="text-white">{i.login}</p>
+                <p className={theme === 'dark' ? " text-white" : 'text-black'}>{i.login}</p>
                 <Link to={i.html_url}>
-                <h1 className="text-gray-400 text-sm cursor-pointer hover:text-gray-300">more details</h1>
+                <h1 className={theme === 'dark'?  "text-gray-400 text-sm cursor-pointer hover:text-gray-300" :  "text-gray-400 text-sm cursor-pointer hover:text-gray-700"}>more details</h1>
                 </Link>
               </div>
             </div>
