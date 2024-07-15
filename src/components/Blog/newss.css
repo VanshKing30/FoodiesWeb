@@ -1,0 +1,130 @@
+.BlogpageContainer_main{
+    background-color: var(--color-background);
+   
+  }
+  .BlogpageContainer {
+    max-width: 1300px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .BlogpageContainer_main .header {
+    text-align: left;
+    background-color: var(--color-primary);
+    opacity: 0.9;
+    width: 100%;
+    margin-bottom: 45px;
+    margin-top: 120px;
+    padding: 0px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    
+  
+   
+  }
+  .BlogpageContainer_main .header h1 {
+    font-size: 2.5em;
+    width: 100%;
+   text-align: center;
+    max-width: 1300px;
+    margin: auto;
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+  .BlogpageContainer .container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0px 20px;
+    justify-content: space-around;
+    gap: 20px;
+    margin-bottom: 60px;
+  }
+  
+  .BlogpageContainer .card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: calc(33% - 40px);
+    /* max-width: 300px; */
+    min-height: 300px;
+    margin: 10px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
+  .BlogpageContainer .card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .BlogpageContainer .image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+  
+  .BlogpageContainer .content1 {
+    padding: 15px;
+  }
+  
+  .BlogpageContainer .content1 h2 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
+      font-size: 1.5em;
+      margin: 0 0 10px 0;
+      transition: all 0.3s ease-in-out;
+  }
+  .BlogpageContainer .content1 h2:hover {
+    text-decoration: underline;
+  }
+  
+  .BlogpageContainer .content1 p {
+    color: gray;
+    margin: 0;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 1200px) {
+    .BlogpageContainer .card {
+      width: calc(33.33% - 40px); /* 3 cards per row */
+    }
+    .BlogpageContainer_main .header h1 {
+      font-size: 2rem;
+    }
+  }
+  
+  @media (max-width: 900px) {
+    .BlogpageContainer_main .header h1 {
+      font-size: 1.75rem;
+    }
+    .BlogpageContainer .card {
+      width: calc(50% - 40px); /* 2 cards per row */
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .BlogpageContainer_main .header h1 {
+      font-size: 1.5rem;
+    }
+    .BlogpageContainer .container {
+      gap: 10px;
+    }
+    .BlogpageContainer .content1 h2 {
+      font-size: 0.9em;
+    }
+    .BlogpageContainer .content1 p {
+      font-size: 0.7em;
+    }
+    .BlogpageContainer .card {
+      width: 100%; /* 1 card per row */
+      min-height: auto;
+    }
+  }

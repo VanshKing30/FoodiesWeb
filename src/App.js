@@ -17,6 +17,7 @@ import { ThemeProvider } from "./themeContext";
 import ContactUs from "./pages/ContactUs";
 import EditProfile from "./pages/EditProfile";
 import OtpVerify from "./pages/OtpVerify";
+import Newss from "./components/Blog/newss";
 
 const Layout = ({ children }) => {
   return (
@@ -156,7 +157,7 @@ function App() {
               path="/news"
               element={
                 <Layout>
-                  <News />
+                  <Newss />
                 </Layout>
               }
             />
