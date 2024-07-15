@@ -40,18 +40,16 @@ li:hover span {
   }
 }
 
-.nav-item{
+.Nav__item{
   font-size: 52px !important;
-<<<<<<< Updated upstream
-=======
 }
 
-.star-rating {
+.StarRating  {
   display: flex;
   flex-direction: row;
 }
 
-.star {
+.StarRating__star {
   font-size: 2rem;
   color: #d3d3d3;
   background: none;
@@ -60,35 +58,34 @@ li:hover span {
   transition: color 0.2s;
 }
 
-.star.on {
+.StarRating__star--on {
   color: #ffc107;
 }
 
-.star.off {
+.StarRating__star--off {
   color: #d3d3d3;
 }
-.reviews-container{
+.Reviews__container{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   
 }
-.review-card{
+.Reviews__card {
   width: calc(90vw/3);
   border: 1px solid green;
   background-color: white;
   background-color: aquamarine;
 }
-.stdfeedback{
+.Feedback__standard{
   background-color: white;
   padding: 2% 3%;
 }
-.stdname{
+.Feedback__name{
   margin: 2% 3%;
 }
 
 .stars {
   color: yellow;
   font-size: 24px; /* Increase the font size to make the stars bigger */
->>>>>>> Stashed changes
 }
