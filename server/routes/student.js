@@ -2,6 +2,7 @@ const express = require("express");
 const { auth, studentAuth, isCanteen } = require("../middlewares/auth");
 const router = express.Router();
 const authController = require("../controllers/Auth");
+const feedbackController = require("../controllers/feedbackController");
 
 router.post("/studentSignup", authController.studentSignup);
 router.post("/studentLogin", authController.studentLogin);
@@ -12,6 +13,8 @@ router.get("/resetPassword/:id/:token", authController.verifyLink);
 router.post("/newPassword/:id/:token", authController.resetPassword);
 router.get("/studentLogout", studentAuth, authController.studentLogout);
 router.get("/canteenLogout", auth, authController.canteenLogout);
+router.post('/submitFeedback', feedbackController.submitFeedback);
+
 router.post(
   "/changeStudentPassword",
   studentAuth,

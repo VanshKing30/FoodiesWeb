@@ -75,6 +75,7 @@ function Login() {
       }
   
       if (formData.accountType === "User") {
+        localStorage.setItem("userid", response?.data?.user?._id)
         localStorage.setItem("usertoken", response.data.token)
          window.location.href='/home'
        
