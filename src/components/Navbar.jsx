@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo2.png";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
-import { IoClose } from "react-icons/io5";
+import { IoClose  } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { jwtDecode } from "jwt-decode"; // Corrected import
 import { ThemeContext } from "../themeContext";
@@ -56,10 +56,10 @@ const Navbar = () => {
             </div>
 
             <div className="hidden md:block">
-              <div className="ml-16 flex gap-6 items-baseline space-x-4">
+              <div className="ml-16 flex gap-4 items-baseline space-x-2">
                 {token ? (
                   <NavItem to={`/section/${canteenId}`} onClick={toggleMenu}>
-                    <IconCanteen /> My Canteen
+                    <IconCanteen />  My <span></span> Canteen
                   </NavItem>
                 ) : (
                   <NavItem to="/home" onClick={toggleMenu}>
@@ -75,10 +75,14 @@ const Navbar = () => {
                 <NavItem to="/rateus" onClick={toggleMenu}>
                   <IconRateUs /> RateUs
                 </NavItem>
+                <NavItem to="/contributors" onClick={toggleMenu}>
+                  <>
+                 <img src="https://cdn-icons-png.freepik.com/256/12210/12210006.png?ga=GA1.2.1168591914.1718009553&semt=ais_hybrid" className="w-5 h-5  mt-5"/><sapn className="mt-5">Contributors</sapn></>
+                </NavItem>
               </div>
             </div>
 
-            <div className="hidden md:flex items-center gap-5">
+            <div className="hidden md:flex items-center gap-6">
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded focus:outline-none text-4xl border-none outline-none"
@@ -144,6 +148,9 @@ const Navbar = () => {
                 </MobileNavItem>
                 <MobileNavItem to="/rateus" onClick={toggleMenu}>
                   RateUs
+                </MobileNavItem>
+                <MobileNavItem to="/contributors" onClick={toggleMenu}>
+                  Contributors
                 </MobileNavItem>
                 {canteenId && (
                   <MobileNavItem to={`/section/${canteenId}`} onClick={toggleMenu}>
