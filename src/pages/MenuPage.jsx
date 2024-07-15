@@ -9,6 +9,7 @@ import FoodCard from "../components/FoodCard";
 import { ThemeContext } from '../themeContext';
 
 
+
 const StarRating = ({ rating, onRatingChange }) => {
   const [hoverRating, setHoverRating] = useState(0);
 
@@ -37,10 +38,38 @@ function MenuPage() {
   const [dinner, setDinner] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('breakfast');
   const [feedback, setFeedback] = useState("");
+  const [studentfeedback, setstudentFeedback] = useState("");
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const { theme, toggleTheme } = useContext(ThemeContext);
+  //feedbacks
+const handlestudentFeedbackSubmit = async () => {
+  if (studentfeedback.trim() === '') {
+    toast.error("Please provide your feedback before submitting.");
+    return;
+  }
+
+  const userId = localStorage.getItem('userid'); // Assuming the user ID is stored in local storage
+  const canteenId = _id; // Canteen ID from URL params
+
+  try {
+    await axios.post(`${process.env.REACT_APP_BASE_URL}/submitFeedback`, {
+      message: studentfeedback,
+      canteenId,
+      userId
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    setstudentFeedback('');
+    toast.success('Feedback Submitted!');
+  } catch (error) {
+    console.error('Error submitting feedback:', error);
+    toast.error('Failed to submit feedback. Please try again.');
+  }
+};
 
   const getBreakfast = async () => {
     try {
@@ -240,11 +269,11 @@ function MenuPage() {
           <textarea
             className="w-full h-32 p-4 border border-purple-300 rounded mb-4"
             placeholder="Enter your feedback here..."
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
+            value={studentfeedback}
+            onChange={(e) => setstudentFeedback(e.target.value)}
           ></textarea>
           <button
-            onClick={handleFeedbackSubmit}
+            onClick={handlestudentFeedbackSubmit}
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
           >
             Submit Feedback
