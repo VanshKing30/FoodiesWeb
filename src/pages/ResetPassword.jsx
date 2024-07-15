@@ -6,30 +6,22 @@ import Icon from "react-icons-kit";
 import { arrows_circle_check } from "react-icons-kit/linea/arrows_circle_check";
 import { arrows_exclamation } from "react-icons-kit/linea/arrows_exclamation";
 import Loader from "../components/Loader/Loader";
-import { useNavigate , useParams } from "react-router-dom";
-import {
-  AiOutlineEye,
-  AiOutlineEyeInvisible,
-} from "react-icons/ai";
+import { useNavigate, useParams } from "react-router-dom";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 function ResetPassword() {
   const { id, token } = useParams();
   const [formData, setFormData] = useState({
+    email: "",
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] =
-    useState(false);
-  const [lowerValidated, setLowerValidated] =
-    useState(false);
-  const [upperValidated, setUpperValidated] =
-    useState(false);
-  const [numberValidated, setNumberValidated] =
-    useState(false);
-  const [specialValidated, setSpecialValidated] =
-    useState(false);
-  const [lengthValidated, setLengthValidated] =
-    useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [lowerValidated, setLowerValidated] = useState(false);
+  const [upperValidated, setUpperValidated] = useState(false);
+  const [numberValidated, setNumberValidated] = useState(false);
+  const [specialValidated, setSpecialValidated] = useState(false);
+  const [lengthValidated, setLengthValidated] = useState(false);
 
   const navigate = useNavigate();
 
@@ -37,9 +29,7 @@ function ResetPassword() {
     const lower = new RegExp("(?=.*[a-z])");
     const upper = new RegExp("(?=.*[A-Z])");
     const number = new RegExp("(?=.*[0-9])");
-    const special = new RegExp(
-      "(?=.*[!@#$%^&*])"
-    );
+    const special = new RegExp("(?=.*[!@#$%^&*])");
     const length = new RegExp("(?=.{8,})");
     const value = event.target.value;
     setLowerValidated(lower.test(value));
@@ -69,15 +59,10 @@ function ResetPassword() {
       // const apiUrl = `http://localhost:4000/api/v1/newPassword/${id}/${token} `;
 
       try {
-        const response = await axios.post(
-          apiUrl,
-          formData
-        );
+        const response = await axios.post(apiUrl, formData);
         console.log(response);
         setLoading(false);
-        toast.success(
-          "Password reset successful"
-        );
+        toast.success("Password reset successful");
         navigate("/login");
       } catch (error) {
         console.log(error);
@@ -85,9 +70,7 @@ function ResetPassword() {
         toast.error("Failed to reset password");
       }
     } else {
-      toast.error(
-        "Password must pass all the criteria"
-      );
+      toast.error("Password must pass all the criteria");
     }
   }
 
@@ -99,14 +82,9 @@ function ResetPassword() {
         <div className="h-screen md:flex">
           <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 bg-no-repeat justify-around items-center hidden">
             <div>
-              <img
-                src={logo}
-                alt="logo"
-                className="w-48 h-12 mb-2"
-              />
+              <img src={logo} alt="logo" className="w-48 h-12 mb-2" />
               <p className="text-white mt-1 ml-3">
-                Connecting You to Your College
-                Canteens
+                Connecting You to Your College Canteens
               </p>
             </div>
             <div className="absolute -bottom-32 -left-40 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
@@ -130,11 +108,7 @@ function ResetPassword() {
                 <input
                   required
                   className="w-full py-2 px-3 border border-gray-300 rounded-2xl"
-                  type={
-                    showPassword
-                      ? "text"
-                      : "password"
-                  }
+                  type={showPassword ? "text" : "password"}
                   placeholder="New Password"
                   name="password"
                   value={formData.password}
@@ -142,17 +116,11 @@ function ResetPassword() {
                 />
                 <span
                   className="absolute right-3 top-3 cursor-pointer"
-                  onClick={() =>
-                    setShowPassword(
-                      (prev) => !prev
-                    )
-                  }>
+                  onClick={() => setShowPassword((prev) => !prev)}>
                   {showPassword ? (
                     <AiOutlineEye size={20} />
                   ) : (
-                    <AiOutlineEyeInvisible
-                      size={20}
-                    />
+                    <AiOutlineEyeInvisible size={20} />
                   )}
                 </span>
               </div>
@@ -172,15 +140,11 @@ function ResetPassword() {
                   }>
                   {lowerValidated ? (
                     <span className="list-icon green">
-                      <Icon
-                        icon={arrows_circle_check}
-                      />
+                      <Icon icon={arrows_circle_check} />
                     </span>
                   ) : (
                     <span className="list-icon">
-                      <Icon
-                        icon={arrows_exclamation}
-                      />
+                      <Icon icon={arrows_exclamation} />
                     </span>
                   )}
                   At least one lowercase letter
@@ -193,15 +157,11 @@ function ResetPassword() {
                   }>
                   {upperValidated ? (
                     <span className="list-icon green">
-                      <Icon
-                        icon={arrows_circle_check}
-                      />
+                      <Icon icon={arrows_circle_check} />
                     </span>
                   ) : (
                     <span className="list-icon">
-                      <Icon
-                        icon={arrows_exclamation}
-                      />
+                      <Icon icon={arrows_exclamation} />
                     </span>
                   )}
                   At least one uppercase letter
@@ -214,15 +174,11 @@ function ResetPassword() {
                   }>
                   {numberValidated ? (
                     <span className="list-icon green">
-                      <Icon
-                        icon={arrows_circle_check}
-                      />
+                      <Icon icon={arrows_circle_check} />
                     </span>
                   ) : (
                     <span className="list-icon">
-                      <Icon
-                        icon={arrows_exclamation}
-                      />
+                      <Icon icon={arrows_exclamation} />
                     </span>
                   )}
                   At least one number
@@ -235,15 +191,11 @@ function ResetPassword() {
                   }>
                   {specialValidated ? (
                     <span className="list-icon green">
-                      <Icon
-                        icon={arrows_circle_check}
-                      />
+                      <Icon icon={arrows_circle_check} />
                     </span>
                   ) : (
                     <span className="list-icon">
-                      <Icon
-                        icon={arrows_exclamation}
-                      />
+                      <Icon icon={arrows_exclamation} />
                     </span>
                   )}
                   At least one special character
@@ -256,15 +208,11 @@ function ResetPassword() {
                   }>
                   {lengthValidated ? (
                     <span className="list-icon green">
-                      <Icon
-                        icon={arrows_circle_check}
-                      />
+                      <Icon icon={arrows_circle_check} />
                     </span>
                   ) : (
                     <span className="list-icon">
-                      <Icon
-                        icon={arrows_exclamation}
-                      />
+                      <Icon icon={arrows_exclamation} />
                     </span>
                   )}
                   At least 8 characters

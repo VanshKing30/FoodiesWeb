@@ -23,7 +23,7 @@ code {
   display: none;
 }
 
-.nav-item{
+.Nav__item{
    font-size: 12px !important;
    font-weight: bolder !important;
 }

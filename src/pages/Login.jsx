@@ -6,7 +6,6 @@ import axios from "axios";
 import logo from "../assets/logo2.png";
 import Loader from "../components/Loader/Loader"; // Ensure this path is correct
 import { useAuth } from "../authContext";
-
 function Login() {
 
   const [formData, setFormData] = useState({
@@ -55,11 +54,10 @@ function Login() {
 
   async function submitHandler(event) {
     event.preventDefault();
-  
-
-
-       const apiUrl = formData.accountType === "User" 
-      ? 'http://localhost:4000/api/v1/studentLogin' : 'http://localhost:4000/api/v1/canteenLogin'
+   
+    const apiUrl = formData.accountType === "User" 
+    ? `${process.env.REACT_APP_BASE_URL}/studentLogin` 
+    : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
 
 
 

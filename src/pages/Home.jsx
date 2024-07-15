@@ -10,11 +10,6 @@ import Footer from "../components/Footer";
 import FloatBtn from "../components/FloatBtn/FloatBtn";
 import { useAuth } from "../authContext";
 import { useNavigate } from "react-router-dom";
-<<<<<<< Updated upstream
-=======
-import Reviews from "../components/Feedback";
->>>>>>> Stashed changes
-
 function Home() {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
@@ -26,6 +21,7 @@ function Home() {
   const getCanteenData = async () => {
     try {
       setLoading(true);
+      console.log(process.env.REACT_APP_BASE_URL);
       const getCanteen = await fetch(
         `${process.env.REACT_APP_BASE_URL}/getcanteen`,
         {
@@ -140,12 +136,6 @@ function Home() {
           <div className="text-center">
             <CanteenList canteenData={filteredCanteenData} />
           </div>
-<<<<<<< Updated upstream
-=======
-          <div className="canteenReviews">
-            <Reviews></Reviews>
-          </div>
->>>>>>> Stashed changes
           <Footer />
         </div>
       )}

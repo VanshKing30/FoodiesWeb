@@ -32,7 +32,7 @@ function News() {
 
   useEffect(() => {
     fetchNews(process.env.REACT_APP_DEFAULT_QUERY);
-  }, []);
+    }, []);
 
   return (
     <>
@@ -46,10 +46,10 @@ function News() {
               <h1 className="text-3xl font-bold text-center mt-20 text-white p-6 dark:text-slate-900">
                 Trending Food and Health News
               </h1>
-              <main className="mt-24 p-4">
+              <main className="mt-10 p-4">
                 <div style={{display:"flex",justifyContent:"center"}}>
                   <div className="container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 ">
-                    {articles.map((article, index) => (
+                    {articles?.map((article, index) => (
                       <NewsCard key={index} article={article} />
                     ))}
                   </div>
