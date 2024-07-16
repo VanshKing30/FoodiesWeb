@@ -17,6 +17,7 @@ import { ThemeProvider } from "./themeContext";
 import ContactUs from "./pages/ContactUs";
 import EditProfile from "./pages/EditProfile";
 import OtpVerify from "./pages/OtpVerify";
+import Contributors from "./pages/Contributors";
 
 const Layout = ({ children }) => {
   return (
@@ -54,6 +55,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/contact" element={<ContactUs />} />
+          <Route path="/contributors" element={<Contributors/>}/>
 
           {token ? (
             <Route
