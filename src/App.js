@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
@@ -19,19 +19,38 @@ import EditProfile from "./pages/EditProfile";
 import OtpVerify from "./pages/OtpVerify";
 import Contributors from "./pages/Contributors";
 
+import { Contributors } from "./pages/Contributors";
+import Navbar from "./components/Navbar";
+
+
+import Newss from "./components/Blog/newss";
+
+
 const Layout = ({ children }) => {
   return (
-    <div className="bg-cover bg-center min-h-screen bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 bg-no-repeat dark:bg-none">
+    <div className="bg-cover bg-center min-h-screen bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 bg-no-repeat dark:bg-none ">
       {children}
     </div>
   );
 };
 
 function App() {
+
+  const [preloader , setPreloader] = useState(false)
   const usertoken = localStorage.getItem("usertoken");
   const token = localStorage.getItem("token");
   const canteenId = localStorage.getItem("canteenId");
   const hasAnyToken = token || usertoken;
+
+  useEffect(() =>{
+    
+    const t = setTimeout(() => {
+    setPreloader(true)
+  }, 0);
+
+  return () => clearTimeout(t)
+
+  },[])
 
   // Check if either token is undefined and redirect to login if true
   if (usertoken === undefined || token === undefined) {
@@ -40,10 +59,16 @@ function App() {
     window.location.href = "/login"; // Redirect to login page
     return null; // Render nothing else
   }
+  
+
+  
+     
+
 
   return (
     <ThemeProvider>
-      <div className="">
+    {!preloader  ? <Loader />  :  <div className="">
+     
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
@@ -158,7 +183,7 @@ function App() {
               path="/news"
               element={
                 <Layout>
-                  <News />
+                  <Newss />
                 </Layout>
               }
             />
@@ -183,6 +208,15 @@ function App() {
               </Layout>
             }
           />
+          <Route
+            path="/contributors"
+            element={
+              <Layout>
+                <Contributors />
+              </Layout>
+            }
+          />
+           
 
           <Route
             path="*"
@@ -193,7 +227,7 @@ function App() {
             }
           />
         </Routes>
-      </div>
+      </div>}
     </ThemeProvider>
   );
 }

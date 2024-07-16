@@ -15,6 +15,15 @@ export default function Footer() {
           <li className="mr-4 hover:underline md:mr-6 hover:text-orange-600">
             <Link to="/news">News</Link>
           </li>
+
+          <li className="mr-4 hover:underline md:mr-6 hover:text-orange-600">
+              <Link to="/contact">Contact</Link>
+          </li>
+      </ul>
+      <span className="text-sm text-white sm:text-center ">© 2024-2025 <a href="#" className="hover:underline">Foodies™</a>. All Rights Reserved.</span>
+  </div>
+</footer>
+    )
           <li className="mr-4 hover:underline md:mr-6 hover:text-orange-600">
             <Link to="/contributors">Our Contributors</Link>
           </li>
@@ -24,3 +33,4 @@ export default function Footer() {
     </footer>
   );
 }
+

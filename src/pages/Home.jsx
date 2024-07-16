@@ -114,7 +114,7 @@ function Home() {
         <Loader />
       ) : (
         <div className="min-h-screen dark:bg-teal-700">
-          <Navbar />
+        <Navbar />
           <div className="mx-auto max-w-2xl p-4" style={{ paddingTop: "120px" }}>
             <div className="relative">
               <AiOutlineSearch className="absolute top-2 left-3 text-gray-400" size={24} />
