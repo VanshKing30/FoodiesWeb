@@ -57,7 +57,7 @@ function Signup() {
 
   async function submitHandler(event) {
     event.preventDefault();
-    console.log("ENV FILE", process.env.process.env.REACT_APP_BASE_URL);
+    console.log("ENV FILE", process.env.REACT_APP_BASE_URL);
   
     if (lowerValidated && upperValidated && numberValidated && specialValidated && lengthValidated) {
       const apiUrl = formData.accountType === "User" 

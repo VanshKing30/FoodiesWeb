@@ -27,6 +27,10 @@ const canteenSchema = new Schema({
   canteenImage: {
     type: String, // Assuming you're storing the URL or base64 string of the image
   },
+  contactNumber : {
+    type : String,
+    default : ''
+  },
   canteenSocialMediaLinks: {
     Instagram: {
       type: String,
