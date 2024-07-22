@@ -1,21 +1,21 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo2.png";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
-import { IoClose } from "react-icons/io5";
+import { IoClose  } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { jwtDecode } from "jwt-decode"; // Corrected import
 import { ThemeContext } from "../themeContext";
-import { jwtDecode } from "jwt-decode";
 import { useAuth } from "../authContext";
 
 const Navbar = () => {
   const { logout } = useAuth();
-  // const [canteenId, setCanteenId] = useState(null);
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isOpen, setIsOpen] = useState(false);
   const { scrollYProgress } = useScroll();
   const token = localStorage.getItem("token");
   const canteenId = localStorage.getItem("canteenId");
+
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     if (token) {
@@ -29,16 +29,11 @@ const Navbar = () => {
       }
     }
   }, []);
-  const removetoken = () => {
-    const usertoken = localStorage.getItem("usertoken");
-    const token = localStorage.getItem("token");
-    if (usertoken) {
-      localStorage.removeItem("usertoken");
-    }
-    if (token) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("canteenId");
-    }
+
+  const removeToken = () => {
+    localStorage.removeItem("usertoken");
+    localStorage.removeItem("token");
+    localStorage.removeItem("canteenId");
   };
 
   const toggleMenu = () => {
@@ -54,7 +49,6 @@ const Navbar = () => {
         />
         <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-12">
           <div className="flex items-center justify-between h-16">
-            {/* Foodies Web Logo */}
             <div className="flex-shrink-0">
               <Link to="/home" className="flex items-center">
                 <img src={logo} alt="Logo" className="h-12" />
@@ -62,60 +56,65 @@ const Navbar = () => {
             </div>
 
             <div className="hidden md:block">
-              <div className="ml-16 flex gap-6 items-baseline space-x-4">
+              <div className="ml-16 flex gap-4 items-baseline space-x-2">
                 {token ? (
-                  <NavItem to={`/section/${canteenId}`} icon={<IconCanteen />}>
-                    My&nbsp;Canteen
+                  <NavItem to={`/section/${canteenId}`} onClick={toggleMenu}>
+                    <IconCanteen />  My <span></span> Canteen
                   </NavItem>
                 ) : (
-                  <NavItem to="/home" icon={<IconHome />}>
-                    Home
+                  <NavItem to="/home" onClick={toggleMenu}>
+                    <IconHome /> Home
                   </NavItem>
                 )}
-                <NavItem to="/about" icon={<IconAbout />}>
-                  About
+                <NavItem to="/about" onClick={toggleMenu}>
+                  <IconAbout /> About
                 </NavItem>
-                <NavItem to="/news" icon={<IconNews />}>
-                  News
+                <NavItem to="/news" onClick={toggleMenu}>
+                  <IconNews /> News
                 </NavItem>
-                <NavItem to="/rateus" icon={<IconRateUs />}>
-                  RateUs
+                <NavItem to="/rateus" onClick={toggleMenu}>
+                  <IconRateUs /> RateUs
                 </NavItem>
-                {/* Conditionally render "My Canteen" button */}
+                <NavItem to="/contributors" onClick={toggleMenu}>
+                  <>
+                 <img src="https://cdn-icons-png.freepik.com/256/12210/12210006.png?ga=GA1.2.1168591914.1718009553&semt=ais_hybrid" className="w-5 h-5  mt-5"/><sapn className="mt-5">Contributors</sapn></>
+                </NavItem>
               </div>
             </div>
 
-            <div className="hidden md:flex items-center gap-5">
+            <div className="hidden md:flex items-center gap-6">
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded focus:outline-none text-4xl border-none outline-none">
+                className="p-2 rounded focus:outline-none text-4xl border-none outline-none"
+              >
                 {theme === "dark" ? "🌞" : "🌙"}
               </button>
-              <div>
-                <Link to="/">
-                  <button
-                    onClick={logout}
-                    className={`py-1 px-2  w-full h-auto text-l relative z-0 rounded-lg transition-all duration-200 hover:scale-110 ${
-                      theme === "dark"
-                        ? "bg-white text-black"
-                        : "bg-green-400 hover:bg-green-600 hover:shadow-green text-white"
-                    }`}>
-                    Log out
-                  </button>
-                </Link>
-              </div>
+              <Link to="/">
+                <button
+                  onClick={logout}
+                  className={`py-1 px-2 w-full h-auto text-l relative z-0 rounded-lg transition-all duration-200 hover:scale-110 ${
+                    theme === "dark"
+                      ? "bg-white text-black"
+                      : "bg-green-400 hover:bg-green-600 hover:shadow-green text-white"
+                  }`}
+                >
+                  Log out
+                </button>
+              </Link>
             </div>
 
             <div className="-mr-2 flex md:hidden">
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded focus:outline-none text-2xl border-none outline-none">
+                className="p-2 rounded focus:outline-none text-2xl border-none outline-none"
+              >
                 {theme === "dark" ? "🌞" : "🌙"}
               </button>
               <button
                 onClick={toggleMenu}
                 className="inline-flex items-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
-                aria-expanded="false">
+                aria-expanded={isOpen}
+              >
                 {isOpen ? (
                   <IoClose className="text-white" />
                 ) : (
@@ -132,27 +131,40 @@ const Navbar = () => {
               initial={{ opacity: 0, y: -50 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -50 }}
-              className="md:hidden absolute left-0 w-full flex flex-col items-center justify-center">
+              className="md:hidden absolute left-0 w-full flex flex-col items-center justify-center"
+            >
               <div className="w-[100%] bg-[#152146] px-[20%] pt-2 pb-3 space-y-1 mt-1 dark:bg-teal-900">
-                <MobileNavItem to="/home">Home</MobileNavItem>
-                <MobileNavItem to="/about">About us</MobileNavItem>
-                <MobileNavItem to="/news">News</MobileNavItem>
-                <MobileNavItem to="/contact">Contact</MobileNavItem>
-                <MobileNavItem to="/rateus">RateUs</MobileNavItem>
-                {/* Conditionally render "My Canteen" button */}
+                <MobileNavItem to="/home" onClick={toggleMenu}>
+                  Home
+                </MobileNavItem>
+                <MobileNavItem to="/about" onClick={toggleMenu}>
+                  About us
+                </MobileNavItem>
+                <MobileNavItem to="/news" onClick={toggleMenu}>
+                  News
+                </MobileNavItem>
+                <MobileNavItem to="/contact" onClick={toggleMenu}>
+                  Contact
+                </MobileNavItem>
+                <MobileNavItem to="/rateus" onClick={toggleMenu}>
+                  RateUs
+                </MobileNavItem>
+                <MobileNavItem to="/contributors" onClick={toggleMenu}>
+                  Contributors
+                </MobileNavItem>
                 {canteenId && (
-                  <MobileNavItem to={`/section/${canteenId}`}>
+                  <MobileNavItem to={`/section/${canteenId}`} onClick={toggleMenu}>
                     My Canteen
                   </MobileNavItem>
                 )}
-                <MobileNavItem to="/">
+                <MobileNavItem to="/" onClick={() => { logout(); toggleMenu(); }}>
                   <button
-                    onClick={logout}
                     className={`rounded transition duration-300 ease-in-out transform hover:scale-105 ${
                       theme === "dark"
                         ? "bg-white text-black"
                         : "bg-green-500 hover:bg-green-700 text-white py-1 px-2"
-                    }`}>
+                    }`}
+                  >
                     Log out
                   </button>
                 </MobileNavItem>
@@ -165,22 +177,23 @@ const Navbar = () => {
   );
 };
 
-const NavItem = ({ icon, to, children }) => {
+const NavItem = ({ to, children, onClick }) => {
   return (
     <Link
       to={to}
-      className="flex items-center space-x-2 w-full h-auto relative z-0 rounded-lg transition-all duration-200 hover:scale-125 text-xl block hover:bg-opacity-50">
-      {icon && <span>{icon}</span>}
-      <span>{children}</span>
+      className="flex items-center space-x-2 w-full h-auto relative z-0 rounded-lg transition-all duration-200 hover:scale-125 text-xl hover:bg-opacity-50"
+      onClick={onClick}
+    >
+      {children}
     </Link>
   );
 };
 
-const MobileNavItem = ({ to, children }) => {
-  const classname =
+const MobileNavItem = ({ to, children, onClick }) => {
+  const className =
     "z-[2] text-gray-300 text-center hover:text-white block px-3 py-2 rounded-md text-xl font-medium";
   return (
-    <Link to={to} className={classname + " hover:bg-gray-700"}>
+    <Link to={to} className={className + " hover:bg-gray-700"} onClick={onClick}>
       {children}
     </Link>
   );
