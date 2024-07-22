@@ -92,7 +92,6 @@ const EditProfile = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log("this is form data", formData);
     e.preventDefault();
     try {
       const response = await fetch(`${process.env.REACT_APP_BASE_URL}/${_id}/update`, {
