@@ -24,7 +24,6 @@ const getAllCanteen = async (req, res, next) => {
 
 const getCanteenData = async(req, res) => {
   const canteenId = req.params.id;
-   console.log("Hiii ");
   try {
     const canteenData = await Canteen.findById(canteenId);
     console.log("this is canteen",canteenData);
