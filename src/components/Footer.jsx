@@ -24,13 +24,13 @@ export default function Footer() {
   </div>
 </footer>
     )
-          <li className="mr-4 hover:underline md:mr-6 hover:text-orange-600">
-            <Link to="/contributors">Our Contributors</Link>
-          </li>
-        </ul>
-        <span className="text-sm text-white sm:text-center">© 2024-2025 <Link to="/" className="hover:underline">Foodies™</Link>. All Rights Reserved.</span>
-      </div>
-    </footer>
-  );
+    //       <li className="mr-4 hover:underline md:mr-6 hover:text-orange-600">
+    //         <Link to="/contributors">Our Contributors</Link>
+    //       </li>
+    //     </ul>
+    //     <span className="text-sm text-white sm:text-center">© 2024-2025 <Link to="/" className="hover:underline">Foodies™</Link>. All Rights Reserved.</span>
+    //   </div>
+    // </footer>
+    // );
 }
 

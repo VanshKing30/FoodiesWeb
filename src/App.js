@@ -17,7 +17,7 @@ import { ThemeProvider } from "./themeContext";
 import ContactUs from "./pages/ContactUs";
 import EditProfile from "./pages/EditProfile";
 import OtpVerify from "./pages/OtpVerify";
-import Contributors from "./pages/Contributors";
+// import Contributors from "./pages/Contributors";
 
 import { Contributors } from "./pages/Contributors";
 import Navbar from "./components/Navbar";
