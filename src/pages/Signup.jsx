@@ -100,8 +100,8 @@ function Signup() {
   
 
   return (
-    <div className="h-screen md:flex">
-      <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 bg-no-repeat justify-around items-center hidden">
+    <div className="min-h-screen flex flex-col md:flex-row overflow-y-auto">
+      <div className="md:flex w-full md:w-1/2 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 bg-no-repeat justify-around items-center hidden">
         <div>
           <img src={logo} alt="logo" className="w-48 h-12 mb-2" />
           <p className="text-white mt-1 ml-3">Connecting You to Your College Canteens</p>
@@ -112,8 +112,8 @@ function Signup() {
         <div className="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
       </div>
 
-      <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
-        <form className="bg-white p-8 rounded shadow-lg w-80" onSubmit={submitHandler}>
+      <div className="flex md:w-1/2 justify-center items-center bg-white pt-16">
+        <form className="bg-white p-8 rounded shadow-lg w-full max-w-md pt-10" onSubmit={submitHandler}>
           <h1 className="text-gray-800 font-bold text-2xl mb-1">
             Hello There!
           </h1>
@@ -217,13 +217,13 @@ function Signup() {
           >
             {loading ? "Loading..." : "Sign Up"}
           </button>
-
+          <div className="flex justify-center">
           <Link to="/login">
             <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
               Already have an account? Login
             </span>
           </Link>
-
+          </div>
           <main className='tracker-box text-sm font-normal text-red-600'>
             <div className={lowerValidated ? 'validated text-green-600' : 'not-validated'}>
               <span className='list-icon'>

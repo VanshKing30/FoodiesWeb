@@ -24,7 +24,8 @@ const Foodlist = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `${process.env.REACT_APP_BASE_URL}/${_id}/${mealType}`,        {
+        `${process.env.REACT_APP_BASE_URL}/${_id}/${mealType}`,
+        {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -39,10 +40,8 @@ const Foodlist = () => {
       setLoading(false);
     }
   };
-  function handleClose(){
-    setEditModal(false)
-    console.log(editModal)
-  }
+
+
   const handleDelete = async (dishId, mealType) => {
     try {
       const token = localStorage.getItem("token");
@@ -76,7 +75,7 @@ const Foodlist = () => {
 
   const handleUpdateDish = async (updatedDish) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token"); // Retrieve token from local storage
       if (!token) {
         toast.error("Token is missing. Please log in.");
         return;
@@ -105,7 +104,11 @@ const Foodlist = () => {
 
       toast.success("Dish updated successfully!");
       setEditModal(false);
-      fetchData(currentDish.mealType, getMealSetter(currentDish.mealType));
+
+      // Re-fetch the data to update the list
+      fetchData("breakfast", setBreakfast);
+     fetchData("lunch", setLunch);
+     fetchData("dinner", setDinner);
     } catch (error) {
       console.error("Error updating dish: ", error);
       toast.error("Failed to update dish.");
@@ -121,6 +124,7 @@ const Foodlist = () => {
     });
   };
 
+
   const getMealSetter = (mealType) => {
     switch (mealType) {
       case "breakfast":
@@ -130,14 +134,14 @@ const Foodlist = () => {
       case "dinner":
         return setDinner;
       default:
-        return;
+        return () => {};
     }
   };
 
   useEffect(() => {
     fetchData("breakfast", setBreakfast);
     fetchData("lunch", setLunch);
-    fetchData("dinner", setLunch);
+    fetchData("dinner", setDinner);
   }, [_id]);
 
   const handleDishClick = async (dishId) => {
@@ -168,37 +172,29 @@ const Foodlist = () => {
         items = [];
     }
     if (items.length === 0) {
-      return (
-        <p className="text-xl text-red-700 text-center">
-          No{" "}
-          {selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)}{" "}
-          Available Now
-        </p>
-      );
+      return <p className="text-xl text-red-700 text-center">No {selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Available Now</p>;
     }
     return items.map((dish) => (
-      <FoodCard
-        key={dish._id}
-        dish={dish}
-        onClick={() => handleDishClick(dish.dishId)}
-        onEdit={() => handleEditClick(dish, selectedCategory)}
-        onDelete={() => handleDelete(dish._id, selectedCategory)}
+      <FoodCard 
+        key={dish._id} 
+        dish={dish} 
+        onClick={() => handleDishClick(dish.dishId)}   
+        onEdit={() => handleEditClick(dish, selectedCategory)} 
+        onDelete={() => handleDelete(dish._id, selectedCategory)}  
       />
     ));
   };
-
   return (
-    <div className={` text-purple-800 min-h-screen pt-5  ${theme=="dark"?"bg-[#131b33]":""}` }>
+    <div className="text-purple-800 min-h-screen pt-5 bg-transparent">
       <Navbar />
       <div className="container px-8 mx-auto p-4 mt-20 min-h-screen bg-transparent">
         <div className="flex justify-center space-x-4 mb-8">
           {["breakfast", "lunch", "dinner"].map((category) => (
             <button
               key={category}
-              className={`px-4 py-2 rounded-lg ${
-                selectedCategory === category ? "bg-green-300" : "bg-gray-300"
-              } focus:outline-none`}
-              onClick={() => setSelectedCategory(category)}>
+              className={`px-4 py-2 rounded-lg ${selectedCategory === category ? 'bg-green-300' : 'bg-gray-300'} focus:outline-none`}
+              onClick={() => setSelectedCategory(category)}
+            >
               {category.charAt(0).toUpperCase() + category.slice(1)}
             </button>
           ))}
@@ -206,169 +202,20 @@ const Foodlist = () => {
         {loading ? (
           <Loader />
         ) : (
-          <div className="flex flex-col gap-4 p-5 md:flex-row justify-center">
-            {breakfast.length > 0 && (
-              <div className="w-2/3 rounded-lg shadow-md border-2 border-red-300 mt-5">
-                <div className="text-center bg-red-300 text-black py-3 font-xl relative">
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/128/5025/5025429.png"
-                    alt="Breakfast Icon"
-                    className="absolute top-0 left-4 h-16 w-16 -mt-8 -ml-8"
-                  />
-                  Breakfast
-                </div>
-                <div className="p-4">
-                  <ul>
-                    {breakfast.map((dish) => (
-                      <li
-                        key={dish._id}
-                        onClick={() => handleDishClick(dish._id)}
-                        className={`cursor-pointer relative text-start hover:bg-gradient-to-r from-green-300 to-green-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${
-                          theme === "dark" ? "text-white" : "text-red-600"
-                        } hover:text-black mt-2`}>
-                        • {dish.dish}
-                        <span
-                          className="absolute right-12 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleEditClick(dish, "breakfast");
-                          }}>
-                          <img
-                            src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png"
-                            alt="Edit Icon"
-                            className="h-6 w-6"
-                          />
-                        </span>
-                        <span
-                          className="absolute right-5 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDelete(dish._id, "breakfast");
-                          }}>
-                          <img
-                            src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png"
-                            alt="Delete Icon"
-                            className="h-6 w-6"
-                          />
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            )}
-            {lunch.length > 0 && (
-              <div className="w-2/3 rounded-lg shadow-md border-green-300 border-2 mt-5">
-                <div className="text-center bg-green-300 text-black py-3 font-xl relative">
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/128/2082/2082045.png"
-                    alt="Lunch Icon"
-                    className="absolute top-0 left-4 h-16 w-16 -mt-8 -ml-8"
-                  />
-                  Lunch
-                </div>
-                <div className="p-4">
-                  <ul>
-                    {lunch.map((dish) => (
-                      <li
-                        key={dish._id}
-                        onClick={() => handleDishClick(dish._id)}
-                        className={`cursor-pointer relative text-start hover:bg-gradient-to-r from-green-300 to-green-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${
-                          theme === "dark" ? "text-white" : "text-green-600"
-                        } hover:text-black mt-2`}>
-                        • {dish.dish}
-                        <span
-                          className="absolute right-12 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleEditClick(dish, "lunch");
-                          }}>
-                          <img
-                            src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png"
-                            alt="Edit Icon"
-                            className="h-6 w-6"
-                          />
-                        </span>
-                        <span
-                          className="absolute right-5 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDelete(dish._id, "lunch");
-                          }}>
-                          <img
-                            src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png"
-                            alt="Delete Icon"
-                            className="h-6 w-6"
-                          />
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            )}
-            {dinner.length > 0 && (
-              <div className="w-2/3 rounded-lg shadow-md border-blue-300 border-2 mt-5">
-                <div className="text-center bg-blue-300 text-black py-3 font-xl relative">
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/128/3321/3321601.png"
-                    alt="Dinner Icon"
-                    className="absolute top-0 left-4 h-16 w-16 -mt-8 -ml-8"
-                  />
-                  Dinner
-                </div>
-                <div className="p-4">
-                  <ul>
-                    {dinner.map((dish) => (
-                      <li
-                        key={dish._id}
-                        onClick={() => handleDishClick(dish._id)}
-                        className={`cursor-pointer relative text-start hover:bg-gradient-to-r from-green-300 to-green-500 transition-transform duration-300 ease-in-out transform hover:-translate-y-1 px-5 py-2 ${
-                          theme === "dark" ? "text-white" : "text-blue-600"
-                        } hover:text-black mt-2`}>
-                        • {dish.dish}
-                        <span
-                          className="absolute right-12 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleEditClick(dish, "dinner");
-                          }}>
-                          <img
-                            src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png"
-                            alt="Edit Icon"
-                            className="h-6 w-6"
-                          />
-                        </span>
-                        <span
-                          className="absolute right-5 top-2 opacity-0 hover:opacity-100 transition-opacity duration-300"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDelete(dish._id, "dinner");
-                          }}>
-                          <img
-                            src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png"
-                            alt="Delete Icon"
-                            className="h-6 w-6"
-                          />
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {renderMenuItems()}
           </div>
         )}
       </div>
-      <Footer />
-
       {editModal && (
         <Modalupdate
-          dish={currentDish}
-          onCancel={handleClose}
-          onUpdate={handleUpdateDish}
+        dish={currentDish.dish}
+        description={currentDish.description}
+        onUpdate={(updatedDish) => handleUpdateDish(updatedDish)}
+        onCancel={() => setEditModal(false)}
         />
       )}
+     
     </div>
   );
 };
