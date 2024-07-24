@@ -247,8 +247,9 @@ const handlestudentFeedbackSubmit = async () => {
   console.log("this is canteen", canteenData.name);
   return (
     <div className="text-purple-800 min-h-screen pt-5 bg-transparent dark:bg-slate-200">
-       <Navbar /> 
-      <div className="container px-8 mx-auto p-4 mt-20 min-h-screen bg-transparent dark:bg-slate-200">
+
+      <Navbar />
+      <div className="container px-8 mx-auto p-4 mt-20 h-auto bg-transparent dark:bg-slate-200">
         <div className="flex justify-center space-x-4 mb-8">
           {['breakfast', 'lunch', 'dinner'].map((category) => (
             <button
@@ -270,7 +271,7 @@ const handlestudentFeedbackSubmit = async () => {
           />
         </div>
         {searchTerm ? (
-          <div className="grid grid-cols-1 relative md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
+          <div className=" grid grid-cols-1 relative md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
             {loading ? <Loader /> : renderSearchResults()}
           </div>
         ) : (
@@ -279,14 +280,14 @@ const handlestudentFeedbackSubmit = async () => {
             {loading ? (
               <Loader />
             ) : (
-              <div className="grid grid-cols-1 relative md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
+              <div className=" grid grid-cols-1 relative md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
                 {renderMenuItems()}
               </div>
             )}
           </>
         )}
       </div>
-      <div className="mt-8 text-purple-800 px-8 mb-4">
+      <div className=" mt-20 text-purple-800 px-8 mb-4">
           <h2 className="text-2xl font-bold mb-4 text-white text-center dark:text-black">Meal Feedback</h2>
           <textarea
             className="w-full h-32 p-4 border border-purple-300 rounded mb-4"
