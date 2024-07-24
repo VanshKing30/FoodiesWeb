@@ -22,6 +22,32 @@ const getAllCanteen = async (req, res, next) => {
   }
 };
 
+const getCanteenData = async(req, res) => {
+  const canteenId = req.params.id;
+  try {
+    const canteenData = await Canteen.findById(canteenId);
+    console.log("this is canteen",canteenData);
+     if(!canteenData){
+      res.status(500).json({
+        success: false,
+        message: "Error while fetching canteen data",
+      });
+    }
+
+    return  res.status(200).json({
+      success: true,
+      data: canteenData,
+      message: "Canteen Data Successfully!",
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error while fetching canteen data",
+    });
+  }
+}
+
 const getBreakfast = async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -527,8 +553,8 @@ module.exports = {
   updateBreakfastDish,
   updateLunchDish,
   updateDinnerDish,
-
   feedback,
   canteenFeedbackRender,
   addSocialMediaLinks,
+  getCanteenData
 };
