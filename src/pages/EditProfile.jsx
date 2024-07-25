@@ -28,6 +28,7 @@ const EditProfile = () => {
     email: "",
     collegeName: "",
     canteenImage: "", // Placeholder for the image URL or base64 string
+    contactNumber : undefined
   });
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
@@ -201,6 +202,11 @@ const EditProfile = () => {
               />
             </div>
           </div>
+
+         
+          
+
+
           <div className="mb-6">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"

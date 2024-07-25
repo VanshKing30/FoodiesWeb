@@ -55,10 +55,14 @@ function Login() {
   async function submitHandler(event) {
     event.preventDefault();
    
-    const apiUrl = formData.accountType === "User" 
+    // const apiUrl = formData.accountType === "User" 
+    // ? `${process.env.REACT_APP_BASE_URL}/studentLogin` 
+    // : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
+
+    
+  const apiUrl = formData.accountType === "User" 
     ? `${process.env.REACT_APP_BASE_URL}/studentLogin` 
     : `${process.env.REACT_APP_BASE_URL}/canteenLogin`;
-
 
 
 
@@ -75,6 +79,7 @@ function Login() {
       }
   
       if (formData.accountType === "User") {
+        localStorage.setItem("userid", response?.data?.user?._id)
         localStorage.setItem("usertoken", response.data.token)
          window.location.href='/home'
        
@@ -90,7 +95,7 @@ function Login() {
      
     } catch (error) {
       console.error("This is error",error);
-      toast.error("Failed to login");
+      toast.error(error?.response?.data?.message || "Can't Login for Now Please try again Later");
     }
   }
   return (

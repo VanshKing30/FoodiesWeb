@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-const Modalupdate = ({ dish, onUpdate, onCancel }) => {
+const Modalupdate = ({ dish,description, onUpdate, onCancel }) => {
   const [updatedDish, setUpdatedDish] = useState({
-    dish: dish.dish,
-    description: dish.description || "",
+    dish: dish,
+    description: description || "",
     dishImage: null, // For the new image file
   });
 

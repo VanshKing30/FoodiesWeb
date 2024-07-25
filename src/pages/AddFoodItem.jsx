@@ -105,7 +105,9 @@ function AddFoodItem() {
   };
 
   return (
-    <div className={`flex justify-center p-10 w-screen items-start h-fit ${theme === 'dark' ? 'bg-[#131b33]' : 'bg-white'}`}>
+
+    <div className={`flex justify-center items-center h-[120vh] ${theme === 'dark' ? 'bg-[#131b33]' : 'bg-white'}`}>
+
       <form
         onSubmit={handleSubmit}
         className={`p-6  shadow-lg w-full sm:w-2/5 rounded-3xl border-2 ${theme === 'dark' ? 'bg-gray-300' : 'bg-white'}`}

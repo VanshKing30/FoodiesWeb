@@ -7,6 +7,9 @@ import Loader from "../components/Loader/Loader";
 import Footer from "../components/Footer";
 import FoodCard from "../components/FoodCard";
 import { ThemeContext } from '../themeContext';
+import { Link } from "react-router-dom";
+import { FaInstagram, FaFacebook, FaLinkedinIn, FaYoutube } from "react-icons/fa";
+
 
 
 const StarRating = ({ rating, onRatingChange }) => {
@@ -37,10 +40,40 @@ function MenuPage() {
   const [dinner, setDinner] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('breakfast');
   const [feedback, setFeedback] = useState("");
+  const [studentfeedback, setstudentFeedback] = useState("");
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [canteenData, setCanteenData] = useState({});
   const { theme, toggleTheme } = useContext(ThemeContext);
+  
+  //feedbacks
+const handlestudentFeedbackSubmit = async () => {
+  if (studentfeedback.trim() === '') {
+    toast.error("Please provide your feedback before submitting.");
+    return;
+  }
+
+  const userId = localStorage.getItem('userid'); // Assuming the user ID is stored in local storage
+  const canteenId = _id; // Canteen ID from URL params
+
+  try {
+    await axios.post(`${process.env.REACT_APP_BASE_URL}/submitFeedback`, {
+      message: studentfeedback,
+      canteenId,
+      userId
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    setstudentFeedback('');
+    toast.success('Feedback Submitted!');
+  } catch (error) {
+    console.error('Error submitting feedback:', error);
+    toast.error('Failed to submit feedback. Please try again.');
+  }
+};
 
   const getBreakfast = async () => {
     try {
@@ -55,9 +88,26 @@ function MenuPage() {
         }
       );
       const res = await getBreakfast.json();
-      setBreakfast(res.data);
+      setBreakfast(res.data)
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchCanteenData = async () => {
+    try {
+      const getCanteen = await fetch(`${process.env.REACT_APP_BASE_URL}/canteen/${_id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const res = await getCanteen.json();
+      setCanteenData(res.data);
+    } catch (error) {
+      console.error("Error fetching canteen data:", error);
     } finally {
       setLoading(false);
     }
@@ -106,6 +156,7 @@ function MenuPage() {
   };
 
   useEffect(() => {
+    fetchCanteenData();
     getBreakfast();
     getLunch();
     getDinner();
@@ -193,11 +244,12 @@ function MenuPage() {
       <FoodCard key={dish._id} dish={dish} onClick={() => handleDishClick(dish.dishId)} />
     ));
   };
-
+  console.log("this is canteen", canteenData.name);
   return (
     <div className="text-purple-800 min-h-screen pt-5 bg-transparent dark:bg-slate-200">
+
       <Navbar />
-      <div className="container px-8 mx-auto p-4 mt-20 min-h-screen bg-transparent dark:bg-slate-200">
+      <div className="container px-8 mx-auto p-4 mt-20 h-auto bg-transparent dark:bg-slate-200">
         <div className="flex justify-center space-x-4 mb-8">
           {['breakfast', 'lunch', 'dinner'].map((category) => (
             <button
@@ -219,7 +271,7 @@ function MenuPage() {
           />
         </div>
         {searchTerm ? (
-          <div className="grid grid-cols-1 relative md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
+          <div className=" grid grid-cols-1 relative md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
             {loading ? <Loader /> : renderSearchResults()}
           </div>
         ) : (
@@ -228,28 +280,80 @@ function MenuPage() {
             {loading ? (
               <Loader />
             ) : (
-              <div className="grid grid-cols-1 relative md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
+              <div className=" grid grid-cols-1 relative md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
                 {renderMenuItems()}
               </div>
             )}
           </>
         )}
       </div>
-      <div className="mt-8 text-purple-800 px-8 mb-4">
+      <div className=" mt-20 text-purple-800 px-8 mb-4">
           <h2 className="text-2xl font-bold mb-4 text-white text-center dark:text-black">Meal Feedback</h2>
           <textarea
             className="w-full h-32 p-4 border border-purple-300 rounded mb-4"
             placeholder="Enter your feedback here..."
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
+            value={studentfeedback}
+            onChange={(e) => setstudentFeedback(e.target.value)}
           ></textarea>
           <button
-            onClick={handleFeedbackSubmit}
+            onClick={handlestudentFeedbackSubmit}
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
           >
             Submit Feedback
           </button>
         </div>
+      
+      {/* Contact Links */}
+
+      <div className="bg-green-100 p-6 rounded-lg shadow-lg text-black font-semibold">
+      <h4 className="text-2xl mb-4">Contact With Canteen</h4>
+
+      <div className="mb-4">
+        Email: <a href={`mailto:${canteenData.email}`} className="text-blue-400">{canteenData.email}</a>
+      </div>
+
+      {canteenData && canteenData.canteenSocialMediaLinks && (
+        <div className="flex flex-wrap gap-5 my-2">
+          {canteenData.canteenSocialMediaLinks.Facebook && (
+            <Link
+              to={canteenData.canteenSocialMediaLinks.Facebook}
+              className="text-blue-500 text-4xl"
+              target="_blank"
+            >
+              <FaFacebook />
+            </Link>
+          )}
+          {canteenData.canteenSocialMediaLinks.LinkedIn && (
+            <Link
+              to={canteenData.canteenSocialMediaLinks.LinkedIn}
+              className="text-blue-500 text-4xl"
+              target="_blank"
+            >
+              <FaLinkedinIn />
+            </Link>
+          )}
+          {canteenData.canteenSocialMediaLinks.Youtube && (
+            <Link
+              to={canteenData.canteenSocialMediaLinks.Youtube}
+              className="text-red-500 text-4xl"
+              target="_blank"
+            >
+              <FaYoutube />
+            </Link>
+          )}
+          {canteenData.canteenSocialMediaLinks.Instagram && (
+            <Link
+              to={canteenData.canteenSocialMediaLinks.Instagram}
+              className="text-pink-500 text-4xl"
+              target="_blank"
+            >
+              <FaInstagram />
+            </Link>
+          )}
+        </div>
+      )}
+    </div>
+
       <Footer />
     </div>
   );
