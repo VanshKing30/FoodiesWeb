@@ -1,33 +1,42 @@
+/* Import Tailwind base, components, and utilities */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Import Google Font 'Poppins' */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-
+/* General body styling */
 body {
   margin: 0;
-  font-family: 'Poppins' , sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Poppins', sans-serif; /* Use Poppins font */
+  -webkit-font-smoothing: antialiased; /* Smooth fonts for Webkit browsers */
+  -moz-osx-font-smoothing: grayscale; /* Smooth fonts for macOS browsers */
 }
 
+/* Styling for code elements */
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace; /* Use monospace font for code */
 }
-.text-3xl{
+
+/* Custom margin for text with class 'text-3xl' */
+.text-3xl {
   margin-top: 80px;
   margin-bottom: 40px;
 }
-::-webkit-scrollbar{
+
+/* Hide scrollbar in Webkit browsers */
+::-webkit-scrollbar {
   display: none;
 }
 
-.Nav__item{
-   font-size: 12px !important;
-   font-weight: bolder !important;
+/* Styling for navigation items */
+.Nav__item {
+  font-size: 12px !important;
+  font-weight: bolder !important;
 }
 
+/* Hide scrollbar in Firefox and IE/Edge */
 * {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE, Edge */
