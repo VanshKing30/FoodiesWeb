@@ -26,6 +26,10 @@ const Contact = () => {
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
+    if (!form.name || !form.email || !form.message) {
+      alert("Please fill in all fields before submitting.");
+      return; // Stop further processing if form is incomplete
+    }
     setLoading(true);
 
     try {
@@ -62,6 +66,10 @@ const Contact = () => {
   };
   const handleSaveToDB = async (e) => {
     e.preventDefault();
+    if (!form.name || !form.email || !form.message) {
+      alert("Please fill in all fields before submitting.");
+      return; // Stop further processing if form is incomplete
+    }
     setLoading(true);
 
     try {
