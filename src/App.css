@@ -1,6 +1,10 @@
 .App {
   text-align: center;
 }
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
 
 .App-logo {
   height: 40vmin;
