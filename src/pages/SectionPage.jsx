@@ -1,30 +1,25 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Modal from "../components/Modal";
 import Navbar from "../components/Navbar";
 import Loader from "../components/Loader/Loader";
 import Footer from "../components/Footer";
 import AddFoodItem from "./AddFoodItem";
-import EditProfile from "./EditProfile";
 import Foodlist from "./Foodlist";
+import FeedbackList from "./FeedbackList"; // Import the new component
 import { ThemeContext } from "../themeContext";
 import { FaRegEdit } from "react-icons/fa";
 import { CiBoxList } from "react-icons/ci";
 import { IoMdAdd } from "react-icons/io";
+import { FaComments } from "react-icons/fa"; // Import an icon for feedback
+
 const SectionPage = () => {
   const { _id } = useParams();
   const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedSection, setSelectedSection] = useState("");
-  const [formData, setFormData] = useState(null);
-  const [selectedBreakfastRecipes, setSelectedBreakfastRecipes] = useState([]);
-  const [selectedLunchRecipes, setSelectedLunchRecipes] = useState([]);
-  const [selectedDinnerRecipes, setSelectedDinnerRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [canteenData, setCanteenData] = useState();
   const [view, setView] = useState("add");
-   
+
   const getCanteenData = async () => {
     try {
       setLoading(true);
@@ -50,23 +45,6 @@ const SectionPage = () => {
     getCanteenData();
   }, [_id]);
 
-  const handleSectionClick = (sectionName) => {
-    setSelectedSection(sectionName);
-    setShowModal(true);
-  };
-
-  const handleFormSubmit = (data) => {
-    if (selectedSection === "Breakfast") {
-      setSelectedBreakfastRecipes([...selectedBreakfastRecipes, data]);
-    } else if (selectedSection === "Lunch") {
-      setSelectedLunchRecipes([...selectedLunchRecipes, data]);
-    } else if (selectedSection === "Dinner") {
-      setSelectedDinnerRecipes([...selectedDinnerRecipes, data]);
-    }
-    setFormData(data);
-    setShowModal(false);
-  };
-
   return (
     <div
       className={`text-center ${
@@ -76,7 +54,6 @@ const SectionPage = () => {
       <Navbar />
 
       <div className="relative bg-white">
-
         {loading ? (
           <Loader />
         ) : (
@@ -114,9 +91,21 @@ const SectionPage = () => {
               >
                 Product List <CiBoxList />
               </button>
+              <button
+                className={`mx-4 mt-2 py-3 px-4 flex items-center w-fit rounded-full border-green-400 border-2 ${
+                  view === "feedback"
+                    ? " bg-transparent text-green-500"
+                    : "bg-transparent text-green-500"
+                } flex gap-2 `}
+                onClick={() => setView("feedback")}
+              >
+                Feedbacks <FaComments />
+              </button>
             </div>
-            <div className={ ` py-[10%] ${theme === 'dark' ? 'bg-[#131b33]' : 'bg-white'}` }>
-            {view === "add" ? <AddFoodItem /> : <Foodlist />}
+            <div className={`py-[10%] ${theme === "dark" ? "bg-[#131b33]" : "bg-white"}`}>
+              {view === "add" && <AddFoodItem />}
+              {view === "list" && <Foodlist />}
+              {view === "feedback" && <FeedbackList />} {/* Render FeedbackList */}
             </div>
           </>
         )}
