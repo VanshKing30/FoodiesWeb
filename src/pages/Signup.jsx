@@ -18,7 +18,7 @@ function Signup() {
   });
 
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
   const [lowerValidated, setLowerValidated] = useState(false);
   const [upperValidated, setUpperValidated] = useState(false);
   const [numberValidated, setNumberValidated] = useState(false);
@@ -177,7 +177,7 @@ function Signup() {
             <input
               required
               className="w-full py-2 px-3 border border-gray-300 rounded-2xl"
-              type={showPassword ? "text" : "password"}
+              type={!showPassword ? "text" : "password"}
               placeholder="Password"
               name="password"
               value={formData.password}
