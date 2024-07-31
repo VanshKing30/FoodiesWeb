@@ -25,6 +25,7 @@ function Signup() {
   const [specialValidated, setSpecialValidated] = useState(false);
   const [lengthValidated, setLengthValidated] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [nameError, setNameError] = useState('');
 
   const navigate = useNavigate();
 
@@ -47,6 +48,34 @@ function Signup() {
       [event.target.name]: value,
     }));
   }
+
+  // Name validation logic
+  const validateName = (name) => {
+    // Regex to allow only alphabetic characters and spaces
+    const isValid = /^[a-zA-Z ]+$/.test(name) && name.trim().length >= 2;
+    return isValid;
+  };
+    // Handle form input changes
+  function changeHandler(event) {
+    const { name, value } = event.target;
+
+    // Update form data
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+
+    // Validate name if the field being changed is the name field
+    if (name === 'name') {
+      if (!validateName(value)) {
+        setNameError('Name must be at least 2 characters long and contain only alphabets and spaces.');
+      } else {
+        setNameError('');
+      }
+    }
+  }
+
+
 
   function changeHandler(event) {
     setFormData((prevData) => ({
@@ -131,6 +160,7 @@ function Signup() {
               value={formData.name}
               onChange={changeHandler}
             />
+            {nameError && <p className="text-red-500 mt-1 text-sm">{nameError}</p>}
           </div>
 
           <div className="mb-4">
