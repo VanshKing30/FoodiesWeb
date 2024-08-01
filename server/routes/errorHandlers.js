@@ -18,7 +18,7 @@ function generalErrorHandler(err, req, res, next) {
       message: 'Something went wrong!'
     });
   }
-}
+}    
 
 // 404 Not Found handler
 function notFoundHandler(req, res, next) {
