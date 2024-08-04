@@ -624,3 +624,71 @@ exports.resetPassword = async (req, res) => {
     res.status(500).json("Some error occurred!");
   }
 };
+
+exports.Contact= async (req, res) => {
+  const { name, email, message } = req.body;
+
+  // Set up Nodemailer transport
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: "Acknowledgment: We've received your message",
+    html: `
+    <div style="background-color: #ffffff; padding: 20px; font-family: Arial, sans-serif;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+        <tr>
+          <td align="center" bgcolor="#172554" style="padding: 20px 0; color: #ffffff;">
+            <img src="https://raw.githubusercontent.com/VanshKing30/FoodiesWeb/main/public/logo.png" alt="Foodies Logo" style="display: block; margin-bottom: 10px;" />
+            <h1 style="font-size: 24px; margin: 0;">Foodies</h1>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#ffffff" style="padding: 20px; color: #172554;">
+            <h2 style="font-size: 20px;">Hello ${name},</h2>
+            <p style="font-size: 16px; line-height: 1.5;">
+              Thank you for contacting us. We have received your message:
+            </p>
+            <blockquote style="font-size: 16px; line-height: 1.5; color: #555555;">
+              "${message}"
+            </blockquote>
+            <p style="font-size: 16px; line-height: 1.5;">
+              We will get back to you shortly.
+            </p>
+            <p style="font-size: 16px; line-height: 1.5;">
+              Best regards,<br />
+              <strong>Foodies Web Team</strong>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#f0f0f0" style="padding: 20px; text-align: center; color: #555555;">
+            <p style="font-size: 14px;">&copy; 2024 Foodies. All rights reserved.</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+  `,
+  };
+
+  try {
+    // Send acknowledgment email to the user
+    await transporter.sendMail(mailOptions);
+
+    // Save contact details in the database
+    const contact = new Contact({ name, email, message });
+    await contact.save();
+
+    res.status(200).json({ message: "Message sent and saved successfully." });
+  } catch (error) {
+    console.error("Error sending email or saving contact:", error);
+    res.status(500).json({ message: "Failed to send email or save message." });
+  }
+};
