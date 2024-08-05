@@ -13,6 +13,7 @@ router.post("/VerifyUser", authController.forgotPassword);
 router.get("/resetPassword/:id/:token", authController.verifyLink);
 router.post("/newPassword/:id/:token", authController.resetPassword);
 router.get("/studentLogout", studentAuth, authController.studentLogout);
+router.post("/contact", authController.Contact);
 router.get("/canteenLogout", auth, authController.canteenLogout);
 router.get("/canteen/:id", getCanteenData);
 router.post('/submitFeedback', feedbackController.submitFeedback);
