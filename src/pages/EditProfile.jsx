@@ -28,7 +28,7 @@ const EditProfile = () => {
     email: "",
     collegeName: "",
     canteenImage: "", // Placeholder for the image URL or base64 string
-    contactNumber : undefined
+    contactNumber: undefined,
   });
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
@@ -41,12 +41,15 @@ const EditProfile = () => {
 
   const fetchCanteenData = async () => {
     try {
-      const getCanteen = await fetch(`${process.env.REACT_APP_BASE_URL}/getcanteen`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const getCanteen = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/getcanteen`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const res = await getCanteen.json();
       const canteenData = res.data.find((canteen) => canteen._id === _id);
       setCanteen(canteenData);
@@ -94,14 +97,17 @@ const EditProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/${_id}/update`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/${_id}/update`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formData),
+        }
+      );
       const result = await response.json();
       console.log(result);
       window.location.reload();
