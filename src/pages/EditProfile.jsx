@@ -10,13 +10,13 @@ import {
   FaInstagram,
   FaFacebook,
 } from "react-icons/fa";
-import { CiFacebook } from "react-icons/ci";
 import AddSocialMediaModal from "../components/AddSocialMediaModal";
+
 const EditProfile = () => {
   const { _id } = useParams(); // Assuming you have canteen ID in the URL
   const navigate = useNavigate(); // useNavigate hook for navigation
-  const [edit, setEditable] = useState(false);
   const [editName, setEditName] = useState(false);
+  const [editable, setEditable] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
   const [editCollegeName, setEditCollegeName] = useState(false);
   const [editImage, setEditImage] = useState(false);
@@ -28,7 +28,7 @@ const EditProfile = () => {
     email: "",
     collegeName: "",
     canteenImage: "", // Placeholder for the image URL or base64 string
-    contactNumber : undefined
+    contactNumber: undefined,
   });
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
@@ -41,12 +41,15 @@ const EditProfile = () => {
 
   const fetchCanteenData = async () => {
     try {
-      const getCanteen = await fetch(`${process.env.REACT_APP_BASE_URL}/getcanteen`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const getCanteen = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/getcanteen`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const res = await getCanteen.json();
       const canteenData = res.data.find((canteen) => canteen._id === _id);
       setCanteen(canteenData);
@@ -67,7 +70,7 @@ const EditProfile = () => {
 
   useEffect(() => {
     fetchCanteenData();
-  }, [_id, handleSocialMediaLinks]);
+  }, [_id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -94,14 +97,17 @@ const EditProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/${_id}/update`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/${_id}/update`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formData),
+        }
+      );
       const result = await response.json();
       console.log(result);
       window.location.reload();
@@ -203,10 +209,6 @@ const EditProfile = () => {
             </div>
           </div>
 
-         
-          
-
-
           <div className="mb-6">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -219,7 +221,7 @@ const EditProfile = () => {
                 type="file"
                 accept="image/*"
                 disabled={!editImage}
-                onChange={handleChange}
+                onChange={handleImageChange} // Corrected here
                 className=" appearance-none border-none rounded w-full py-2 px-3 text-gray-700 leading-tight outline-none"
               />
               <MdEdit
@@ -313,16 +315,6 @@ const EditProfile = () => {
             </div>
           )}
           <div className="flex items-center justify-between">
-            {/* {!edit && (
-            <button
-              type="button"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              onClick={() => setEditable(true)}
-            >
-              Edit
-            </button>
-          )} */}
-
             <>
               <button
                 disabled={
