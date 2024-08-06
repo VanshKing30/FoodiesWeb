@@ -22,6 +22,7 @@
     "react-icons": "^4.12.0",
     "react-icons-kit": "^2.0.0",
     "react-modal": "^3.16.1",
+    "react-rating": "^2.0.5",
     "react-router-dom": "^6.16.0",
     "react-scripts": "5.0.1",
     "react-spinners": "^0.13.8",
