@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import  "./newss.css";
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import image1 from "../../assets/news1.jpg"
 import image2 from "../../assets/news2.jpg"
 import image3 from "../../assets/news3.jpeg"
-
+import { color, motion, useScroll } from "framer-motion";
 const blogPosts = [
   {
     id: 1,
@@ -94,27 +94,75 @@ const blogPosts = [
 ];
 
 const Newss = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredPosts, setFilteredPosts] = useState([]);
+useEffect(()=>{
+  setFilteredPosts([...blogPosts])
+},[blogPosts])
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSearch = () => {
+    const lowercasedQuery = searchQuery.toLowerCase();
+    const newFilteredPosts = blogPosts.filter(post => 
+      post.title.toLowerCase().includes(lowercasedQuery) ||
+      post.author.toLowerCase().includes(lowercasedQuery)
+    );
+    setFilteredPosts(newFilteredPosts);
+  };
+
+  const eventVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0 },
+  };
   return (
     <>
     <Navbar/>
     <div className="BlogpageContainer_main">
       <header className="header">
-        <h1>Trending Food and Health News</h1>
+        {/* <h1>Trending Food and Health News</h1> */}
+        <div className="p-4 flex flex-col justify-center items-center gap-y-4 w-[100%]">
+        <div className="text-5xl font-extrabold text-center">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-black to-yellow-400">
+          Trending Food and Health News
+          </span>
+        </div>
+        <div className="sm:flex mt-[20px]">
+        <input
+          type="text"
+          placeholder="Your Search..."
+          className="border-[1px] border-black p-2 outline-none"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          required
+        />          <button onClick={handleSearch} className=" border-none bg-yellow-400 text-white p-2" >Search</button>
+        </div>
+        </div>
       </header>
     <div className="BlogpageContainer">
       
       <div className="container">
-        {blogPosts.map(post => (
-          <div key={post.id} className="card">
+      {filteredPosts.map(post => (
+          <motion.div
+            key={post.id}
+            initial="hidden"
+            whileInView="visible"
+            whileHover={{ scale: 1.06 }}
+            viewport={{ once: true }}
+            variants={eventVariants}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="card"
+          >
             <div className="imagecontainer">
-            <img src={post.image} alt={post.title} className="image" />
+              <img src={post.image} alt={post.title} className="image" />
             </div>
             <div className="content1">
               <h2>{post.title}</h2>
               <p>~{post.author}</p>
               <p>{post.date}</p>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
