@@ -9,6 +9,7 @@ import FoodCard from "../components/FoodCard";
 import { ThemeContext } from '../themeContext';
 import { Link } from "react-router-dom";
 import { FaInstagram, FaFacebook, FaLinkedinIn, FaYoutube } from "react-icons/fa";
+import BasicRating from "../components/Ratings";
 
 
 
@@ -287,14 +288,17 @@ const handlestudentFeedbackSubmit = async () => {
           </>
         )}
       </div>
+
       <div className=" mt-20 text-purple-800 px-8 mb-4">
           <h2 className="text-2xl font-bold mb-4 text-white text-center dark:text-black">Meal Feedback</h2>
+          <BasicRating/>
           <textarea
-            className="w-full h-32 p-4 border border-purple-300 rounded mb-4"
+            className="w-full h-32 p-4 border border-purple-300 rounded mb-4 mt-5 "
             placeholder="Enter your feedback here..."
             value={studentfeedback}
             onChange={(e) => setstudentFeedback(e.target.value)}
           ></textarea>
+          
           <button
             onClick={handlestudentFeedbackSubmit}
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
