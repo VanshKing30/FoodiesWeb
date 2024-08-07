@@ -1,13 +1,17 @@
-const OTP = require("../models/otp-model.js");
+const OTP = require("../models/otp-model");
 const User = require("../models/studentLoginInfo");
 const otpGenerator = require("otp-generator");
-const { sendMail } = require("../utils/Mailer.js");
-const {
-  forgotPasswordToken,
-  verifyToken,
-  findUserByEmail,
-  findUserById,
-} = require("../utils/PasswordTokenAndUser.js");
+const { sendMail } = require("../utils/Mailer");
+const { findUserByEmail, forgotPasswordToken } = require("../utils/PasswordTokenAndUser");
+// Function to generate OTP
+const generateOTP = () => {
+  return otpGenerator.generate(6, {
+    upperCaseAlphabets: false,
+    lowerCaseAlphabets: false,
+    specialChars: false,
+  });
+};
+// Function to send OTP
 const sendOTP = async (req, res) => {
   try {
     const { email } = req.body;
@@ -24,18 +28,10 @@ const sendOTP = async (req, res) => {
         message: "No user with the given email is registered!",
       });
     }
-    let otp = otpGenerator.generate(6, {
-      upperCaseAlphabets: false,
-      lowerCaseAlphabets: false,
-      specialChars: false,
-    });
+    let otp = generateOTP();
     let result = await OTP.findOne({ otp });
     while (result) {
-      otp = otpGenerator.generate(6, {
-        upperCaseAlphabets: false,
-        lowerCaseAlphabets: false,
-        specialChars: false,
-      });
+      otp = generateOTP();
       result = await OTP.findOne({ otp });
     }
     const otpSent = await OTP.create({
@@ -70,6 +66,7 @@ const sendOTP = async (req, res) => {
     });
   }
 };
+// Function to verify OTP
 const verifyOTP = async (req, res) => {
   try {
     const { email, otp } = req.body;
