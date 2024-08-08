@@ -8,7 +8,8 @@ const multerUploads = require('../middleware/multer.middleware');
 
 router.get('/getcanteen' , canteenController.getAllCanteen);
 router.post("/feedback", canteenController.feedback)
-router.get("/reviews", canteenController.canteenFeedbackRender)
+router.get("/reviews", canteenController.canteenFeedbackRender);
+router.post('/addrating', canteenController.addFeedback)
 //yeh mere routes
 router.get('/:id/breakfast' , canteenController.getBreakfast);
 

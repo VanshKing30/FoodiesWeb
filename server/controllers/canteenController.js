@@ -537,6 +537,52 @@ const addSocialMediaLinks = asyncHandler(async (req, res) => {
   }
 });
 
+// Add Feedback to Canteen
+const addFeedback = asyncHandler(async (req, res) => {
+  const { canteenId, rating, comment } = req.body;
+  const studentId = req.user.id;
+
+  try {
+    // Check if the canteen exists
+    const canteen = await Canteen.findById(canteenId);
+    if (!canteen) {
+      return res.status(401).json({
+        message : "Not canteen found!"
+      })
+    }
+
+    // Create new feedback
+    const feedback = new Feedback({
+      student: studentId,
+      canteen: canteenId,
+      comment,
+      rating,
+    });
+
+    // Save feedback
+    await feedback.save();
+
+    // Calculate the new overall rating
+    const feedbacks = await Feedback.find({ canteen: canteenId });
+    const totalRatings = feedbacks.length;
+    const sumRatings = feedbacks.reduce((sum, feedback) => sum + feedback.rating, 0);
+    canteen.overallRating = sumRatings / totalRatings;
+
+    // Save the updated canteen document
+    await canteen.save();
+
+    return res.status(200).json({
+      message :"Feedback added successfully!",
+      canteen : canteen
+    })
+  } catch (error) {
+    console.error("Error adding feedback:", error);
+    return res.status(500).json({
+      message : "Error while adding feedback"
+    })
+  }
+});
+
 module.exports = {
   getCanteenDashboard,
   addBreakfastDish,
@@ -556,5 +602,6 @@ module.exports = {
   feedback,
   canteenFeedbackRender,
   addSocialMediaLinks,
-  getCanteenData
+  getCanteenData,
+  addFeedback
 };

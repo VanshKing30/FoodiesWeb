@@ -31,6 +31,10 @@ const canteenSchema = new Schema({
     type : String,
     default : ''
   },
+  overallRating : {
+     type : Number,
+     default : 0
+  },
   canteenSocialMediaLinks: {
     Instagram: {
       type: String,
