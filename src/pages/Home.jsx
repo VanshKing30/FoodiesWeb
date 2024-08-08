@@ -90,11 +90,12 @@ function Home() {
             };
           });
           const canteensWithDishes = await Promise.all(allDishesPromises);
-          const filteredData = canteensWithDishes.filter((canteen) =>
-            canteen.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            canteen.dishes.some((dish) =>
-              dish.dish.toLowerCase().includes(searchTerm.toLowerCase())
-            )
+          const filteredData = canteensWithDishes.filter(
+            (canteen) =>
+              canteen.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              canteen.dishes.some((dish) =>
+                dish.dish.toLowerCase().includes(searchTerm.toLowerCase())
+              )
           );
           setFilteredCanteenData({ data: filteredData });
         } catch (error) {
@@ -114,20 +115,28 @@ function Home() {
         <Loader />
       ) : (
         <div className="min-h-screen dark:bg-teal-700">
-        <Navbar />
-          <div className="mx-auto max-w-2xl p-4" style={{ paddingTop: "120px" }}>
-            <div className="relative">
-              <AiOutlineSearch className="absolute top-2 left-3 text-gray-400" size={24} />
+          <Navbar />
+          <div
+            className="mx-auto max-w-2xl p-4"
+            style={{ paddingTop: "120px" }}
+          >
+            {/* Search bar */}
+
+            <div className="relative w-full max-w-sm mx-auto">
+              <AiOutlineSearch
+                className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-500"
+                size={20}
+              />
               <input
                 type="text"
                 placeholder="Search Dish or Canteen"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500 shadow-md"
               />
               <button
                 onClick={handleSearch}
-                className="absolute top-0 right-0 h-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none"
+                className="absolute top-1/2 right-0 transform -translate-y-1/2 h-full px-6 py-2 text-white bg-green-500 rounded-r-full hover:bg-green-600 focus:outline-none transition-transform duration-300 ease-in-out hover:scale-105 shadow-lg"
               >
                 Search
               </button>
