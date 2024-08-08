@@ -59,50 +59,50 @@ const SectionPage = () => {
         ) : (
           <>
             <button
-              className="absolute mt-2 end-0 sm:right-16 right-6 bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-full flex items-center gap-2 "
+              className="absolute -top-7 lg:top-0  mt-2 end-0 sm:right-16 right-6 bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 lg:py-3 lg:px-4 rounded-full flex items-center gap-2 "
               onClick={() => navigate(`/edit-profile/${_id}`)}
             >
-              Edit Profile <FaRegEdit />
+              Edit Profile <FaRegEdit className=" hidden lg:block " />
             </button>
             <div
-              className={`flex sm:flex-row flex-col justify-center mt-4 ${
+              className={`flex sm:flex-row flex-row lg:flex-col justify-center py-4 lg:bg-transparent ${
                 theme === "dark"
                   ? "text-white bg-[#131b33]"
                   : "text-gray-900 bg-white"
               } `}
             >
               <button
-                className={`mx-4 mt-2 py-3 px-4 flex w-fit items-center rounded-full ${
+                className={`mx-4 mt-2 py-1 px-2 lg:py-3 lg:px-4 flex w-fit items-center rounded-full ${
                   view === "add"
                     ? "bg-green-500 text-white"
                     : "bg-green-500 text-white"
                 } flex gap-2 `}
                 onClick={() => setView("add")}
               >
-                Add Product <IoMdAdd />
+                Add Product <IoMdAdd className=" hidden lg:block " />
               </button>
               <button
-                className={`mx-4 mt-2 py-3 px-4 flex items-center w-fit rounded-full border-green-400 border-2 ${
+                className={`mx-4 mt-2 py-1 px-2 lg:py-3 lg:px-4 flex items-center w-fit rounded-full border-green-400 border-2 ${
                   view === "list"
                     ? " bg-transparent text-green-500"
                     : "bg-transparent text-green-500"
                 } flex gap-2 `}
                 onClick={() => setView("list")}
               >
-                Product List <CiBoxList />
+                Product List <CiBoxList className=" hidden lg:block " />
               </button>
               <button
-                className={`mx-4 mt-2 py-3 px-4 flex items-center w-fit rounded-full border-green-400 border-2 ${
+                className={`mx-4 mt-2 py-1 px-2 lg:py-3 lg:px-4 flex items-center w-fit rounded-full border-green-400 border-2 ${
                   view === "feedback"
                     ? " bg-transparent text-green-500"
                     : "bg-transparent text-green-500"
                 } flex gap-2 `}
                 onClick={() => setView("feedback")}
               >
-                Feedbacks <FaComments />
+                Feedbacks <FaComments className=" hidden lg:block " />
               </button>
             </div>
-            <div className={`py-[10%] ${theme === "dark" ? "bg-[#131b33]" : "bg-white"}`}>
+            <div className={`py-[10%] pt-20 lg:pt-0 ${theme === "dark" ? "bg-[#131b33]" : "bg-white"}`}>
               {view === "add" && <AddFoodItem />}
               {view === "list" && <Foodlist />}
               {view === "feedback" && <FeedbackList />} {/* Render FeedbackList */}
