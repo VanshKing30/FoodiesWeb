@@ -239,6 +239,15 @@ const EditProfile = () => {
               <p className="mt-4 text-gray-700">No image available</p>
             )}
           </div>
+          <div className="my-4">
+            <Link
+             to={`/${_id}/timing`}
+              className="bg-green-400 px-2 py-2 rounded-full text-white"
+               
+            >
+              Add Timing
+            </Link>
+          </div>
           {canteen.canteenSocialMediaLinks && (
             <div className="mb-6">
               <label
@@ -261,6 +270,7 @@ const EditProfile = () => {
                     ""
                   )}
                 </div>
+
                 <div>
                   {canteen.canteenSocialMediaLinks.LinkedIn !== "" ? (
                     <Link
@@ -300,6 +310,7 @@ const EditProfile = () => {
                     ""
                   )}
                 </div>
+
                 <button
                   className="bg-green-400 px-2 py-2 rounded-full text-white"
                   onClick={handleSocialMediaLinks}

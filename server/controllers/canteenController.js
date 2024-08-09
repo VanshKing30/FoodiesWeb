@@ -583,6 +583,61 @@ const addFeedback = asyncHandler(async (req, res) => {
   }
 });
 
+const addTiming = asyncHandler(async (req, res, next) => {
+  const { day, morningTime, afternoonTime, eveningTime } = req.body;
+  console.log("Inside save time");
+  const canteenId = req.params.id;
+  // Find the canteen by ID
+  const canteen = await Canteen.findById(canteenId);
+
+  if (!canteen) {
+    return res.status(404).json({
+      message: "Canteen not found!",
+    });
+  }
+
+  // Update the timing for the specified day
+  canteen.timing[day] = {
+    morning: morningTime || canteen.timing[day].morning,
+    afternoon: afternoonTime || canteen.timing[day].afternoon,
+    evening: eveningTime || canteen.timing[day].evening,
+  };
+
+  // Save the updated canteen document
+  await canteen.save();
+
+  // Send a success response
+  return res.status(200).json({
+    message: "Canteen timing updated successfully!",
+    timing: canteen.timing,
+  });
+});
+
+const getTiming = asyncHandler(async (req, res) => {
+   const canteenId = req.params.id;
+   // Find the canteen by ID
+  const canteen = await Canteen.findById(canteenId);
+  if (!canteen) {
+    return res.status(404).json({
+      message: "Canteen not found!",
+    });
+  }
+
+  if(!canteen.timing){
+    return res.status(404).json({
+      message: "Don't find timing!",
+    });
+  }
+  
+  const timing = canteen.timing;
+
+  return res.status(200).json({
+    message : "Canteen Timing",
+    timing : timing
+  })
+
+
+})
 module.exports = {
   getCanteenDashboard,
   addBreakfastDish,
@@ -603,5 +658,7 @@ module.exports = {
   canteenFeedbackRender,
   addSocialMediaLinks,
   getCanteenData,
-  addFeedback
+  addFeedback,
+  addTiming,
+  getTiming
 };
