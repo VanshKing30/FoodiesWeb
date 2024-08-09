@@ -24,6 +24,7 @@ import Navbar from "./components/Navbar";
 
 
 import Newss from "./components/Blog/newss";
+import AddTiming from "./pages/AddTiming";
 
 
 const Layout = ({ children }) => {
@@ -106,6 +107,19 @@ function App() {
             />
           ) : (
             <Route path="/edit-profile/:_id" element={<Navigate to="/" />} />
+          )}
+
+{token ? (
+            <Route
+              path="/:id/timing"
+              element={
+                <Layout>
+                  <AddTiming/>
+                </Layout>
+              }
+            />
+          ) : (
+            <Route path="/:id/timing" element={<Navigate to="/" />} />
           )}
 
           {usertoken ? (

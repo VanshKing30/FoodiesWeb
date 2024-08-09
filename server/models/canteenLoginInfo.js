@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
- 
+
+// Define a schema for the timing of each day
+const dailyTimingSchema = new Schema({
+  morning: { type: String, default: '' },
+  afternoon: { type: String, default: '' },
+  evening: { type: String, default: '' },
+});
 
 const canteenSchema = new Schema({
   name: {
@@ -27,20 +33,20 @@ const canteenSchema = new Schema({
   canteenImage: {
     type: String, // Assuming you're storing the URL or base64 string of the image
   },
-  contactNumber : {
-    type : String,
-    default : ''
+  contactNumber: {
+    type: String,
+    default: ''
   },
-  overallRating : {
-     type : Number,
-     default : 0
+  overallRating: {
+    type: Number,
+    default: 0
   },
   canteenSocialMediaLinks: {
     Instagram: {
       type: String,
-      default : ''
+      default: ''
     },
-    Facebook : {
+    Facebook: {
       type: String,
       default: ''
     },
@@ -50,8 +56,17 @@ const canteenSchema = new Schema({
     },
     Youtube: {
       type: String,
-      default : ''
+      default: ''
     }
+  },
+  timing: {
+    monday: dailyTimingSchema,
+    tuesday: dailyTimingSchema,
+    wednesday: dailyTimingSchema,
+    thursday: dailyTimingSchema,
+    friday: dailyTimingSchema,
+    saturday: dailyTimingSchema,
+    sunday: dailyTimingSchema,
   }
 });
 
