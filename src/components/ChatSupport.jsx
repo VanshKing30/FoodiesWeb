@@ -1,51 +1,71 @@
-// src/components/ChatSupport.jsx
-import React, { useEffect, useState } from 'react';
-import io from 'socket.io-client';
-// Socket server URL
-const SOCKET_SERVER_URL = 'http://localhost:3000'; 
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+import './ChatSupport.css'; // Ensure to create this CSS file for styling
 const ChatSupport = () => {
-  const [socket, setSocket] = useState(null);
   const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState('');
-  const [username, setUsername] = useState('');
-  useEffect(() => {
-    // Initialize socket connection
-    const socketIo = io(SOCKET_SERVER_URL);
-    setSocket(socketIo);
-    // Listen for incoming messages
-    socketIo.on('message', (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-    });
-    // Clean up on unmount
-    return () => {
-      socketIo.disconnect();
-    };
-  }, []);
-  const handleSendMessage = () => {
-    if (newMessage.trim() && socket) {
-      socket.emit('message', { username, text: newMessage });
-      setNewMessage('');
+  const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
+  const chatEndRef = useRef(null);
+  // Function to scroll to the latest message
+  const scrollToBottom = () => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+  // Function to send a message
+  const sendMessage = async () => {
+    if (input.trim() === '') return;
+    const userMessage = { sender: 'user', text: input };
+    setMessages([...messages, userMessage]);
+    setInput('');
+    setLoading(true);
+    try {
+      const response = await axios.post('/api/chat', { message: input });
+      const botMessage = { sender: 'bot', text: response.data.reply };
+      setMessages((prevMessages) => [...prevMessages, botMessage]);
+    } catch (error) {
+      const errorMessage = { sender: 'bot', text: 'Error: Could not send message. Please try again later.' };
+      setMessages((prevMessages) => [...prevMessages, errorMessage]);
+    } finally {
+      setLoading(false);
+      scrollToBottom();
     }
   };
+  // Handle pressing the Enter key
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  };
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
     <div className="chat-support">
-      <div className="chat-window">
-        <div className="messages">
-          {messages.map((msg, index) => (
-            <div key={index} className={`message ${msg.username === username ? 'self' : ''}`}>
-              <strong>{msg.username}:</strong> {msg.text}
-            </div>
-          ))}
-        </div>
-        <div className="message-input">
-          <input
-            type="text"
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            placeholder="Type your message..."
-          />
-          <button onClick={handleSendMessage}>Send</button>
-        </div>
+      <div className="chat-header">
+        <h3>Chat Support</h3>
+      </div>
+      <div className="chat-messages">
+        {messages.map((message, index) => (
+          <div
+            key={index}
+            className={`chat-message ${message.sender === 'user' ? 'user-message' : 'bot-message'}`}
+          >
+            {message.text}
+          </div>
+        ))}
+        <div ref={chatEndRef} />
+      </div>
+      <div className="chat-input">
+        <input
+          type="text"
+          placeholder="Type your message..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={handleKeyPress}
+        />
+        <button onClick={sendMessage} disabled={loading}>
+          {loading ? 'Sending...' : 'Send'}
+        </button>
       </div>
     </div>
   );
