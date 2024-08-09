@@ -124,7 +124,7 @@ useEffect(()=>{
         {/* <h1>Trending Food and Health News</h1> */}
         <div className="p-4 flex flex-col justify-center items-center gap-y-4 w-[100%]">
         <div className="text-5xl font-extrabold text-center">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-black to-yellow-400">
+          <span className="bg-clip-text text-green-500">
           Trending Food and Health News
           </span>
         </div>

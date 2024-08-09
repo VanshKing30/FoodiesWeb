@@ -43,7 +43,7 @@ function News() {
           (
             <div className="text-gray-900 min-h-screen">
               <Navbar />
-              <h1 className="text-3xl font-bold text-center mt-20 text-white p-6 dark:text-slate-900">
+              <h1 className="text-3xl font-bold text-center text-green-500 p-6">
                 Trending Food and Health News
               </h1>
               <main className="mt-10 p-4">
