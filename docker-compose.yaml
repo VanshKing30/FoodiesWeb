@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  mongodb:
+    image: "mongo"
+    volumes:
+      - data:/data/db
+  server:
+    build: ./server
+    ports:
+      - "4000:4000"
+    volumes:
+      - logs:/app/logs
+      - ./server:/app
+      - /app/node_modules
+    environment:     
+      - PORT=4000
+      - DATABASE_URL=""
+      - EMAIL=""
+      - MAILPASS=""
+      - JWT_SECRET=""
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/app/src
+    environment:
+      - REACT_APP_API_URL=http://localhost:4000/api
+      - REACT_APP_API_KEY =""
+      - REACT_APP_BASE_URL
+      - PORT=3000
+    stdin_open: true
+    tty: true
+    depends_on:
+      - server
+
+volumes:
+  data:
+  logs:
