@@ -11,6 +11,7 @@ import { ThemeContext } from "../themeContext";
 import { FaRegEdit } from "react-icons/fa";
 import { CiBoxList } from "react-icons/ci";
 import { IoMdAdd } from "react-icons/io";
+import { Chatmain } from "../components/Chatbot/Chatmain";
 const SectionPage = () => {
   const { _id } = useParams();
   const navigate = useNavigate();
@@ -121,6 +122,7 @@ const SectionPage = () => {
           </>
         )}
       </div>
+      <Chatmain />
       <Footer />
     </div>
   );

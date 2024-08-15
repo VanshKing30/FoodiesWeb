@@ -1,0 +1,27 @@
+
+.chatbot-container {
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transform: translateY(100%);
+    opacity: 0;
+    z-index: 1000; /* Ensure the chatbot is on top */
+    border-radius: 8px;
+     /* Add border radius if needed */
+  }
+  
+  .chatbot-show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  .chatbot-hide {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  
+  .chat-toggle-button {
+    z-index: 1100;
+     /* Higher than chatbot-container */
+  }
+
+  
+  

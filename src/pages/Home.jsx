@@ -10,6 +10,7 @@ import Footer from "../components/Footer";
 import FloatBtn from "../components/FloatBtn/FloatBtn";
 import { useAuth } from "../authContext";
 import { useNavigate } from "react-router-dom";
+import { Chatmain } from "../components/Chatbot/Chatmain";
 function Home() {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
@@ -136,6 +137,7 @@ function Home() {
           <div className="text-center">
             <CanteenList canteenData={filteredCanteenData} />
           </div>
+          <Chatmain />
           <Footer />
         </div>
       )}
