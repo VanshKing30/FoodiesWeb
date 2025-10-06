@@ -6,6 +6,11 @@ import axios from "axios";
 import logo from "../assets/logo2.png";
 import Loader from "../components/Loader/Loader"; // Ensure this path is correct
 import { useAuth } from "../authContext";
+import Button from"../components/Button";
+
+
+<Button text="Sign In" onClick={handleLogin} />
+
 function Login() {
 
   const [formData, setFormData] = useState({
