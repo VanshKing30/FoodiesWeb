@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/logo2.png";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
-import { IoClose  } from "react-icons/io5";
+import { IoClose } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { jwtDecode } from "jwt-decode"; // Corrected import
+import { jwtDecode } from "jwt-decode";
 import { ThemeContext } from "../themeContext";
 import { useAuth } from "../authContext";
 
@@ -15,6 +15,14 @@ const Navbar = () => {
   const { scrollYProgress } = useScroll();
   const token = localStorage.getItem("token");
   const canteenId = localStorage.getItem("canteenId");
+  const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -42,7 +50,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="text-white p-3 shadow-lg top-0 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 w-full fixed z-40 dark:bg-cadetblue dark:bg-none">
+      <nav className={`text-white p-3 top-0 bg-gradient-to-t from-blue-950 via-blue-950 to-gray-900 w-full fixed z-40 dark:bg-cadetblue dark:bg-none transition-shadow duration-300 ${scrolled ? "shadow-2xl" : "shadow-lg"}`}>
         <motion.div
           className="left-0 top-0 w-full h-1 bg-blue-500 fixed z-50"
           style={{ scaleX: scrollYProgress }}
@@ -58,26 +66,25 @@ const Navbar = () => {
             <div className="hidden md:block">
               <div className="ml-16 flex gap-4 items-baseline space-x-2">
                 {token ? (
-                  <NavItem to={`/section/${canteenId}`} onClick={toggleMenu}>
+                  <NavItem to={`/section/${canteenId}`} onClick={toggleMenu} active={location.pathname.startsWith("/section/")}>
                     <IconCanteen />  My <span></span> Canteen
                   </NavItem>
                 ) : (
-                  <NavItem to="/home" onClick={toggleMenu}>
+                  <NavItem to="/home" onClick={toggleMenu} active={location.pathname === "/home"}>
                     <IconHome /> Home
                   </NavItem>
                 )}
-                <NavItem to="/about" onClick={toggleMenu}>
+                <NavItem to="/about" onClick={toggleMenu} active={location.pathname === "/about"}>
                   <IconAbout /> About
                 </NavItem>
-                <NavItem to="/news" onClick={toggleMenu}>
+                <NavItem to="/news" onClick={toggleMenu} active={location.pathname === "/news"}>
                   <IconNews /> News
                 </NavItem>
-                <NavItem to="/rateus" onClick={toggleMenu}>
+                <NavItem to="/rateus" onClick={toggleMenu} active={location.pathname === "/rateus"}>
                   <IconRateUs /> RateUs
                 </NavItem>
-                <NavItem to="/contributors" onClick={toggleMenu}>
-                  <>
-                 <img src="https://cdn-icons-png.freepik.com/256/12210/12210006.png?ga=GA1.2.1168591914.1718009553&semt=ais_hybrid" className="w-5 h-5  mt-5"/><sapn className="mt-5">Contributors</sapn></>
+                <NavItem to="/contributors" onClick={toggleMenu} active={location.pathname === "/contributors"}>
+                  <img src="https://cdn-icons-png.freepik.com/256/12210/12210006.png?ga=GA1.2.1168591914.1718009553&semt=ais_hybrid" className="w-5 h-5 mt-5"/><span className="mt-5">Contributors</span>
                 </NavItem>
               </div>
             </div>
@@ -134,26 +141,26 @@ const Navbar = () => {
               className="md:hidden absolute left-0 w-full flex flex-col items-center justify-center"
             >
               <div className="w-[100%] bg-[#152146] px-[20%] pt-2 pb-3 space-y-1 mt-1 dark:bg-teal-900">
-                <MobileNavItem to="/home" onClick={toggleMenu}>
+                <MobileNavItem to="/home" onClick={toggleMenu} active={location.pathname === "/home"}>
                   Home
                 </MobileNavItem>
-                <MobileNavItem to="/about" onClick={toggleMenu}>
+                <MobileNavItem to="/about" onClick={toggleMenu} active={location.pathname === "/about"}>
                   About us
                 </MobileNavItem>
-                <MobileNavItem to="/news" onClick={toggleMenu}>
+                <MobileNavItem to="/news" onClick={toggleMenu} active={location.pathname === "/news"}>
                   News
                 </MobileNavItem>
-                <MobileNavItem to="/contact" onClick={toggleMenu}>
+                <MobileNavItem to="/contact" onClick={toggleMenu} active={location.pathname === "/contact"}>
                   Contact
                 </MobileNavItem>
-                <MobileNavItem to="/rateus" onClick={toggleMenu}>
+                <MobileNavItem to="/rateus" onClick={toggleMenu} active={location.pathname === "/rateus"}>
                   RateUs
                 </MobileNavItem>
-                <MobileNavItem to="/contributors" onClick={toggleMenu}>
+                <MobileNavItem to="/contributors" onClick={toggleMenu} active={location.pathname === "/contributors"}>
                   Contributors
                 </MobileNavItem>
                 {canteenId && (
-                  <MobileNavItem to={`/section/${canteenId}`} onClick={toggleMenu}>
+                  <MobileNavItem to={`/section/${canteenId}`} onClick={toggleMenu} active={location.pathname.startsWith("/section/")}>
                     My Canteen
                   </MobileNavItem>
                 )}
@@ -177,11 +184,11 @@ const Navbar = () => {
   );
 };
 
-const NavItem = ({ to, children, onClick }) => {
+const NavItem = ({ to, children, onClick, active }) => {
   return (
     <Link
       to={to}
-      className="flex items-center space-x-2 w-full h-auto relative z-0 rounded-lg transition-all duration-200 hover:scale-125 text-xl hover:bg-opacity-50"
+      className={`flex items-center space-x-2 w-full h-auto relative z-0 rounded-lg transition-all duration-200 hover:scale-125 text-xl hover:bg-opacity-50 ${active ? "text-yellow-300 scale-110" : ""}`}
       onClick={onClick}
     >
       {children}
@@ -189,9 +196,9 @@ const NavItem = ({ to, children, onClick }) => {
   );
 };
 
-const MobileNavItem = ({ to, children, onClick }) => {
+const MobileNavItem = ({ to, children, onClick, active }) => {
   const className =
-    "z-[2] text-gray-300 text-center hover:text-white block px-3 py-2 rounded-md text-xl font-medium";
+    `z-[2] text-center block px-3 py-2 rounded-md text-xl font-medium ${active ? "text-yellow-300 bg-gray-700" : "text-gray-300 hover:text-white"}`;
   return (
     <Link to={to} className={className + " hover:bg-gray-700"} onClick={onClick}>
       {children}
