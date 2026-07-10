@@ -1,5 +1,4 @@
 // Modal.js
-import React from 'react';
 
 const Modal = ({ show, onClose, children }) => {
   if (!show) {
