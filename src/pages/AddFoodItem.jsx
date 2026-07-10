@@ -61,7 +61,6 @@ function AddFoodItem() {
         break;
       case "Dinner":
         apiUrl = `${process.env.REACT_APP_BASE_URL}/${canteenId}/dinner/add`;
-        console.log("This is api url",apiUrl);
         break;
       default:
         toast.error("Please select a meal type.");
