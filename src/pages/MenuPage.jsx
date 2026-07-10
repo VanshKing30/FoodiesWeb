@@ -245,7 +245,6 @@ const handlestudentFeedbackSubmit = async () => {
       <FoodCard key={dish._id} dish={dish} onClick={() => handleDishClick(dish.dishId)} />
     ));
   };
-  console.log("this is canteen", canteenData.name);
   return (
     <div className="text-purple-800 min-h-screen pt-5 bg-transparent dark:bg-slate-200">
 
