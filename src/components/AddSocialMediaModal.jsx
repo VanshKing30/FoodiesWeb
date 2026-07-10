@@ -18,7 +18,6 @@ function AddSocialMediaModal({ onClose, id, canteenData }) {
   }, []);
 
   const handleAddSocialMediaLinks = async () => {
-    console.log("Hii");
 
     try {
       const response = await axios.post(
