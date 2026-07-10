@@ -1,5 +1,3 @@
-import React from 'react';
-
 function FoodCard({ dish, onClick, onEdit, onDelete }) {
   const placeholderImage = "https://www.holidify.com/blog/wp-content/uploads/2015/11/Maharashtras_Misal_Pav.jpg";
   const defaultDescription = "No description available.";
