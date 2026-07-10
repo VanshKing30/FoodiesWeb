@@ -28,7 +28,6 @@ export const Contributors = () => {
         setData(prev => [...prev , ...json])
      }
     catch(error){
-        console.log(error)
     }
 }
     useEffect(() =>{
