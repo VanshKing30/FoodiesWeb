@@ -11,13 +11,21 @@
     height: 45px;
     font-size: 24px;
     cursor: pointer;
-    display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    z-index: 1000;
   }
 
   .scrollButton:hover {
     background-color: #43A047;
+    transform: translateY(0) scale(1.1);
+  }
+
+  .scrollButton[style*="flex"] {
+    opacity: 1;
+    transform: translateY(0);
   }
