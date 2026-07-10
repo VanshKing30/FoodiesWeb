@@ -7,7 +7,6 @@ import { ThemeContext } from '../themeContext';
 
 
 export const Contributors = () => {
-    console.log(ThemeContext)
     const [data , setData] = useState([])
     const [page , setPage ] = useState(1)
     const [scroll, setScroll] = useState(false)
