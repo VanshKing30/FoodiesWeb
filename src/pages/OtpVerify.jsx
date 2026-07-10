@@ -32,7 +32,6 @@ function OtpVerify() {
       if (response.data.success) {
         toast.success("OTP Verified Successfully");
         const link = response.data.link;
-        console.log("Link is:-> ", link);
         navigate(`${link}`); // Redirect to home or another page after successful verification
       } else {
         toast.error(response.data.message);
