@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './TermsOfService.css';
 const TermsOfService = () => {
   const [terms, setTerms] = useState('');
   const [loading, setLoading] = useState(true);
