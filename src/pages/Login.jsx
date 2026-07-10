@@ -69,7 +69,6 @@ function Login() {
   
     try {
       const response = await axios.post(apiUrl, formData);
-      console.log("This is response data", response.data);
       toast.success("User Logged in");
       
       if (rememberMe) {
@@ -139,18 +138,23 @@ function Login() {
                 />
               </div>
               <div className="mb-4">
-                <select
-                  required
-                  name="accountType"
-                  onChange={changeHandler}
-                  value={formData.accountType}
-                  className="mt-1 p-2 w-full border rounded-2xl border-b-3 border-customBlue">
-                  <option value="" disabled hidden>
-                    Login as
-                  </option>
-                  <option value="User">User</option>
-                  <option value="Canteen">Canteen</option>
-                </select>
+                <div className="relative">
+                  <select
+                    required
+                    name="accountType"
+                    onChange={changeHandler}
+                    value={formData.accountType}
+                    className="w-full py-2 px-3 border rounded-2xl border-b-3 border-customBlue appearance-none bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+                    <option value="" disabled hidden>
+                      Login as
+                    </option>
+                    <option value="User">👤 User</option>
+                    <option value="Canteen">🍽️ Canteen</option>
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-500">
+                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                  </div>
+                </div>
               </div>
               <div className="relative mb-4">
                 <input
