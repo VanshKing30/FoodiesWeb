@@ -65,7 +65,6 @@ function ResetPassword() {
         toast.success("Password reset successful");
         navigate("/login");
       } catch (error) {
-        console.log(error);
         setLoading(false);
         toast.error("Failed to reset password");
       }
