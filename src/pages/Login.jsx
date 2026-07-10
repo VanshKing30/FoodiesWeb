@@ -69,7 +69,6 @@ function Login() {
   
     try {
       const response = await axios.post(apiUrl, formData);
-      console.log("This is response data", response.data);
       toast.success("User Logged in");
       
       if (rememberMe) {
