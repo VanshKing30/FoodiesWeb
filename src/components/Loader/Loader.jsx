@@ -1,4 +1,3 @@
-import React from 'react'
 import {RiseLoader} from 'react-spinners'
 import './Loader.css'
 
