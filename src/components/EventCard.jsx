@@ -1,5 +1,5 @@
 // src/components/EventCard.jsx
-import React from 'react';
+
 import './EventCard.css'; // Optional: for styling
 const EventCard = ({ event }) => {
   const { title, date, description, imageUrl } = event;
