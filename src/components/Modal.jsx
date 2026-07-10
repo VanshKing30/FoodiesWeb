@@ -1,4 +1,3 @@
-import React from 'react';
 import ModalForm from './ModalForm';
 
 const Modal = ({ showModal, setShowModal, sectionName, canteenData, onSubmit, id }) => {
