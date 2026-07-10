@@ -43,7 +43,6 @@ const OtpVerify = () => {
     }
     try {
       const response = await OTPChecker({ email, otp: otp.join('') });
-      console.log(response)
         alert(response.data.message);
         dispatch(setAuthToken(response.data.token));
         setOtp(new Array(6).fill(''));
