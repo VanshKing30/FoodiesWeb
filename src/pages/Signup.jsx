@@ -92,7 +92,6 @@ function Signup() {
   
         const response = await axios.post(apiUrl, formData);
 
-        console.log("This is response", response.data);
   
         toast.success("Account Created Successfully!");
   
