@@ -60,7 +60,6 @@ function ResetPassword() {
 
       try {
         const response = await axios.post(apiUrl, formData);
-        console.log(response);
         setLoading(false);
         toast.success("Password reset successful");
         navigate("/login");
