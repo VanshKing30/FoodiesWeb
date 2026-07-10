@@ -12,7 +12,6 @@ const NotificationBell = () => {
   };
   const handleNotificationClick = (id) => {
     // Handle notification click (e.g., mark as read, navigate to detail page)
-    console.log(`Notification ${id} clicked`);
   };
   return (
     <div className="notification-bell">
