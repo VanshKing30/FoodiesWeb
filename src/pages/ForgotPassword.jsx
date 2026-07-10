@@ -34,7 +34,6 @@ function ForgotPassword() {
         toast.success("Link sent to your email");
       })
       .catch((error) => {
-        console.log(error);
         setLoading(false);
         toast.error("Failed to send Link");
       });
