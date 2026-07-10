@@ -1,5 +1,3 @@
-import React from 'react';
-
 const CanteenCardSkeleton = () => {
   return (
     <div className="sm:w-64 w-[80vw] px-5 bg-white flex flex-col border pt-5 h-[320px] border-white rounded-lg shadow dark:bg-none dark:border-white my-4 mx-2 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-green-500/50 ... md:justify-center">
