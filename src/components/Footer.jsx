@@ -20,7 +20,7 @@ export default function Footer() {
               <Link to="/contact">Contact</Link>
           </li>
       </ul>
-      <span className="text-sm text-white sm:text-center ">© 2024-2025 <a href="#" className="hover:underline">Foodies™</a>. All Rights Reserved.</span>
+      <span className="text-sm text-white sm:text-center ">© 2024-2025 <Link to="/" className="hover:underline">Foodies™</Link>. All Rights Reserved.</span>
   </div>
 </footer>
     )
