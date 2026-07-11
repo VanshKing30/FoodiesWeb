@@ -209,7 +209,7 @@ function Signup() {
               value={formData.password}
               onChange={PasswordChecker}
             />
-            <span className="absolute right-3 top-3 cursor-pointer" onClick={() => setShowPassword((prev) => !prev)}>
+            <span className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer" onClick={() => setShowPassword((prev) => !prev)}>
               {showPassword ? <AiOutlineEyeInvisible size={20} />: <AiOutlineEye size={20} /> }
             </span>
           </div>
