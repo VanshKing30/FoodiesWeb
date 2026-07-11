@@ -6,7 +6,7 @@ const Loader = ({ loading }) => {
     return (
       <div className="loader-wrapper">
         <div className="loader">
-          <RiseLoader color={'#36D7B7'} loading={loading} size={15} />
+          <RiseLoader color={'#1e3a8a'} loading={loading} size={15} />
         </div>
       </div>
     );
