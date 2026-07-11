@@ -103,7 +103,7 @@ function Login() {
       {loading ? (
         <Loader />
       ) : (
-        <div className="relative h-screen md:flex">
+        <div className="relative h-screen md:flex overflow-hidden">
           <div className="absolute top-0 right-0 m-3">
             <Link to="/contact">
               <button className="hover:shadow-blue-950 hover:shadow-sm text-white py-1 px-2 w-full h-auto text-l relative z-0 rounded-full transition-all duration-200 hover:scale-110">
