@@ -54,7 +54,7 @@ function App() {
   },[])
 
   // Check if either token is undefined and redirect to login if true
-  if (!usertoken || !token) {
+  if (!usertoken && !token) {
     localStorage.removeItem("usertoken");
     localStorage.removeItem("token");
     window.location.href = "/login"; // Redirect to login page

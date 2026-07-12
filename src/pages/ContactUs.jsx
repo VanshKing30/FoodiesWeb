@@ -30,7 +30,7 @@ const Contact = () => {
 
     try {
       // Send form data to backend
-      await axios.post("${process.env.REACT_APP_BASE_URL}/contact", form);
+      await axios.post(`${process.env.REACT_APP_BASE_URL}/contact`, form);
       setLoading(false);
       alert("Thank you. Your message has been sent and saved.");
       setForm({

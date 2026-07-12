@@ -28,6 +28,11 @@ const AuthProvider = ({ children }) => {
         setAuthenticated(true);
     };
 
+    const setAuthToken = (token) => {
+        localStorage.setItem('authToken', token);
+        setAuthenticated(true);
+    };
+
     const logout = () => {
        
         localStorage.removeItem('authToken');
@@ -35,7 +40,7 @@ const AuthProvider = ({ children }) => {
     };
 
     return (
-        <authContext.Provider value={{ isAuthenticated, login, logout, signUp }}>
+        <authContext.Provider value={{ isAuthenticated, login, logout, signUp, setAuthToken }}>
             {children}
         </authContext.Provider>
     );

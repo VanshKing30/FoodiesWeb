@@ -49,7 +49,7 @@ function ForgotPassword() {
       }
       setLoading(true); // Start loading
       const response = await axios.post(
-        "${process.env.REACT_APP_BASE_URL}/otp/sendotp",
+        `${process.env.REACT_APP_BASE_URL}/otp/sendotp`,
         { email: formData.email }
       );
       setLoading(false); // Stop loading
