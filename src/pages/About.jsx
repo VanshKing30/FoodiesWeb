@@ -15,9 +15,7 @@ const About = () => {
   const [loading,setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
     AOS.init({ duration: 800 });
-    setLoading(false);
   }, []);
 
 //   useEffect(() => {
