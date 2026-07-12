@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useEffect, useState } from "react";
 import { Link, useNavigate,useLocation } from "react-router-dom";
 import { useDispatch } from 'react-redux';
@@ -29,7 +30,7 @@ const OtpVerify = () => {
   };
 
   const OTPChecker = (data) =>
-    axios.post(`${API_URL}/register`, data, {
+    axios.post(`${process.env.REACT_APP_BASE_URL}/register`, data, {
         headers: {
             "Content-Type": "application/json",
         },
