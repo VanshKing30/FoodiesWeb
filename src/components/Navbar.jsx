@@ -84,7 +84,7 @@ const Navbar = () => {
                   <IconRateUs /> RateUs
                 </NavItem>
                 <NavItem to="/contributors" onClick={toggleMenu} active={location.pathname === "/contributors"}>
-                  <img src="https://cdn-icons-png.freepik.com/256/12210/12210006.png?ga=GA1.2.1168591914.1718009553&semt=ais_hybrid" className="w-5 h-5 mt-5"/><span className="mt-5">Contributors</span>
+                  <img src="https://cdn-icons-png.freepik.com/256/12210/12210006.png?ga=GA1.2.1168591914.1718009553&semt=ais_hybrid" className="w-5 h-5 mt-5" alt="Contributors"/><span className="mt-5">Contributors</span>
                 </NavItem>
               </div>
             </div>

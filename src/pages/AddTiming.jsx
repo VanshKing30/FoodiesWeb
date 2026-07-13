@@ -108,6 +108,7 @@ const AddTiming = () => {
             className="border p-2 w-full"
             placeholder='Example: 08:00 am - 12:00 pm'
             required
+            aria-label="Morning timing"
           />
         </div>
         <div className="mb-4">
@@ -119,6 +120,7 @@ const AddTiming = () => {
             className="border p-2 w-full"
             placeholder='Example: 12:00 pm - 04:00 pm'
             required
+            aria-label="Afternoon timing"
           />
         </div>
         <div className="mb-4">
@@ -130,6 +132,7 @@ const AddTiming = () => {
             className="border p-2 w-full"
             placeholder='Example: 06:00 pm - 10:00 pm'
             required
+            aria-label="Evening timing"
           />
         </div>
         <button onClick={handleSave} className="bg-green-500 text-white p-2 rounded">

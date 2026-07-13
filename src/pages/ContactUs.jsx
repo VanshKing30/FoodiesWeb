@@ -73,6 +73,7 @@ const Contact = () => {
                 name="name"
                 value={form.name}
                 onChange={handleChange}
+                aria-label="Name"
               />
             </div>
             <div className="mb-4">
@@ -84,6 +85,7 @@ const Contact = () => {
                 name="email"
                 value={form.email}
                 onChange={handleChange}
+                aria-label="Email"
               />
             </div>
             <div className="mb-4">
@@ -96,6 +98,7 @@ const Contact = () => {
                 value={form.message}
                 onChange={handleChange}
                 rows={5}
+                aria-label="Message"
               />
             </div>
             <div className="flex gap-3">

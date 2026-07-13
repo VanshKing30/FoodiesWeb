@@ -136,6 +136,7 @@ function Login() {
                   name="email"
                   value={formData.email}
                   onChange={changeHandler}
+                  aria-label="Email"
                 />
               </div>
               <div className="mb-4">
@@ -145,7 +146,8 @@ function Login() {
                     name="accountType"
                     onChange={changeHandler}
                     value={formData.accountType}
-                    className="w-full py-2 px-3 border rounded-2xl border-b-3 border-customBlue appearance-none bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+                    className="w-full py-2 px-3 border rounded-2xl border-b-3 border-customBlue appearance-none bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    aria-label="Account type">
                     <option value="" disabled hidden>
                       Login as
                     </option>
@@ -166,6 +168,7 @@ function Login() {
                   name="password"
                   value={formData.password}
                   onChange={changeHandler}
+                  aria-label="Password"
                 />
                 <span
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
@@ -180,6 +183,7 @@ function Login() {
                   id="remember-me"
                   checked={rememberMe}
                   onChange={rememberMeHandler}
+                  aria-label="Remember me"
                 />
                 <label htmlFor="remember-me"> Remember me</label>
               </div>

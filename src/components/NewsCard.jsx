@@ -19,7 +19,7 @@ function NewsCard({ article }) {
         
           <img
             src={image || defaultImage}
-            alt="news-image"
+            alt={title}
             className="w-full h-40 object-cover"
           />
       

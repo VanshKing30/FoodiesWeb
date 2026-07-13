@@ -122,6 +122,7 @@ const ModalForm = ({ onSubmit  , sectionName , canteenData , id}) => {
             name="cuisine"
             value={formData.cuisine}
             onChange={handleInputChange}
+            aria-label="Cuisine"
           >
             <option value="" disabled hidden>
               Select Cuisine
@@ -147,6 +148,7 @@ const ModalForm = ({ onSubmit  , sectionName , canteenData , id}) => {
             name="minCalories"
             value={formData.minCalories}
             onChange={handleInputChange}
+            aria-label="Minimum calories"
           />
         </div>
 
@@ -161,6 +163,7 @@ const ModalForm = ({ onSubmit  , sectionName , canteenData , id}) => {
             name="maxCalories"
             value={formData.maxCalories}
             onChange={handleInputChange}
+            aria-label="Maximum calories"
           />
         </div>
 
@@ -175,6 +178,7 @@ const ModalForm = ({ onSubmit  , sectionName , canteenData , id}) => {
             name="minProtein"
             value={formData.minProtein}
             onChange={handleInputChange}
+            aria-label="Minimum protein"
           />
         </div>
 
@@ -189,6 +193,7 @@ const ModalForm = ({ onSubmit  , sectionName , canteenData , id}) => {
             name="maxProtein"
             value={formData.maxProtein}
             onChange={handleInputChange}
+            aria-label="Maximum protein"
           />
         </div>
 

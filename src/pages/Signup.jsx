@@ -150,6 +150,7 @@ function Signup() {
               name="name"
               value={formData.name}
               onChange={changeHandler}
+              aria-label="Name"
             />
             {nameError && <p className="text-red-500 mt-1 text-sm">{nameError}</p>}
           </div>
@@ -163,6 +164,7 @@ function Signup() {
               name="email"
               value={formData.email}
               onChange={changeHandler}
+              aria-label="Email"
             />
           </div>
 
@@ -175,6 +177,7 @@ function Signup() {
               name="collegeName"
               value={formData.collegeName}
               onChange={changeHandler}
+              aria-label="College name"
             />
           </div>
 
@@ -186,6 +189,7 @@ function Signup() {
                 onChange={changeHandler}
                 value={formData.accountType}
                 className="w-full py-2 px-3 border border-gray-300 rounded-2xl appearance-none bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                aria-label="Account type"
               >
                 <option value="" disabled hidden>
                   Sign up as
@@ -208,6 +212,7 @@ function Signup() {
               name="password"
               value={formData.password}
               onChange={PasswordChecker}
+              aria-label="Password"
             />
             <span className="absolute right-3 top-3 cursor-pointer" onClick={() => setShowPassword((prev) => !prev)}>
               {showPassword ? <AiOutlineEyeInvisible size={20} />: <AiOutlineEye size={20} /> }
@@ -223,6 +228,7 @@ function Signup() {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={changeHandler}
+              aria-label="Confirm password"
             />
             <span
               className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"

@@ -82,6 +82,7 @@ function OtpVerify() {
                   placeholder="OTP"
                   value={otp}
                   onChange={changeHandler}
+                  aria-label="OTP"
                 />
               </div>
               <button

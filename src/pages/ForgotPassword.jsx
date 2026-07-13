@@ -100,6 +100,7 @@ function ForgotPassword() {
                   name="email"
                   value={formData.email}
                   onChange={changeHandler}
+                  aria-label="Email"
                 />
               </div>
               <button

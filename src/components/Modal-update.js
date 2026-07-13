@@ -24,17 +24,20 @@ const Modalupdate = ({ dish,description, onUpdate, onCancel }) => {
           value={updatedDish.dish}
           onChange={(e) => setUpdatedDish({ ...updatedDish, dish: e.target.value })}
           className="border border-gray-300 p-2 w-full mb-4"
+          aria-label="Edit dish name"
         />
         <textarea
           value={updatedDish.description}
           onChange={(e) => setUpdatedDish({ ...updatedDish, description: e.target.value })}
           className="border border-gray-300 p-2 w-full mb-4"
           placeholder="Description"
+          aria-label="Edit dish description"
         />
         <input
           type="file"
           onChange={handleFileChange}
           className="border border-gray-300 p-2 w-full mb-4"
+          aria-label="Edit dish image"
         />
         <div className="flex justify-end">
           <button

@@ -58,6 +58,7 @@ const RateUs = () => {
             placeholder="Tell us what you think..."
             value={feedback}
             onChange={handleFeedbackChange}
+            aria-label="Feedback"
           ></textarea>
           <div>
             <button
