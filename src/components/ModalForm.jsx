@@ -123,7 +123,7 @@ const ModalForm = ({ onSubmit  , sectionName , canteenData , id}) => {
             value={formData.cuisine}
             onChange={handleInputChange}
           >
-            <option value="" disabled selected hidden>
+            <option value="" disabled hidden>
               Select Cuisine
             </option>
             <option value="Indian">Indian</option>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
 const AddTiming = () => {
   const [selectedDay, setSelectedDay] = useState('monday');
@@ -72,8 +73,13 @@ const AddTiming = () => {
         },
       }
     )
-    .then(() => alert('Timing updated successfully'))
-    .catch(error => console.error("Error updating timings:", error));
+    .then(() => {
+      toast.success('Timing updated successfully');
+    })
+    .catch(error => {
+      console.error("Error updating timings:", error);
+      toast.error('Failed to update timing. Please try again.');
+    });
   };
 
   return (
