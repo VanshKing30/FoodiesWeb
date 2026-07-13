@@ -1,6 +1,8 @@
+import axios from 'axios';
 import { useEffect, useState } from "react";
 import { Link, useNavigate,useLocation } from "react-router-dom";
 import { useDispatch } from 'react-redux';
+import { setAuthToken } from '../authContext';
 
 const OtpVerify = () => {
   const dispatch = useDispatch();
@@ -29,7 +31,7 @@ const OtpVerify = () => {
   };
 
   const OTPChecker = (data) =>
-    axios.post(`${API_URL}/register`, data, {
+    axios.post(`${process.env.REACT_APP_BASE_URL}/register`, data, {
         headers: {
             "Content-Type": "application/json",
         },
@@ -42,7 +44,7 @@ const OtpVerify = () => {
       return;
     }
     try {
-      const response = await OTPChecker({ email, otp: otp.join('') });
+      const response = await OTPChecker({ email: userData.email, otp: otp.join('') });
       console.log(response)
         alert(response.data.message);
         dispatch(setAuthToken(response.data.token));

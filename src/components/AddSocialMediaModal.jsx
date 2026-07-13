@@ -58,6 +58,7 @@ function AddSocialMediaModal({ onClose, id, canteenData }) {
             placeholder="Enter YouTube Link"
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
             onChange={(e) => setYouTubeLink(e.target.value)}
+            aria-label="YouTube link"
           />
         </div>
         <div className="mb-4">
@@ -68,6 +69,7 @@ function AddSocialMediaModal({ onClose, id, canteenData }) {
             placeholder="Enter Facebook Link"
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
             onChange={(e) => setFacebookLink(e.target.value)}
+            aria-label="Facebook link"
           />
         </div>
         <div className="mb-4">
@@ -78,6 +80,7 @@ function AddSocialMediaModal({ onClose, id, canteenData }) {
             placeholder="Enter LinkedIn Link"
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
             onChange={(e) => setLinkedInLink(e.target.value)}
+            aria-label="LinkedIn link"
           />
         </div>
         <div className="mb-4">
@@ -88,6 +91,7 @@ function AddSocialMediaModal({ onClose, id, canteenData }) {
             placeholder="Enter Instagram Link"
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
             onChange={(e) => setInstaLink(e.target.value)}
+            aria-label="Instagram link"
           />
         </div>
         <button

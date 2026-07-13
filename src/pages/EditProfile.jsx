@@ -232,7 +232,7 @@ const EditProfile = () => {
             {formData.canteenImage ? (
               <img
                 src={formData.canteenImage}
-                alt="Canteen"
+                alt="Canteen preview"
                 className="mt-4 w-32 h-32 object-cover rounded"
               />
             ) : (
