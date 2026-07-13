@@ -205,14 +205,32 @@ const handlestudentFeedbackSubmit = async () => {
     }
   };
 
-  function handleFeedbackSubmit() {
+  const handleFeedbackSubmit = async () => {
     if (feedback.trim() === '') {
       toast.error("Please provide your feedback before submitting.");
-    } else {
+      return;
+    }
+
+    const userId = localStorage.getItem('userid');
+    const canteenId = _id;
+
+    try {
+      await axios.post(`${process.env.REACT_APP_BASE_URL}/submitFeedback`, {
+        message: feedback,
+        canteenId,
+        userId
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
       setFeedback('');
       toast.success('Feedback Submitted!');
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+      toast.error('Failed to submit feedback. Please try again.');
     }
-  }
+  };
 
   const renderMenuItems = () => {
     let items = [];
