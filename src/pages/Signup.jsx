@@ -75,15 +75,6 @@ function Signup() {
     }
   }
 
-
-
-  function changeHandler(event) {
-    setFormData((prevData) => ({
-      ...prevData,
-      [event.target.name]: event.target.value,
-    }));
-  }
-
   async function submitHandler(event) {
     event.preventDefault();
     console.log("ENV FILE", process.env.REACT_APP_BASE_URL);
@@ -159,6 +150,7 @@ function Signup() {
               name="name"
               value={formData.name}
               onChange={changeHandler}
+              aria-label="Name"
             />
             {nameError && <p className="text-red-500 mt-1 text-sm">{nameError}</p>}
           </div>
@@ -172,6 +164,7 @@ function Signup() {
               name="email"
               value={formData.email}
               onChange={changeHandler}
+              aria-label="Email"
             />
           </div>
 
@@ -184,23 +177,30 @@ function Signup() {
               name="collegeName"
               value={formData.collegeName}
               onChange={changeHandler}
+              aria-label="College name"
             />
           </div>
 
           <div className="mb-4">
-            <select
-              required
-              name="accountType"
-              onChange={changeHandler}
-              value={formData.accountType}
-              className="mt-1 p-2 w-full border rounded-2xl"
-            >
-              <option value="" disabled hidden>
-                Login as
-              </option>
-              <option value="User">User</option>
-              <option value="Canteen">Canteen</option>
-            </select>
+            <div className="relative">
+              <select
+                required
+                name="accountType"
+                onChange={changeHandler}
+                value={formData.accountType}
+                className="w-full py-2 px-3 border border-gray-300 rounded-2xl appearance-none bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                aria-label="Account type"
+              >
+                <option value="" disabled hidden>
+                  Sign up as
+                </option>
+                <option value="User">👤 User</option>
+                <option value="Canteen">🍽️ Canteen</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-500">
+                <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
           </div>
 
           <div className="relative mb-4">
@@ -212,6 +212,7 @@ function Signup() {
               name="password"
               value={formData.password}
               onChange={PasswordChecker}
+              aria-label="Password"
             />
             <span className="absolute right-3 top-3 cursor-pointer" onClick={() => setShowPassword((prev) => !prev)}>
               {showPassword ? <AiOutlineEyeInvisible size={20} />: <AiOutlineEye size={20} /> }
@@ -227,6 +228,7 @@ function Signup() {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={changeHandler}
+              aria-label="Confirm password"
             />
             <span
               className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"

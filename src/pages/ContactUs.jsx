@@ -30,7 +30,7 @@ const Contact = () => {
 
     try {
       // Send form data to backend
-      await axios.post("http://localhost:4000/api/v1/contact", form);
+      await axios.post(`${process.env.REACT_APP_BASE_URL}/contact`, form);
       setLoading(false);
       alert("Thank you. Your message has been sent and saved.");
       setForm({
@@ -73,6 +73,7 @@ const Contact = () => {
                 name="name"
                 value={form.name}
                 onChange={handleChange}
+                aria-label="Name"
               />
             </div>
             <div className="mb-4">
@@ -84,6 +85,7 @@ const Contact = () => {
                 name="email"
                 value={form.email}
                 onChange={handleChange}
+                aria-label="Email"
               />
             </div>
             <div className="mb-4">
@@ -96,6 +98,7 @@ const Contact = () => {
                 value={form.message}
                 onChange={handleChange}
                 rows={5}
+                aria-label="Message"
               />
             </div>
             <div className="flex gap-3">

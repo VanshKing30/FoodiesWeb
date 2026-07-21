@@ -113,6 +113,7 @@ function ResetPassword() {
                   name="password"
                   value={formData.password}
                   onChange={PasswordChecker}
+                  aria-label="New password"
                 />
                 <span
                   className="absolute right-3 top-3 cursor-pointer"
