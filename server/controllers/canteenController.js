@@ -597,6 +597,12 @@ const addTiming = asyncHandler(async (req, res, next) => {
   }
 
   // Update the timing for the specified day
+  if (!canteen.timing) {
+    canteen.timing = {};
+  }
+  if (!canteen.timing[day]) {
+    canteen.timing[day] = {};
+  }
   canteen.timing[day] = {
     morning: morningTime || canteen.timing[day].morning,
     afternoon: afternoonTime || canteen.timing[day].afternoon,

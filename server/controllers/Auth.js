@@ -229,6 +229,9 @@ exports.studentLogout = async (req, res) => {
 exports.changeStudentPassword = async (req, res) => {
   const { oldPassword, newPassword } = req.body;
   const user = await User.findById(req.user._id);
+  if (!user) {
+    return res.status(404).json({ success: false, message: 'User not found' });
+  }
 
   const isPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
 
@@ -448,6 +451,9 @@ exports.canteenLogout = async (req, res) => {
 exports.changeCanteenPassword = async (req, res) => {
   const { oldPassword, newPassword } = req.body;
   const user = await Canteen.findById(req.user._id);
+  if (!user) {
+    return res.status(404).json({ success: false, message: 'User not found' });
+  }
 
   const isPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
 
