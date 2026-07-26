@@ -53,12 +53,11 @@ function App() {
 
   },[])
 
-  // Check if either token is undefined and redirect to login if true
-  if (usertoken === undefined || token === undefined) {
+  if (!usertoken && !token && window.location.pathname !== "/login" && window.location.pathname !== "/signup" && window.location.pathname !== "/forgotPassword" && !window.location.pathname.includes("/api/v1/newPassword/")) {
     localStorage.removeItem("usertoken");
     localStorage.removeItem("token");
-    window.location.href = "/login"; // Redirect to login page
-    return null; // Render nothing else
+    window.location.href = "/login";
+    return null;
   }
   
 
