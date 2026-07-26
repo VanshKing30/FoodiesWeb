@@ -242,7 +242,7 @@ exports.changeStudentPassword = async (req, res) => {
   const newHashedPassword = await bcrypt.hash(newPassword, 10);
 
   user.password = newHashedPassword;
-  user.save();
+  await user.save();
 
   return res.status(200).json({
     success: true,
@@ -461,7 +461,7 @@ exports.changeCanteenPassword = async (req, res) => {
   const newHashedPassword = await bcrypt.hash(newPassword, 10);
 
   user.password = newHashedPassword;
-  user.save();
+  await user.save();
 
   return res.status(200).json({
     success: true,
