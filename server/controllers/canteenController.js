@@ -28,9 +28,9 @@ const getCanteenData = async(req, res) => {
     const canteenData = await Canteen.findById(canteenId);
     console.log("this is canteen",canteenData);
      if(!canteenData){
-      res.status(500).json({
+      return res.status(404).json({
         success: false,
-        message: "Error while fetching canteen data",
+        message: "Canteen not found",
       });
     }
 
@@ -269,7 +269,7 @@ const addLunchDish = asyncHandler(async (req, res, next) => {
     }
   }
 
-  const existingDish = await Breakfast.findOne({
+  const existingDish = await Lunch.findOne({
     canteen: canteenId,
     dish,
   }).exec();
@@ -316,7 +316,7 @@ const addDinnerDish = asyncHandler(async (req, res, next) => {
     }
   }
 
-  const existingDish = await Breakfast.findOne({
+  const existingDish = await Dinner.findOne({
     canteen: canteenId,
     dish,
   }).exec();
