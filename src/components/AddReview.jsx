@@ -10,7 +10,7 @@ const AddReview = ({ productId }) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${yourAuthToken}` // Replace with your auth token logic
+                'Authorization': `Bearer ${localStorage.getItem("token") || localStorage.getItem("usertoken")}`
             },
             body: JSON.stringify({ product_id: productId, rating, review_text: reviewText })
         });
