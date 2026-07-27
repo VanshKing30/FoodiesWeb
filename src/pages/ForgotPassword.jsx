@@ -49,7 +49,7 @@ function ForgotPassword() {
       }
       setLoading(true); // Start loading
       const response = await axios.post(
-        "http://localhost:4000/api/v1/otp/sendotp",
+        `${process.env.REACT_APP_BASE_URL}/otp/sendotp`,
         { email: formData.email }
       );
       setLoading(false); // Stop loading
@@ -100,6 +100,7 @@ function ForgotPassword() {
                   name="email"
                   value={formData.email}
                   onChange={changeHandler}
+                  aria-label="Email"
                 />
               </div>
               <button

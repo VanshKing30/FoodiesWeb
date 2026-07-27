@@ -25,7 +25,7 @@ function OtpVerify() {
       }
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:4000/api/v1/otp/verifyotp",
+        `${process.env.REACT_APP_BASE_URL}/otp/verifyotp`,
         { email: userData.email, otp }
       );
       setLoading(false);
@@ -82,6 +82,7 @@ function OtpVerify() {
                   placeholder="OTP"
                   value={otp}
                   onChange={changeHandler}
+                  aria-label="OTP"
                 />
               </div>
               <button

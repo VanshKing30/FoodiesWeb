@@ -126,6 +126,7 @@ function AddFoodItem() {
             className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
             required
             placeholder="Enter dish name"
+            aria-label="Dish name"
           />
         </div>
         <div className="mb-4">
@@ -139,6 +140,7 @@ function AddFoodItem() {
             className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
             required
             placeholder="Enter dish ID"
+            aria-label="Dish ID"
           />
         </div>
         <div className="mb-4">
@@ -150,6 +152,7 @@ function AddFoodItem() {
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded mt-1 text-black "
             required
+            aria-label="Meal type"
           >
             <option value="" disabled hidden>
               Select Meal Type
@@ -169,6 +172,7 @@ function AddFoodItem() {
             className="w-full p-2 border border-gray-300 rounded mt-1 text-black"
             rows="3"
             placeholder="Enter dish description"
+            aria-label="Dish description"
           ></textarea>
         </div>
         <div className="mb-4">
@@ -179,11 +183,12 @@ function AddFoodItem() {
             accept="image/*"
             onChange={handleImageChange}
             className="w-full p-2 border border-gray-300 rounded mt-1"
+            aria-label="Dish image"
           />
           {formData.dishImage && (
             <img
               src={formData.dishImage}
-              alt="Dish"
+              alt="Dish preview"
               className="mt-4 w-32 h-32 object-cover rounded"
             />
           )}
