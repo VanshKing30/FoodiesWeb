@@ -21,7 +21,6 @@ function Home() {
   const getCanteenData = async () => {
     try {
       setLoading(true);
-      console.log(process.env.REACT_APP_BASE_URL);
       const getCanteen = await fetch(
         `${process.env.REACT_APP_BASE_URL}/getcanteen`,
         {

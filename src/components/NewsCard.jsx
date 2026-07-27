@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 
 function NewsCard({ article }) {
   const { title, description, source, publishedAt, url, image } = article;
-  console.log(image)
- const maxDescriptionLength = 100;
+  const maxDescriptionLength = 100;
   const truncatedDescription = description
     ? description.length > maxDescriptionLength
       ? description.substring(0, maxDescriptionLength) + "..."
