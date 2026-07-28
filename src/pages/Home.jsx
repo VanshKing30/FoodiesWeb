@@ -31,6 +31,7 @@ function Home() {
           },
         }
       );
+      if (!getCanteen.ok) throw new Error(`HTTP error! status: ${getCanteen.status}`);
       const res = await getCanteen.json();
       setCanteenData(res);
       setFilteredCanteenData(res);
@@ -52,6 +53,7 @@ function Home() {
           },
         }
       );
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       const data = await res.json();
       return data.data;
     } catch (error) {
