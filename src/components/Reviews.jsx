@@ -6,7 +6,7 @@ const Reviews = ({ productId }) => {
 
     useEffect(() => {
         fetch(`/reviews/${productId}`)
-            .then(response => response.json())
+            .then(response => { if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`); return response.json(); })
             .then(data => {
                 setReviews(data);
                 if (data.length > 0) {

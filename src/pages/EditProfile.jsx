@@ -50,6 +50,7 @@ const EditProfile = () => {
           },
         }
       );
+      if (!getCanteen.ok) throw new Error(`HTTP error! status: ${getCanteen.status}`);
       const res = await getCanteen.json();
       const canteenData = res.data.find((canteen) => canteen._id === _id);
       setCanteen(canteenData);
@@ -108,6 +109,7 @@ const EditProfile = () => {
           body: JSON.stringify(formData),
         }
       );
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const result = await response.json();
       console.log(result);
       window.location.reload();

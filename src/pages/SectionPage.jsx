@@ -32,6 +32,7 @@ const SectionPage = () => {
           },
         }
       );
+      if (!getCanteen.ok) throw new Error(`HTTP error! status: ${getCanteen.status}`);
       const res = await getCanteen.json();
       setCanteenData(res.data.find((canteen) => canteen._id === _id));
     } catch (error) {

@@ -88,6 +88,7 @@ const handlestudentFeedbackSubmit = async () => {
           },
         }
       );
+      if (!getBreakfast.ok) throw new Error(`HTTP error! status: ${getBreakfast.status}`);
       const res = await getBreakfast.json();
       setBreakfast(res.data)
     } catch (error) {
@@ -105,6 +106,7 @@ const handlestudentFeedbackSubmit = async () => {
           "Content-Type": "application/json",
         },
       });
+      if (!getCanteen.ok) throw new Error(`HTTP error! status: ${getCanteen.status}`);
       const res = await getCanteen.json();
       setCanteenData(res.data);
     } catch (error) {
@@ -126,6 +128,7 @@ const handlestudentFeedbackSubmit = async () => {
           },
         }
       );
+      if (!getLunch.ok) throw new Error(`HTTP error! status: ${getLunch.status}`);
       const res = await getLunch.json();
       setLunch(res.data);
     } catch (error) {
@@ -147,6 +150,7 @@ const handlestudentFeedbackSubmit = async () => {
           },
         }
       );
+      if (!getDinner.ok) throw new Error(`HTTP error! status: ${getDinner.status}`);
       const res = await getDinner.json();
       setDinner(res.data);
     } catch (error) {
@@ -173,9 +177,9 @@ const handlestudentFeedbackSubmit = async () => {
       try {
         setLoading(true);
         const [breakfastRes, lunchRes, dinnerRes] = await Promise.all([
-          fetch(`${process.env.REACT_APP_BASE_URL}/${_id}/breakfast`).then(res => res.json()),
-          fetch(`${process.env.REACT_APP_BASE_URL}/${_id}/lunch`).then(res => res.json()),
-          fetch(`${process.env.REACT_APP_BASE_URL}/${_id}/dinner`).then(res => res.json())
+          fetch(`${process.env.REACT_APP_BASE_URL}/${_id}/breakfast`).then(res => { if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`); return res.json(); }),
+          fetch(`${process.env.REACT_APP_BASE_URL}/${_id}/lunch`).then(res => { if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`); return res.json(); }),
+          fetch(`${process.env.REACT_APP_BASE_URL}/${_id}/dinner`).then(res => { if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`); return res.json(); })
         ]);
 
         const allDishes = [...breakfastRes.data, ...lunchRes.data, ...dinnerRes.data];

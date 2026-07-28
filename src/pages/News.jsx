@@ -20,6 +20,7 @@ function News() {
       const response = await fetch(
         `${process.env.REACT_APP_GNEWS_API_URL}?q=${query}&apikey=${process.env.REACT_APP_GNEWS_KEY}&max=9`
       );
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
       setArticles(data.articles);
     } catch (error) {

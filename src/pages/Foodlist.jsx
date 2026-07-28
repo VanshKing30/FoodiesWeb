@@ -32,6 +32,7 @@ const Foodlist = () => {
           },
         }
       );
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const res = await response.json();
       setMeal(res.data);
     } catch (error) {
