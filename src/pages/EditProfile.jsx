@@ -108,7 +108,8 @@ const EditProfile = () => {
           body: JSON.stringify(formData),
         }
       );
-      const result = await response.json();
+      if (!response.ok) throw new Error("Request failed");
+const result = await response.json();
       console.log(result);
       window.location.reload();
     } catch (error) {
