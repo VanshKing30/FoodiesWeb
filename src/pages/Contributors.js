@@ -24,7 +24,8 @@ export const Contributors = () => {
     const fetch_data = async () =>{
       try{
         const res = await fetch(`https://api.github.com/repos/VanshKing30/FoodiesWeb/contributors?page=${page}`)
-        const json = await res.json()
+        if (!res.ok) throw new Error("Request failed");
+const json = await res.json()
         setData(prev => [...prev , ...json])
      }
     catch(error){
