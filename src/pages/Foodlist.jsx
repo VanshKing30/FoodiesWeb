@@ -32,7 +32,8 @@ const Foodlist = () => {
           },
         }
       );
-      const res = await response.json();
+      if (!response.ok) throw new Error("Request failed");
+const res = await response.json();
       setMeal(res.data);
     } catch (error) {
       console.error(error);
