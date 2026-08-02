@@ -52,7 +52,8 @@ function Home() {
           },
         }
       );
-      const data = await res.json();
+      if (!res.ok) throw new Error("Request failed");
+const data = await res.json();
       return data.data;
     } catch (error) {
       console.error(`Error fetching ${category} data: `, error);
