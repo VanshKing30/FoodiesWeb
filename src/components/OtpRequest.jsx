@@ -20,7 +20,7 @@ const OtpVerify = () => {
 
   const handleOtpChange = (e, index) => {
     const value = e.target.value;
-    if (isNaN(value)) return;
+    if (Number.isNaN(value)) return;
     setOtp([...otp.map((d, idx) => (idx === index ? value : d))]);
     // Focus next input
     if (value && index < 5) {
