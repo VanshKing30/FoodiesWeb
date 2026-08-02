@@ -86,13 +86,13 @@ const AddTiming = () => {
               onClick={() => setSelectedDay(day)}
               className={`p-2 cursor-pointer ${selectedDay === day ? 'bg-green-500 text-white' : ''}`}
             >
-              {day.charAt(0).toUpperCase() + day.slice(1)}
+              {day[0].toUpperCase() + day.slice(1)}
             </li>
           ))}
         </ul>
       </div>
       <div className="w-3/4 p-4">
-        <h2 className="text-xl mb-4">Set Timing for {selectedDay.charAt(0).toUpperCase() + selectedDay.slice(1)}</h2>
+        <h2 className="text-xl mb-4">Set Timing for {selectedDay[0].toUpperCase() + selectedDay.slice(1)}</h2>
         <div className="mb-4">
           <label className="block mb-2">Morning:</label>
           <input
