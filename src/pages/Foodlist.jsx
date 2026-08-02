@@ -175,7 +175,7 @@ const res = await response.json();
     if (items.length === 0) {
       return <p className="text-xl text-red-700 text-center">No {selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Available Now</p>;
     }
-    return items.map((dish) => (
+    return (items ?? []).map((dish) => (
       <FoodCard 
         key={dish._id} 
         dish={dish} 
