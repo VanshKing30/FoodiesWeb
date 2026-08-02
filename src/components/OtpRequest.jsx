@@ -73,7 +73,7 @@ const OtpVerify = () => {
           <form onSubmit={handleSubmit} className="flex flex-col items-center w-full">
           <h1 className="text-2xl md:text-4xl font-serif mb-6 md:mb-10">OTP verification</h1>
             <div className="flex space-x-2">
-              {otp.map((data, index) => (
+              {(otp ?? []).map((data, index) => (
                 <input
                   key={index}
                   id={`otp-input-${index}`}
