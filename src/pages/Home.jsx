@@ -52,7 +52,8 @@ function Home() {
           },
         }
       );
-      const data = await res.json();
+      if (!res.ok) throw new Error("Request failed");
+const data = await res.json();
       return data.data;
     } catch (error) {
       console.error(`Error fetching ${category} data: `, error);
@@ -78,7 +79,7 @@ function Home() {
         try {
           setLoading(true);
           const allCanteens = canteenData.data;
-          const allDishesPromises = allCanteens.map(async (canteen) => {
+          const allDishesPromises = (allCanteens ?? []).map(async (canteen) => {
             const [breakfast, lunch, dinner] = await Promise.all([
               getDishData(canteen._id, "breakfast"),
               getDishData(canteen._id, "lunch"),
