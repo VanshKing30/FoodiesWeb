@@ -80,7 +80,7 @@ const AddTiming = () => {
     <div className="flex">
       <div className="w-1/4 p-4 bg-gray-100">
         <ul>
-          {days.map(day => (
+          {(days ?? []).map(day => (
             <li
               key={day}
               onClick={() => setSelectedDay(day)}
