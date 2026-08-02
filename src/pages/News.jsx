@@ -20,7 +20,8 @@ function News() {
       const response = await fetch(
         `${process.env.REACT_APP_GNEWS_API_URL}?q=${query}&apikey=${process.env.REACT_APP_GNEWS_KEY}&max=9`
       );
-      const data = await response.json();
+      if (!response.ok) throw new Error("Request failed");
+const data = await response.json();
       setArticles(data.articles);
     } catch (error) {
       console.error("Error fetching news:", error);
