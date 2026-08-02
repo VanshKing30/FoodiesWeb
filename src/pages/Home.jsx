@@ -79,7 +79,7 @@ const data = await res.json();
         try {
           setLoading(true);
           const allCanteens = canteenData.data;
-          const allDishesPromises = allCanteens.map(async (canteen) => {
+          const allDishesPromises = (allCanteens ?? []).map(async (canteen) => {
             const [breakfast, lunch, dinner] = await Promise.all([
               getDishData(canteen._id, "breakfast"),
               getDishData(canteen._id, "lunch"),
