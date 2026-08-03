@@ -26,7 +26,7 @@ function ResetPassword() {
   const navigate = useNavigate();
 
   function PasswordChecker(event) {
-    const lower = new RegExp("(?=.*[a-z])");
+    const lower = /(?=.*[a-z])/;
     const upper = new RegExp("(?=.*[A-Z])");
     const number = new RegExp("(?=.*[0-9])");
     const special = new RegExp("(?=.*[!@#$%^&*])");
