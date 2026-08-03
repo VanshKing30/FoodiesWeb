@@ -364,3 +364,5 @@ const handlestudentFeedbackSubmit = async () => {
 }
 
 export default MenuPage;
+
+.catch(err => console.error("Promise.all failed:", err));
