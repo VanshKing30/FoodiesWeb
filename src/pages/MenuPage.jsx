@@ -50,7 +50,7 @@ function MenuPage() {
   
   //feedbacks
 const handlestudentFeedbackSubmit = async () => {
-  if (studentfeedback.trim() === '') {
+  if (studentfeedback.trim().length === 0) {
     toast.error("Please provide your feedback before submitting.");
     return;
   }
